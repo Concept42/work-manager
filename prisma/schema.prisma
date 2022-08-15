@@ -15,6 +15,7 @@ model Customer {
   firstName String
   lastName String
   companyName String
+  email String @unique
   adress String
   city String
   oib Int
