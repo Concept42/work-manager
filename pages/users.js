@@ -20,9 +20,23 @@ function Users(props) {
     setContacts(props.initialContacts)
     console.log(contacts)
   }, [])
+
+  const users = contacts.map((user, index) => (
+    <li key={index}>
+      <span>Naziv tvrtke: {user.companyName}</span>
+      <span>Ime: {user.firstName}</span>
+      <span>Prezime: {user.lastName}</span>
+      <span>Oib: {user.oib}</span>
+      <span>Email: {user.email}</span>
+      <span>Adresa: {user.adress}</span>
+      <span>Grad: {user.city}</span>
+      <span>Broj Telefona: {user.phoneNumber}</span>
+    </li>
+  ))
+
   return (
     <div>
-      <h1> Ime: {contacts.firstName}</h1>
+      <ul>{users}</ul>
     </div>
   )
 }
