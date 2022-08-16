@@ -20,4 +20,31 @@ model Customer {
   city String
   oib String
   phoneNumber String
+  workOrders WorkOrder[]
+}
+
+model WorkOrder {
+  id String @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title String
+  discription String
+  statusFlag String
+  customer Customer? @relation(fields: [customerId], references: [id])
+  customerId String?
+  user User? @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model User {
+  id String @id @default(cuid())
+  firstName String
+  lastName String
+  workOrders WorkOrder[]
+  role Role @default(USER)
+}
+
+enum Role {
+  USER
+  ADMIN
 }

@@ -5,12 +5,7 @@ export default function AddNewUser() {
     id: '',
     firstName: '',
     lastName: '',
-    companyName: '',
-    email: '',
-    adress: '',
-    city: '',
-    oib: null,
-    phoneNumber: null,
+    role: '',
   })
 
   const handleChange = (e) => {
@@ -21,7 +16,8 @@ export default function AddNewUser() {
   }
 
   const handleSubmit = async (e) => {
-    const response = await fetch(`/api/post/addCustomer`, {
+    e.preventDefault()
+    const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,12 +25,7 @@ export default function AddNewUser() {
       body: JSON.stringify({
         firstName: newUser.firstName,
         lastName: newUser.lastName,
-        companyName: newUser.companyName,
-        email: newUser.email,
-        adress: newUser.adress,
-        city: newUser.city,
-        oib: newUser.oib,
-        phoneNumber: newUser.phoneNumber,
+        role: newUser.role,
       }),
     })
     const result = await response.json()
@@ -42,12 +33,7 @@ export default function AddNewUser() {
       id: '',
       firstName: '',
       lastName: '',
-      companyName: '',
-      email: '',
-      adress: '',
-      city: '',
-      oib: null,
-      phoneNumber: null,
+      role: '',
     })
     console.log(result)
   }
@@ -77,59 +63,15 @@ export default function AddNewUser() {
           />
         </div>
         <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Ime tvrtke</label>
+          <label className='flex p-2'>Role</label>
           <input
             onChange={handleChange}
             className='border-solid border-2 w-96 h-12 '
             type='text'
-            name='companyName'
+            name='role'
           />
         </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Oib</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='number'
-            name='oib'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Email</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='email'
-            name='email'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Adresa</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='text'
-            name='adress'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Grad</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='text'
-            name='city'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Broj telefona</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='tel'
-            name='phoneNumber'
-          />
-        </div>
+
         <button
           type='submit'
           className='flex border-solid border-4 border-black h-12 w-24 justify-center items-center mt-4 '
