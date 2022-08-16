@@ -14,7 +14,14 @@ function Users() {
   }, [])
 
   const handleDeleteCustomer = async (id) => {
-    console.log(id)
+    const response = await fetch(`/api/post/deleteData`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    })
+    const result = await response.json()
   }
   const users = contacts.map(
     ({
