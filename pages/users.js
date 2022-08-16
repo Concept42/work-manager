@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import AddNewUser from '../components/Forms/AddNewUser'
 
 function Users() {
   const [contacts, setContacts] = useState([])
+  const [editMode, setEditMode] = useState(false)
   const [selectedUser, setSelectedUser] = useState({
     id: '',
     firstName: '',
@@ -14,7 +15,6 @@ function Users() {
     oib: null,
     phoneNumber: null,
   })
-  const [editMode, setEditMode] = useState(false)
 
   const theme = {
     focusList: 'flex w-[12.5%] border-solid border-2 border-black',

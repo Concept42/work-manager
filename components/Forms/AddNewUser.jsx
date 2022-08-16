@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function AddNewUser(props) {
+export default function AddNewUser() {
   const [newUser, setNewUser] = useState({
     id: '',
     firstName: '',
@@ -94,7 +94,6 @@ export default function AddNewUser(props) {
             name='oib'
           />
         </div>
-
         <div className='flex flex-col items-start pb-2'>
           <label className='flex p-2'>Email</label>
           <input
