@@ -39,6 +39,7 @@ export default function AddNewUser(props) {
       }),
     })
     const result = await response.json()
+    console.log(result)
   }
 
   return (

@@ -13,21 +13,42 @@ function Users() {
     fetchData()
   }, [])
 
-  const users = contacts.map((user, index) => (
-    <li
-      className='flex justify-between mt-2 border-solid border-b-2 items-center h-8'
-      key={index}
-    >
-      <span className='flex w-[12.5%]'>{user.companyName}</span>
-      <span className='flex w-[12.5%]'>{user.firstName}</span>
-      <span className='flex w-[12.5%]'>{user.lastName}</span>
-      <span className='flex w-[12.5%]'>{user.oib}</span>
-      <span className='flex w-[12.5%]'>{user.email}</span>
-      <span className='flex w-[12.5%]'>{user.adress}</span>
-      <span className='flex w-[12.5%]'>{user.city}</span>
-      <span className='flex w-[12.5%]'>{user.phoneNumber}</span>
-    </li>
-  ))
+  const handleDeleteCustomer = async (id) => {
+    console.log(id)
+  }
+  const users = contacts.map(
+    ({
+      id,
+      firstName,
+      lastName,
+      companyName,
+      email,
+      adress,
+      city,
+      oib,
+      phoneNumber,
+    }) => (
+      <li
+        className='flex justify-between mt-2 border-solid border-b-2 items-center h-8'
+        key={id}
+      >
+        <span className='flex w-[12.5%]'>{companyName}</span>
+        <span className='flex w-[12.5%]'>{firstName}</span>
+        <span className='flex w-[12.5%]'>{lastName}</span>
+        <span className='flex w-[12.5%]'>{oib}</span>
+        <span className='flex w-[12.5%]'>{email}</span>
+        <span className='flex w-[12.5%]'>{adress}</span>
+        <span className='flex w-[12.5%]'>{city}</span>
+        <span className='flex w-[12.5%]'>{phoneNumber}</span>
+        <button
+          className='border-solid border-2 border-black'
+          onClick={() => handleDeleteCustomer(id)}
+        >
+          Delete
+        </button>
+      </li>
+    )
+  )
 
   return (
     // UserList Section
@@ -42,6 +63,7 @@ function Users() {
           <h3 className='flex w-[12.5%] '>Adresa</h3>
           <h3 className='flex w-[12.5%] '>Grad</h3>
           <h3 className='flex w-[12.5%] '>Broj Telefona</h3>
+          <h3 className='flex w-[12.5%] '>Options</h3>
         </div>
         <ul className='flex flex-col '>{users}</ul>
       </div>

@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Customer" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "companyName" TEXT NOT NULL,
@@ -8,5 +8,7 @@ CREATE TABLE "Customer" (
     "adress" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "oib" TEXT NOT NULL,
-    "phoneNumber" TEXT NOT NULL
+    "phoneNumber" TEXT NOT NULL,
+
+    CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
 );
