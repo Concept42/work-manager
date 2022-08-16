@@ -21,7 +21,6 @@ export default function AddNewUser(props) {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
     const response = await fetch(`/api/post/addCustomer`, {
       method: 'POST',
       headers: {
@@ -39,6 +38,17 @@ export default function AddNewUser(props) {
       }),
     })
     const result = await response.json()
+    setNewUser({
+      id: '',
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      email: '',
+      adress: '',
+      city: '',
+      oib: null,
+      phoneNumber: null,
+    })
     console.log(result)
   }
 
