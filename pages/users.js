@@ -158,22 +158,9 @@ function Users() {
       </li>
     )
   )
-  const updateUsers = selectedUser.map(
-    ({
-      id,
-      firstName,
-      lastName,
-      companyName,
-      email,
-      adress,
-      city,
-      oib,
-      phoneNumber,
-    }) => (
-      <li
-        className='flex justify-between mt-2 border-solid border-b-2 items-center h-8'
-        key={id}
-      >
+  const updateUsers = (
+    <div>
+      <li className='flex justify-between mt-2 border-solid border-b-2 items-center h-8'>
         <input
           className={theme.focusList}
           value={selectedUser.companyName}
@@ -257,7 +244,7 @@ function Users() {
           </button>
         )}
       </li>
-    )
+    </div>
   )
 
   const handleUpdate = async (e) => {
