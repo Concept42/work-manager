@@ -20,27 +20,9 @@ export default function AddNewUser(props) {
     console.log(newUser)
   }
 
-  async function saveCustomer(customer) {
-    const response = await fetch('/api/customers', {
-      method: 'POST',
-      body: JSON.stringify(customer),
-    })
-    return await response.json()
-  }
-  const handleSubmit = async (data, e) => {
-    e.preventDefault()
-    try {
-      debugger
-      await saveCustomer(data)
-      debugger
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
     <div>
-      <form onSubmit={handleSubmit} className='flex flex-col justify-center'>
+      <form className='flex flex-col justify-center'>
         <div className='flex justify-center'>
           <h1 className='text-xl mb-4 p-2'>Dodaj novi kontakt</h1>
         </div>

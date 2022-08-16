@@ -2,21 +2,11 @@ import React, { useState, useEffect } from 'react'
 import AddNewUser from '../components/Forms/AddNewUser'
 import prisma from '../lib/db'
 
-export async function getServerSideProps() {
-  const contacts = await prisma.customer.findMany()
-
-  return {
-    props: {
-      initialContacts: contacts,
-    },
-  }
-}
-
 function Users(props) {
-  const [contacts, setContacts] = useState(props.initialContacts)
+  const [contacts, setContacts] = useState('')
 
   useEffect(() => {
-    setContacts(props.initialContacts)
+    setContacts()
   }, [])
 
   const users = contacts.map((user, index) => (
