@@ -29,7 +29,13 @@ export default function AddNewUser(props) {
       },
       body: JSON.stringify({
         firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        companyName: newUser.companyName,
+        email: newUser.email,
+        adress: newUser.adress,
+        city: newUser.city,
         oib: newUser.oib,
+        phoneNumber: newUser.phoneNumber,
       }),
     })
     const result = await response.json()
