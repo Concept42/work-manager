@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import AddNewUser from '../components/Forms/AddNewUser'
-import prisma from '../lib/db'
 
-function Users(props) {
-  const [contacts, setContacts] = useState('')
+function Users() {
+  const [contacts, setContacts] = useState([])
 
+  const fetchData = async () => {
+    const response = await fetch(`/api/post/getData`)
+    const result = await response.json()
+    setContacts(result)
+  }
   useEffect(() => {
-    setContacts()
+    fetchData()
   }, [])
 
   const users = contacts.map((user, index) => (

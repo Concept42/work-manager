@@ -20,9 +20,24 @@ export default function AddNewUser(props) {
     console.log(newUser)
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const response = await fetch(`/api/post/addCustomer`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: newUser.firstName,
+        oib: newUser.oib,
+      }),
+    })
+    const result = await response.json()
+  }
+
   return (
     <div>
-      <form className='flex flex-col justify-center'>
+      <form onSubmit={handleSubmit} className='flex flex-col justify-center'>
         <div className='flex justify-center'>
           <h1 className='text-xl mb-4 p-2'>Dodaj novi kontakt</h1>
         </div>
