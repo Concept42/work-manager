@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import moment from 'moment'
 
 function WorkOrderList(props) {
   const [singleWorkOrder, setSingleWorkOrder] = useState([])
@@ -21,8 +22,14 @@ function WorkOrderList(props) {
   return (
     <ul key={singleWorkOrder.id}>
       <li>ID: {singleWorkOrder.id}</li>
-      <li>createdAt: {singleWorkOrder.createdAt}</li>
-      <li>updatedAt: {singleWorkOrder.updatedAt}</li>
+      <li>
+        createdAt:
+        {moment(singleWorkOrder.createdAt).format('DD-MMM-YYYY, h:mm:ss')}
+      </li>
+      <li>
+        updatedAt:{' '}
+        {moment(singleWorkOrder.updatedAt).format('DD-MMM-YYYY, h:mm:ss')}
+      </li>
       <li>title: {singleWorkOrder.title}</li>
       <li>statusFlag: {singleWorkOrder.statusFlag}</li>
       <li>customer: {singleWorkOrder.customer}</li>

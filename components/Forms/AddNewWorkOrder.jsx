@@ -11,7 +11,6 @@ export default function AddNewCustomer() {
     customerId: '',
     userId: '',
   })
-
   const handleChange = (e) => {
     setNewWorkOrder((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
@@ -62,7 +61,7 @@ export default function AddNewCustomer() {
           <input
             onChange={handleChange}
             className='border-solid border-2 w-96 h-12'
-            type='text'
+            type='time'
             name='createdAt'
           />
         </div>
@@ -71,7 +70,7 @@ export default function AddNewCustomer() {
           <input
             onChange={handleChange}
             className='border-solid border-2 w-96 h-12'
-            type='text'
+            type='time'
             name='updatedAt'
           />
         </div>
