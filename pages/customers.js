@@ -2,7 +2,6 @@ import CustomerList from '../components/LIsts/CustomerList'
 import AddNewCustomer from '../components/Forms/AddNewCustomer'
 
 function Customers() {
-  
   return (
     <div>
       <CustomerList />
