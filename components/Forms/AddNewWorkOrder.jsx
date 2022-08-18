@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-export default function AddNewCustomer({ listCustomer, listUser }) {
+export default function AddNewCustomer({ listCustomer, listUser, listStatus }) {
   const [newWorkOrder, setNewWorkOrder] = useState({
     title: '',
     discription: '',
@@ -62,15 +62,7 @@ export default function AddNewCustomer({ listCustomer, listUser }) {
             name='discription'
           />
         </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Status</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='text'
-            name='statusFlag'
-          />
-        </div>
+
         <div>
           <span>Stranka: </span>
           <select name='customerId' onChange={handleChange}>

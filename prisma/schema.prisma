@@ -48,3 +48,8 @@ enum Role {
   USER
   ADMIN
 }
+
+model Status {
+  id Int @id @default(autoincrement())
+  status String
+}

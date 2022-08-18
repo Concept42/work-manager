@@ -8,6 +8,7 @@ function WorkOrderList(props) {
 
   const listUsers = props.users
   const listCustomers = props.customers
+  const listStatus = props.status
 
   useEffect(() => {
     setSingleWorkOrder({
@@ -145,10 +146,25 @@ function WorkOrderList(props) {
                 name='discription'
               />
             </h3>
-            <h3 className=''>statusFlag: {singleWorkOrder.statusFlag} </h3>
+
+            <h3>
+              Status:
+              <select name='statusFlag' onChange={handleChange}>
+                <option>Odaberi status</option>
+                {listStatus &&
+                  listStatus.map((status) => {
+                    return (
+                      <option key={status.id} value={status.status}>
+                        {status.status}
+                      </option>
+                    )
+                  })}
+              </select>
+            </h3>
+
             <h3>
               customer:
-              <select name='customerId' onChange={handleChange} defaultValue=''>
+              <select name='customerId' onChange={handleChange}>
                 <option>Odaberi stranku</option>
                 {listCustomers &&
                   listCustomers.map((customer) => {
@@ -162,7 +178,7 @@ function WorkOrderList(props) {
             </h3>
             <h3>
               user:
-              <select name='userId' onChange={handleChange} defaultValue=''>
+              <select name='userId' onChange={handleChange}>
                 <option>Odaberi korisnika</option>
                 {listUsers &&
                   listUsers.map((user) => {

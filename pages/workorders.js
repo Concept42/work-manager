@@ -6,6 +6,7 @@ function WorkOrders() {
   const [workOrders, setWorkOrders] = useState([])
   const [users, setUsers] = useState([])
   const [customers, setCustomers] = useState([])
+  const [status, setStatus] = useState([])
 
   const fetchWorkOrderData = async () => {
     const response = await fetch(`/api/customer/getOrderData`)
@@ -23,11 +24,17 @@ function WorkOrders() {
     const result = await response.json()
     setCustomers(result)
   }
+  const fetchStatusData = async () => {
+    const response = await fetch(`/api/customer/getStatusData`)
+    const result = await response.json()
+    setStatus(result)
+  }
 
   useEffect(() => {
     fetchWorkOrderData()
     fetchUsersData()
     fetchCustomerData()
+    fetchStatusData()
     console.log('workORders: ', workOrders)
     console.log('users: ', users)
   }, [])
@@ -44,6 +51,7 @@ function WorkOrders() {
                 singleWorkOrder={oneWorkOrder}
                 users={users}
                 customers={customers}
+                status={status}
               />
             )
           })}
