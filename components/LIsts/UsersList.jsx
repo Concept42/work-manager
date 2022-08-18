@@ -1,42 +1,56 @@
 import { useState, useEffect } from 'react'
 
-function UsersList() {
-  const [users, setUsers] = useState([])
+function WorkOrderList(props) {
+  const [workOrders, setWorkOrders] = useState([])
+  const singleUser = props.singleUser
 
-  const fetchData = async () => {
-    debugger
-    const response = await fetch(`/api/customer/getUserData`)
-    const result = await response.json()
-    setUsers(result)
-  }
   useEffect(() => {
-    fetchData()
-    console.log(users)
-  }, [])
+    console.log(singleUser)
+    let newWorkOrders = []
+    if (workOrders.length === 0) {
+      singleUser.workOrders.map((workOrder) => {
+        let result = {
+          id: workOrder.id,
+          createdAt: workOrder.createdAt,
+          updatedAt: workOrder.updatedAt,
+          title: workOrder.title,
+          discription: workOrder.discription,
+          statusFlag: workOrder.statusFlag,
+          customerId: workOrder.customerId,
+          userId: workOrder.userId,
+        }
+        newWorkOrders.push(result)
+        setWorkOrders(newWorkOrders)
+      })
+    }
+  })
 
-  const usersList = users.map(({ id, firstName, lastName, role }) => (
-    <li
-      className='flex justify-between mt-2 border-solid border-b-2 items-center h-8'
-      key={id}
-    >
-      <span className='flex w-[12.5%]'>{firstName}</span>
-      <span className='flex w-[12.5%]'>{lastName}</span>
-      <span className='flex w-[12.5%]'>{role}</span>
-    </li>
-  ))
   return (
-    // UserList Section
-    <div className=''>
-      <div className='flex flex-col'>
-        <div className='flex  justify-between mb-4 h-8 items-center'>
-          <h3 className='flex w-[12.5%] '>Ime</h3>
-          <h3 className='flex w-[12.5%] '>Prezime</h3>
-          <h3 className='flex w-[12.5%] '>Role</h3>
-        </div>
-        <ul className='flex flex-col '>{usersList}</ul>
+    <div>
+      <h1 className='text-[50px]'>Korisnik</h1>
+      <ul key={singleUser.id}>
+        <li>ID: {singleUser.id}</li>
+        <li>Ime: {singleUser.firstName}</li>
+        <li>Prezime: {singleUser.lastName}</li>
+        <li>Role: {singleUser.role}</li>
+      </ul>
+      <div>
+        <h1 className='text-[50px]'>Lista poslova</h1>
+        {workOrders.map((workOrder) => {
+          return (
+            <li key={workOrder.id}>
+              <h3>ID posla: {workOrder.id}</h3>
+              <h3 className='text-[20px]'>Naslov posla: {workOrder.title}</h3>
+              <h3>Kreirano: {workOrder.createdAt}</h3>
+              <h3>Završeno: {workOrder.updatedAt}</h3>
+              <h3>Opis posla: {workOrder.discription}</h3>
+              <h3>Stanje posla:{workOrder.statusFlag}</h3>
+            </li>
+          )
+        })}
       </div>
     </div>
   )
 }
 
-export default UsersList
+export default WorkOrderList
