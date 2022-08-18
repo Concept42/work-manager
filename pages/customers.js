@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import CustomerList from '../components/LIsts/CustomerList'
+import AddNewCustomer from '../components/Forms/AddNewCustomer'
 
 function Customers() {
   const [workOrders, setWorkOrders] = useState([])
@@ -40,18 +41,16 @@ function Customers() {
 
   return (
     <div>
-      {/* Work order List */}
+      {/* Customers  List */}
       <section>
         {customers.map((oneCustomer, id) => {
           return (
-            <CustomerList
-              key={id}
-              users={users}
-              singleCustomer={oneCustomer}
-              status={status}
-            />
+            <CustomerList key={id} users={users} singleCustomer={oneCustomer} />
           )
         })}
+      </section>
+      <section>
+        <AddNewCustomer />
       </section>
     </div>
   )

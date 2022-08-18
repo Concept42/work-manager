@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
 
 export default function AddNewCustomer() {
-  const [newUser, setNewUser] = useState({
-    id: '',
+  const [newCustomer, setNewCustomer] = useState({
     firstName: '',
     lastName: '',
     companyName: '',
     email: '',
     adress: '',
     city: '',
-    oib: null,
-    phoneNumber: null,
+    oib: '',
+    phoneNumber: '',
   })
 
   const handleChange = (e) => {
-    setNewUser((prev) => {
+    setNewCustomer((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
-    console.log(newUser)
+    console.log(newCustomer)
   }
 
   const handleSubmit = async (e) => {
@@ -27,27 +26,26 @@ export default function AddNewCustomer() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        companyName: newUser.companyName,
-        email: newUser.email,
-        adress: newUser.adress,
-        city: newUser.city,
-        oib: newUser.oib,
-        phoneNumber: newUser.phoneNumber,
+        firstName: newCustomer.firstName,
+        lastName: newCustomer.lastName,
+        companyName: newCustomer.companyName,
+        email: newCustomer.email,
+        adress: newCustomer.adress,
+        city: newCustomer.city,
+        oib: newCustomer.oib,
+        phoneNumber: newCustomer.phoneNumber,
       }),
     })
     const result = await response.json()
     setNewUser({
-      id: '',
       firstName: '',
       lastName: '',
       companyName: '',
       email: '',
       adress: '',
       city: '',
-      oib: null,
-      phoneNumber: null,
+      oib: '',
+      phoneNumber: '',
     })
     console.log(result)
   }
@@ -56,7 +54,7 @@ export default function AddNewCustomer() {
     <div>
       <form onSubmit={handleSubmit} className='flex flex-col justify-center'>
         <div className='flex justify-center'>
-          <h1 className='text-xl mb-4 p-2'>Dodaj novi kontakt</h1>
+          <h1 className='text-xl mb-4 p-2'>Dodaj novu stranku</h1>
         </div>
         <div className='flex flex-col items-start pb-2'>
           <label className='flex p-2'>Ime</label>
