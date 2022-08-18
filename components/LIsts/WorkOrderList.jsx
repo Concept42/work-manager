@@ -18,13 +18,52 @@ function WorkOrderList(props) {
       userId: props.singleWorkOrder.userId,
       userName: props.singleWorkOrder.user.firstName,
     })
+    if (editMode) {
+    }
   }, [])
 
   const handleChange = async (e) => {
-    setSelectedUser((prev) => {
+    setSingleWorkOrder((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
-    console.log(selectedUser)
+    console.log(singleWorkOrder)
+  }
+
+  const handleEditWorkOrder = async (
+    id,
+    createdAt,
+    updatedAt,
+    title,
+    discription,
+    statusFlag,
+    customerId,
+    userId
+  ) => {
+    setEditMode(true)
+    console.log(editMode)
+  }
+
+  const handleUpdateData = async (e) => {
+    e.preventDefault()
+    const response = await fetch(`/api/customer/updateWorkOrder`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: singleWorkOrder.id,
+        createdAt: singleWorkOrder.createdAt,
+        updatedAt: singleWorkOrder.updatedAt,
+        title: singleWorkOrder.title,
+        discription: singleWorkOrder.discription,
+        statusFlag: singleWorkOrder.statusFlag,
+        customerId: singleWorkOrder.customerId,
+        userId: singleWorkOrder.userId,
+      }),
+    })
+    setEditMode(false)
+    const json = await response.json()
+    console.log(json)
   }
 
   const handleDeleteWorkOrder = async (id) => {
@@ -35,10 +74,6 @@ function WorkOrderList(props) {
       },
       body: JSON.stringify({ id }),
     })
-  }
-  const handleEditWorkOrder = async () => {
-    setEditMode(true)
-    console.log(editMode)
   }
 
   return (
@@ -69,7 +104,18 @@ function WorkOrderList(props) {
               Delete
             </button>
             <button
-              onClick={() => handleEditWorkOrder()}
+              onClick={() =>
+                handleEditWorkOrder({
+                  id: singleWorkOrder.id,
+                  createdAt: singleWorkOrder.createdAt,
+                  updatedAt: singleWorkOrder.updatedAt,
+                  title: singleWorkOrder.title,
+                  discription: singleWorkOrder.discription,
+                  statusFlag: singleWorkOrder.statusFlag,
+                  customerId: singleWorkOrder.customerId,
+                  userId: singleWorkOrder.userId,
+                })
+              }
               className='border-solid border-2 border-red-500'
             >
               Edit
@@ -77,7 +123,7 @@ function WorkOrderList(props) {
           </div>
         </ul>
       ) : (
-        <form>
+        <form onSubmit={handleUpdateData}>
           <div>
             <h3 className=''>ID: {singleWorkOrder.id} </h3>
             <h3 className=''>
@@ -95,19 +141,45 @@ function WorkOrderList(props) {
           </div>
           <div className=''>
             <h3>
-              title: <input value={singleWorkOrder.title} />
+              title:{' '}
+              <input
+                value={singleWorkOrder.title}
+                onChange={handleChange}
+                name='title'
+              />
             </h3>
-
-            <span>discription:</span>
-            <input value={singleWorkOrder.discription} />
+            <h3>
+              discription:{' '}
+              <input
+                value={singleWorkOrder.discription}
+                onChange={handleChange}
+                name='discription'
+              />
+            </h3>
             <h3 className=''>statusFlag: {singleWorkOrder.statusFlag} </h3>
             <h3>
-              customer: <input value={singleWorkOrder.customer} />
+              customer:{' '}
+              <input
+                value={singleWorkOrder.customer}
+                onChange={handleChange}
+                name='customer'
+              />
             </h3>
             <h3>
-              user: <input value={singleWorkOrder.userName} />
+              user:{' '}
+              <input
+                value={singleWorkOrder.userName}
+                onChange={handleChange}
+                name='userName'
+              />
             </h3>
           </div>
+          <button
+            type='submit'
+            className='border-solid border-2 border-red-500'
+          >
+            Update
+          </button>
         </form>
       )}
     </div>
