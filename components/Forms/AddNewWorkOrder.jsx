@@ -76,7 +76,7 @@ export default function AddNewCustomer({ listCustomer, listUser, listStatus }) {
             })}
           </select>
           <div>
-            <span>Stranka: </span>
+            <span>Korisnik: </span>
             <select name='userId' onChange={handleChange} defaultValue=''>
               <option>Odaberi korisnika</option>
               {users.length > 0 &&
