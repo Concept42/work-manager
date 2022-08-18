@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import moment from 'moment'
 
+// WORK ORDER MUST HAVE A CUSTOMER!!!!!
+
 function WorkOrderList(props) {
   const [singleWorkOrder, setSingleWorkOrder] = useState([])
   const [updatedDate, setUpdatedDate] = useState('')
@@ -33,7 +35,6 @@ function WorkOrderList(props) {
         [e.target.name]: e.target.value,
       }
     })
-
     console.log(singleWorkOrder, updatedDate)
   }
 
@@ -47,6 +48,7 @@ function WorkOrderList(props) {
     updatedDate.toISOString()
     setUpdatedDate(updatedDate)
   }
+
   const handleUpdateData = async (e) => {
     e.preventDefault()
 
