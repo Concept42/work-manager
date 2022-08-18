@@ -20,6 +20,13 @@ function WorkOrderList(props) {
     })
   }, [])
 
+  const handleChange = async (e) => {
+    setSelectedUser((prev) => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+    console.log(selectedUser)
+  }
+
   const handleDeleteWorkOrder = async (id) => {
     const response = await fetch(`/api/customer/deleteWorkOrder`, {
       method: 'POST',
