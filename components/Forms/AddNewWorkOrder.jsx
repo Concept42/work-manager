@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-export default function AddNewCustomer() {
+export default function AddNewCustomer({ listCustomer, listUser }) {
   const [newWorkOrder, setNewWorkOrder] = useState({
-    id: '',
-    createdAt: '',
-    updatedAt: '',
     title: '',
     discription: '',
-    statusFlag: '',
+    statusFlag: 'U izradi',
     customerId: '',
     userId: '',
   })
+
+  const users = listUser
+  const customer = listCustomer
+
   const handleChange = (e) => {
     setNewWorkOrder((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
@@ -26,9 +27,6 @@ export default function AddNewCustomer() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: newWorkOrder.id,
-        createdAt: newWorkOrder.createdAt,
-        updatedAt: newWorkOrder.updatedAt,
         title: newWorkOrder.title,
         discription: newWorkOrder.discription,
         statusFlag: newWorkOrder.statusFlag,
@@ -37,17 +35,6 @@ export default function AddNewCustomer() {
       }),
     })
     const result = await response.json()
-    setNewWorkOrder({
-      id: '',
-      createdAt: '',
-      updatedAt: '',
-      title: '',
-      discription: '',
-      statusFlag: '',
-      customerId: '',
-      userId: '',
-    })
-    console.log('newWorkORder', result)
   }
 
   return (
@@ -56,24 +43,7 @@ export default function AddNewCustomer() {
         <div className='flex justify-center'>
           <h1 className='text-xl mb-4 p-2'>Dodaj novi work Order</h1>
         </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Kreirano: </label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12'
-            type='text'
-            name='createdAt'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Updatano: </label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12'
-            type='text'
-            name='updatedAt'
-          />
-        </div>
+
         <div className='flex flex-col items-start pb-2'>
           <label className='flex p-2'>Naslov:</label>
           <input
@@ -101,23 +71,32 @@ export default function AddNewCustomer() {
             name='statusFlag'
           />
         </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Stranka</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='text'
-            name='customerId'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Zadužena osoba:</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
-            type='text'
-            name='userId'
-          />
+        <div>
+          <span>Stranka: </span>
+          <select name='customerId' onChange={handleChange}>
+            <option>Odaberi stranku</option>
+            {customer.map((customer) => {
+              return (
+                <option key={customer.id} value={customer.id}>
+                  {customer.firstName}
+                </option>
+              )
+            })}
+          </select>
+          <div>
+            <span>Stranka: </span>
+            <select name='userId' onChange={handleChange} defaultValue=''>
+              <option>Odaberi korisnika</option>
+              {users.length > 0 &&
+                users.map((user) => {
+                  return (
+                    <option key={user.id} value={user.id}>
+                      {user.firstName}
+                    </option>
+                  )
+                })}
+            </select>
+          </div>
         </div>
 
         <button

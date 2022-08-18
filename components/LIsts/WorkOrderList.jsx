@@ -3,8 +3,11 @@ import moment from 'moment'
 
 function WorkOrderList(props) {
   const [singleWorkOrder, setSingleWorkOrder] = useState([])
-  const [users, setUsers] = useState(props.users)
+  const [updatedDate, setUpdatedDate] = useState('')
   const [editMode, setEditMode] = useState(false)
+
+  const listUsers = props.users
+  const listCustomers = props.customers
 
   useEffect(() => {
     setSingleWorkOrder({
@@ -19,23 +22,33 @@ function WorkOrderList(props) {
       userId: props.singleWorkOrder.userId,
       userName: props.singleWorkOrder.user.firstName,
     })
-    if (editMode) {
-    }
   }, [])
 
   const handleChange = async (e) => {
+    newDate()
     setSingleWorkOrder((prev) => {
-      return { ...prev, [e.target.name]: e.target.value }
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      }
     })
-    console.log(singleWorkOrder)
+
+    console.log(singleWorkOrder, updatedDate)
   }
 
   const handleEditWorkOrder = async () => {
     setEditMode(true)
   }
 
+  const newDate = async () => {
+    let newDate = Date.now()
+    let updatedDate = new Date(newDate)
+    updatedDate.toISOString()
+    setUpdatedDate(updatedDate)
+  }
   const handleUpdateData = async (e) => {
     e.preventDefault()
+
     const response = await fetch(`/api/customer/updateWorkOrder`, {
       method: 'POST',
       headers: {
@@ -43,6 +56,7 @@ function WorkOrderList(props) {
       },
       body: JSON.stringify({
         id: singleWorkOrder.id,
+        updatedAt: updatedDate,
         title: singleWorkOrder.title,
         discription: singleWorkOrder.discription,
         statusFlag: singleWorkOrder.statusFlag,
@@ -74,7 +88,7 @@ function WorkOrderList(props) {
             {moment(singleWorkOrder.createdAt).format('DD-MMM-YYYY, h:mm:ss')}
           </li>
           <li>
-            updatedAt:
+            updatedAt:{' '}
             {moment(singleWorkOrder.updatedAt).format('DD-MMM-YYYY, h:mm:ss')}
           </li>
           <li>title: {singleWorkOrder.title}</li>
@@ -92,7 +106,7 @@ function WorkOrderList(props) {
               Delete
             </button>
             <button
-              onClick={() => handleEditWorkOrder({})}
+              onClick={() => handleEditWorkOrder()}
               className='border-solid border-2 border-red-500'
             >
               Edit
@@ -111,9 +125,7 @@ function WorkOrderList(props) {
             </h3>
             <h3 className=''>
               updatedAt:
-              {moment(singleWorkOrder.updatedAt).format(
-                'DD-MMM-YYYY, h:mm:ss'
-              )}{' '}
+              {singleWorkOrder.updatedAt}
             </h3>
           </div>
           <div className=''>
@@ -135,21 +147,28 @@ function WorkOrderList(props) {
             </h3>
             <h3 className=''>statusFlag: {singleWorkOrder.statusFlag} </h3>
             <h3>
-              customer:{' '}
-              <input
-                value={singleWorkOrder.customer}
-                onChange={handleChange}
-                name='customer'
-              />
+              customer:
+              <select name='customerId' onChange={handleChange} defaultValue=''>
+                <option>Odaberi stranku</option>
+                {listCustomers &&
+                  listCustomers.map((customer) => {
+                    return (
+                      <option key={customer.id} value={customer.id}>
+                        {customer.firstName}
+                      </option>
+                    )
+                  })}
+              </select>
             </h3>
             <h3>
               user:
-              <select name='userName' onChange={handleChange}>
-                {users.length > 0 &&
-                  users.map((userName, id) => {
+              <select name='userId' onChange={handleChange} defaultValue=''>
+                <option>Odaberi korisnika</option>
+                {listUsers &&
+                  listUsers.map((user) => {
                     return (
-                      <option key={id} value={userName.firstName}>
-                        {userName.firstName}
+                      <option key={user.id} value={user.id}>
+                        {user.firstName}
                       </option>
                     )
                   })}
