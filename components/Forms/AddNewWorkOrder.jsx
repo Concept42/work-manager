@@ -61,7 +61,7 @@ export default function AddNewCustomer() {
           <input
             onChange={handleChange}
             className='border-solid border-2 w-96 h-12'
-            type='time'
+            type='text'
             name='createdAt'
           />
         </div>
@@ -70,7 +70,7 @@ export default function AddNewCustomer() {
           <input
             onChange={handleChange}
             className='border-solid border-2 w-96 h-12'
-            type='time'
+            type='text'
             name='updatedAt'
           />
         </div>

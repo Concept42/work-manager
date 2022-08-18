@@ -3,6 +3,7 @@ import moment from 'moment'
 
 function WorkOrderList(props) {
   const [singleWorkOrder, setSingleWorkOrder] = useState([])
+  const [users, setUsers] = useState(props.users)
   const [editMode, setEditMode] = useState(false)
 
   useEffect(() => {
@@ -29,18 +30,8 @@ function WorkOrderList(props) {
     console.log(singleWorkOrder)
   }
 
-  const handleEditWorkOrder = async (
-    id,
-    createdAt,
-    updatedAt,
-    title,
-    discription,
-    statusFlag,
-    customerId,
-    userId
-  ) => {
+  const handleEditWorkOrder = async () => {
     setEditMode(true)
-    console.log(editMode)
   }
 
   const handleUpdateData = async (e) => {
@@ -52,8 +43,6 @@ function WorkOrderList(props) {
       },
       body: JSON.stringify({
         id: singleWorkOrder.id,
-        createdAt: singleWorkOrder.createdAt,
-        updatedAt: singleWorkOrder.updatedAt,
         title: singleWorkOrder.title,
         discription: singleWorkOrder.discription,
         statusFlag: singleWorkOrder.statusFlag,
@@ -63,7 +52,6 @@ function WorkOrderList(props) {
     })
     setEditMode(false)
     const json = await response.json()
-    console.log(json)
   }
 
   const handleDeleteWorkOrder = async (id) => {
@@ -104,18 +92,7 @@ function WorkOrderList(props) {
               Delete
             </button>
             <button
-              onClick={() =>
-                handleEditWorkOrder({
-                  id: singleWorkOrder.id,
-                  createdAt: singleWorkOrder.createdAt,
-                  updatedAt: singleWorkOrder.updatedAt,
-                  title: singleWorkOrder.title,
-                  discription: singleWorkOrder.discription,
-                  statusFlag: singleWorkOrder.statusFlag,
-                  customerId: singleWorkOrder.customerId,
-                  userId: singleWorkOrder.userId,
-                })
-              }
+              onClick={() => handleEditWorkOrder({})}
               className='border-solid border-2 border-red-500'
             >
               Edit
@@ -166,12 +143,17 @@ function WorkOrderList(props) {
               />
             </h3>
             <h3>
-              user:{' '}
-              <input
-                value={singleWorkOrder.userName}
-                onChange={handleChange}
-                name='userName'
-              />
+              user:
+              <select name='userName' onChange={handleChange}>
+                {users.length > 0 &&
+                  users.map((userName, id) => {
+                    return (
+                      <option key={id} value={userName.firstName}>
+                        {userName.firstName}
+                      </option>
+                    )
+                  })}
+              </select>
             </h3>
           </div>
           <button

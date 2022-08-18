@@ -1,24 +1,13 @@
 import prisma from '../../../lib/db'
 
 export default async function handler(req, res) {
-  const {
-    id,
-    createdAt,
-    updatedAt,
-    title,
-    discription,
-    statusFlag,
-    customerId,
-    userId,
-  } = req.body
+  const { id, title, discription, statusFlag, customerId, userId } = req.body
   const workOrders = await prisma.workOrder.update({
     where: {
       id,
     },
     data: {
       id,
-      createdAt,
-      updatedAt,
       title,
       discription,
       statusFlag,
