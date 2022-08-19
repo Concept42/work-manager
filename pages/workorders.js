@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react'
 import AddNewWorkOrder from '../components/Forms/AddNewWorkOrder'
 import WorkOrderList from '../components/LIsts/WorkOrderList'
+import { useSession } from 'next-auth/react'
 
 function WorkOrders() {
+  const { data, status } = useSession()
+
+  console.log(data, status)
   const [workOrders, setWorkOrders] = useState([])
   const [users, setUsers] = useState([])
   const [customers, setCustomers] = useState([])
-  const [status, setStatus] = useState([])
+  const [statusFlag, setStatusFlag] = useState([])
 
   const fetchWorkOrderData = async () => {
     const response = await fetch(`/api/customer/getOrderData`)
@@ -26,7 +30,7 @@ function WorkOrders() {
   const fetchStatusData = async () => {
     const response = await fetch(`/api/customer/getStatusData`)
     const result = await response.json()
-    setStatus(result)
+    setStatusFlag(result)
   }
 
   useEffect(() => {
@@ -48,7 +52,7 @@ function WorkOrders() {
                 singleWorkOrder={oneWorkOrder}
                 users={users}
                 customers={customers}
-                status={status}
+                statusFlag={status}
               />
             )
           })}

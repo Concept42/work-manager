@@ -3,11 +3,23 @@ import moment from 'moment'
 
 function WorkOrderList(props) {
   const [workOrders, setWorkOrders] = useState([])
+  const [singleCustomer, setSingleCustomer] = useState([])
   const [editMode, setEditMode] = useState(false)
 
   const customer = props.singleCustomer
 
   useEffect(() => {
+    setSingleCustomer({
+      id: customer.id,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      companyName: customer.companyName,
+      email: customer.email,
+      adress: customer.adress,
+      city: customer.city,
+      oib: customer.oib,
+      phoneNumber: customer.phoneNumber,
+    })
     let newWorkOrders = []
     if (workOrders.length === 0) {
       customer.workOrders.map((workOrder) => {

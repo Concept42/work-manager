@@ -10,7 +10,7 @@ function WorkOrderList(props) {
 
   const listUsers = props.users
   const listCustomers = props.customers
-  const listStatus = props.status
+  const listStatus = props.statusFlag
 
   useEffect(() => {
     setSingleWorkOrder({
