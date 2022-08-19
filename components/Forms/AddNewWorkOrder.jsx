@@ -34,7 +34,6 @@ export default function AddNewCustomer({ listCustomer, listUser, listStatus }) {
         userId: newWorkOrder.userId,
       }),
     })
-    const result = await response.json()
   }
 
   return (

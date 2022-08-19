@@ -13,7 +13,6 @@ function WorkOrders() {
     const result = await response.json()
     setWorkOrders(result)
   }
-
   const fetchUsersData = async () => {
     const response = await fetch(`/api/customer/getUserData`)
     const result = await response.json()
@@ -35,8 +34,6 @@ function WorkOrders() {
     fetchUsersData()
     fetchCustomerData()
     fetchStatusData()
-    console.log('workORders: ', workOrders)
-    console.log('users: ', users)
   }, [])
 
   return (

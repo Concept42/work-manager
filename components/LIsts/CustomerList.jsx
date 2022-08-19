@@ -2,21 +2,29 @@ import { useState, useEffect } from 'react'
 import moment from 'moment'
 
 function WorkOrderList(props) {
-  const [singleCustomer, setSingleCustomer] = useState([])
+  const [workOrders, setWorkOrders] = useState([])
   const [editMode, setEditMode] = useState(false)
 
+  const customer = props.singleCustomer
+
   useEffect(() => {
-    setSingleCustomer({
-      id: props.singleCustomer.id,
-      firstName: props.singleCustomer.firstName,
-      lastName: props.singleCustomer.lastName,
-      companyName: props.singleCustomer.companyName,
-      email: props.singleCustomer.email,
-      adress: props.singleCustomer.adress,
-      city: props.singleCustomer.city,
-      oib: props.singleCustomer.oib,
-      phoneNumber: props.singleCustomer.phoneNumber,
-    })
+    let newWorkOrders = []
+    if (workOrders.length === 0) {
+      customer.workOrders.map((workOrder) => {
+        let result = {
+          id: workOrder.id,
+          createdAt: workOrder.createdAt,
+          updatedAt: workOrder.updatedAt,
+          title: workOrder.title,
+          discription: workOrder.discription,
+          statusFlag: workOrder.statusFlag,
+          customerId: workOrder.customerId,
+          userId: workOrder.userId,
+        }
+        newWorkOrders.push(result)
+        setWorkOrders(newWorkOrders)
+      })
+    }
   }, [])
 
   const handleDeleteCustomer = async (id) => {
@@ -69,16 +77,16 @@ function WorkOrderList(props) {
   return (
     <div>
       {!editMode ? (
-        <ul key={singleCustomer.id}>
-          <li>ID: {singleCustomer.id}</li>
-          <li>Ime: {singleCustomer.firstName}</li>
-          <li>Prezime: {singleCustomer.lastName}</li>
-          <li>Ime tvrtke: {singleCustomer.companyName}</li>
-          <li>Email: {singleCustomer.email}</li>
-          <li>Adresa: {singleCustomer.adress}</li>
-          <li>Grad: {singleCustomer.city}</li>
-          <li>OIB: {singleCustomer.oib}</li>
-          <li>Broj Telefona: {singleCustomer.phoneNumber}</li>
+        <ul key={customer.id}>
+          <li>ID: {customer.id}</li>
+          <li>Ime: {customer.firstName}</li>
+          <li>Prezime: {customer.lastName}</li>
+          <li>Ime tvrtke: {customer.companyName}</li>
+          <li>Email: {customer.email}</li>
+          <li>Adresa: {customer.adress}</li>
+          <li>Grad: {customer.city}</li>
+          <li>OIB: {customer.oib}</li>
+          <li>Broj Telefona: {customer.phoneNumber}</li>
           <div>
             <button
               onClick={() => handleDeleteCustomer(singleCustomer.id)}
@@ -92,6 +100,22 @@ function WorkOrderList(props) {
             >
               Edit
             </button>
+          </div>
+          <div>
+            <h1 className='text-[2rem]'>Work Orders</h1>
+            {workOrders &&
+              workOrders.map((singleWorkOrder, id) => {
+                return (
+                  <ul key={id}>
+                    <li className='text-[30px]'>ID: {singleWorkOrder.id}</li>
+                    <li>Kreirano: {singleWorkOrder.createdAt}</li>
+                    <li>Završeno: {singleWorkOrder.updatedAt}</li>
+                    <li>Naslov: {singleWorkOrder.title}</li>
+                    <li>Opis: {singleWorkOrder.discription}</li>
+                    <li>Status: {singleWorkOrder.statusFlag}</li>
+                  </ul>
+                )
+              })}
           </div>
         </ul>
       ) : (
