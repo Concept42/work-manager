@@ -1,13 +1,14 @@
 import React from 'react'
+import MainContainer from './MainContainer'
+import Sidebar from '../Layout/Sidebar'
+import Application from '../Layout/Application'
 
 const AppLayout = ({ children }) => {
   return (
-    <div className='flex grow-0 h-screen w-screen bg-green-300 justify-center'>
-      <div className='flex grow-1 h-screen w-80 bg-blue-300 fixed left-0 '>
-        SideBar
-      </div>
-      {children}
-    </div>
+    <MainContainer>
+      <Sidebar></Sidebar>
+      <Application>{children}</Application>
+    </MainContainer>
   )
 }
 

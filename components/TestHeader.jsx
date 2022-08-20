@@ -5,7 +5,7 @@ function TestHeader() {
   const { status } = useSession()
 
   return (
-    <div className='flex grow-0 w-full h-[70px] fixed bg-red-300 justify-end'>
+    <div className='flex grow-0 w-full h-[100px] bg-red-300 justify-end items-center'>
       {status === 'authenticated' ? (
         <button
           className='border-solid border-2 p-4'
