@@ -41,7 +41,7 @@ function WorkOrders() {
   }, [])
 
   return (
-    <div>
+    <div className='flex justify-center items-center'>
       {/* Work order List */}
       <section>
         {workOrders.length > 0 &&

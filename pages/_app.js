@@ -1,14 +1,17 @@
 import { SessionProvider } from 'next-auth/react'
 import '../styles/globals.css'
-import TestHeader from '../components/TestHeader'
 import AuthWrapper from '../components/AuthWrapper'
+import AppLayout from '../components/Layout/AppLayout'
+import TestHeader from '../components/TestHeader'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={pageProps.session}>
       <AuthWrapper>
-        <TestHeader />
-        <Component {...pageProps} />
+        <AppLayout>
+          <TestHeader />
+          <Component {...pageProps} />
+        </AppLayout>
       </AuthWrapper>
     </SessionProvider>
   )
