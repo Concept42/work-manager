@@ -30,8 +30,7 @@ function WorkOrderList(props) {
       <h1 className='text-[50px]'>Korisnik</h1>
       <ul key={singleUser.id}>
         <li>ID: {singleUser.id}</li>
-        <li>Ime: {singleUser.firstName}</li>
-        <li>Prezime: {singleUser.lastName}</li>
+        <li>Ime: {singleUser.name}</li>
         <li>Role: {singleUser.role}</li>
       </ul>
       <div>

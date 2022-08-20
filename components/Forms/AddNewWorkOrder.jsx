@@ -20,7 +20,6 @@ export default function AddNewCustomer({ listCustomer, listUser, listStatus }) {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
     const response = await fetch(`/api/customer/addWorkOrder`, {
       method: 'POST',
       headers: {
@@ -77,12 +76,12 @@ export default function AddNewCustomer({ listCustomer, listUser, listStatus }) {
           <div>
             <span>Korisnik: </span>
             <select name='userId' onChange={handleChange} defaultValue=''>
-              <option>Odaberi korisnika</option>
+              <option>Odaberi korisnikaaa</option>
               {users.length > 0 &&
                 users.map((user) => {
                   return (
                     <option key={user.id} value={user.id}>
-                      {user.firstName}
+                      {user.name}
                     </option>
                   )
                 })}

@@ -52,7 +52,7 @@ function WorkOrders() {
                 singleWorkOrder={oneWorkOrder}
                 users={users}
                 customers={customers}
-                statusFlag={status}
+                statusFlag={statusFlag}
               />
             )
           })}

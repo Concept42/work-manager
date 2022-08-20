@@ -12,7 +12,7 @@ function Users() {
 
   useEffect(() => {
     fetchUsersData()
-  }, [])
+  }, [users])
 
   return (
     <div>

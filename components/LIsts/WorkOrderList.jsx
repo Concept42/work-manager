@@ -50,8 +50,6 @@ function WorkOrderList(props) {
   }
 
   const handleUpdateData = async (e) => {
-    e.preventDefault()
-
     const response = await fetch(`/api/customer/updateWorkOrder`, {
       method: 'POST',
       headers: {
@@ -182,14 +180,13 @@ function WorkOrderList(props) {
               user:
               <select name='userId' onChange={handleChange}>
                 <option>Odaberi korisnika</option>
-                {listUsers &&
-                  listUsers.map((user) => {
-                    return (
-                      <option key={user.id} value={user.id}>
-                        {user.firstName}
-                      </option>
-                    )
-                  })}
+                {listUsers.map((user) => {
+                  return (
+                    <option key={user.id} value={user.id}>
+                      {user.firstName}
+                    </option>
+                  )
+                })}
               </select>
             </h3>
           </div>
