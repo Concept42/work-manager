@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: 'NUNITO';
+  src: url('https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap');
+}
