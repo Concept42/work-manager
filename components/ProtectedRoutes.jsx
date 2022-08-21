@@ -8,7 +8,7 @@ const ProtectedRoutes = ({ children }) => {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/')
+      router.push('/signin')
     }
   }, [router, status])
 

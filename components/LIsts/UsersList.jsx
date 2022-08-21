@@ -26,14 +26,13 @@ function WorkOrderList(props) {
   })
 
   return (
-    <div>
-      <h1 className='text-[50px]'>Korisnik</h1>
+    <div className=''>
       <ul key={singleUser.id}>
         <li>ID: {singleUser.id}</li>
         <li>Ime: {singleUser.name}</li>
         <li>Role: {singleUser.role}</li>
       </ul>
-      <div>
+      {/* <div>
         <h1 className='text-[50px]'>Lista poslova</h1>
         {workOrders.map((workOrder) => {
           return (
@@ -47,7 +46,7 @@ function WorkOrderList(props) {
             </li>
           )
         })}
-      </div>
+      </div> */}
     </div>
   )
 }

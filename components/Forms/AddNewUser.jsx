@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 export default function AddNewUser() {
   const [newUser, setNewUser] = useState({
     id: '',
-    firstName: '',
-    lastName: '',
+    name: '',
     role: '',
   })
 
@@ -45,21 +44,12 @@ export default function AddNewUser() {
           <h1 className='text-xl mb-4 p-2'>Dodaj novi kontakt</h1>
         </div>
         <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Ime</label>
+          <label className='flex p-2'>Ime i Prezime</label>
           <input
             onChange={handleChange}
             className='border-solid border-2 w-96 h-12'
             type='text'
-            name='firstName'
-          />
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Prezime</label>
-          <input
-            onChange={handleChange}
-            className='border-solid border-2 w-96 h-12'
-            type='text'
-            name='lastName'
+            name='name'
           />
         </div>
         <div className='flex flex-col items-start pb-2'>
@@ -71,7 +61,6 @@ export default function AddNewUser() {
             name='role'
           />
         </div>
-
         <button
           type='submit'
           className='flex border-solid border-4 border-black h-12 w-24 justify-center items-center mt-4 '

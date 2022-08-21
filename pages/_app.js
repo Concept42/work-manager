@@ -9,7 +9,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <SessionProvider session={pageProps.session}>
       <AuthWrapper>
         <AppLayout>
-          <TestHeader />
           <Component {...pageProps} />
         </AppLayout>
       </AuthWrapper>

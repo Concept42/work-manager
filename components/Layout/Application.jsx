@@ -1,7 +1,11 @@
 import React from 'react'
 
 const Application = ({ children }) => {
-  return <div className='grid bg-green-300'>{children}</div>
+  return (
+    <div className='flex flex-col px-16 py-10  bg-primary font-nunito '>
+      {children}
+    </div>
+  )
 }
 
 export default Application
