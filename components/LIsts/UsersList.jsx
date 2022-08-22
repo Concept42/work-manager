@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DotMenu from '../Ui/DotMenu'
+import { relativeTimeRounding } from 'moment'
 
 function WorkOrderList(props) {
   const [workOrders, setWorkOrders] = useState([])
@@ -57,6 +58,7 @@ function WorkOrderList(props) {
       },
       body: JSON.stringify({ id }),
     })
+    window.location.reload(false)
   }
 
   return (
