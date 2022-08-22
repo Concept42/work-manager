@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { Input } from '@material-tailwind/react'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
+import { Select, Option } from '@material-tailwind/react'
 
 export default function AddNewUser(props) {
   const [newUser, setNewUser] = useState({
@@ -12,7 +9,9 @@ export default function AddNewUser(props) {
     email: '',
     role: '',
   })
+  const [singleUser, setSingleUser] = useState(props.singleUser)
 
+ 
   const handleChange = (e) => {
     setNewUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
@@ -21,13 +20,12 @@ export default function AddNewUser(props) {
   }
   const handleRoleChange = (e) => {
     setNewUser((prev) => {
-      return { ...prev, role: e.target.value }
+      return { ...prev, role: e }
     })
     console.log(newUser)
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
     const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
       headers: {
@@ -45,7 +43,7 @@ export default function AddNewUser(props) {
       email: '',
       role: '',
     })
-    console.log(result)
+    props.cancelButton
   }
 
   return (
@@ -54,7 +52,7 @@ export default function AddNewUser(props) {
         onSubmit={handleSubmit}
         className='flex flex-col w-full h-full justify-between gap-8'
       >
-        <div className='flex flex-col items-start pb-2 text-font'>
+        <div>
           <Input
             className='flex h-14 '
             label='Ime i prezime*'
@@ -64,7 +62,7 @@ export default function AddNewUser(props) {
             name='name'
           />
         </div>
-        <div className='flex flex-col items-start pb-2 text-font'>
+        <div>
           <Input
             className='flex h-14'
             label='Email*'
@@ -74,30 +72,27 @@ export default function AddNewUser(props) {
             name='email'
           />
         </div>
-        <FormControl className='text-font'>
-          <InputLabel variant='outlined' className='text-font' id='role'>
-            Role
-          </InputLabel>
-          <Select
-            onChange={handleRoleChange}
-            labelId='role'
-            id='role'
-            label='Role'
-            value={newUser.role}
-            className='text-font'
-          >
-            <MenuItem>
-              <em>Odaberi role</em>
-            </MenuItem>
-            <MenuItem value='USER'>USER</MenuItem>
-            <MenuItem value='ADMIN'>ADMIN</MenuItem>
-          </Select>
-        </FormControl>
 
-        <div className='flex justify-end'>
+        <Select
+          id='role'
+          label='Role'
+          onChange={handleRoleChange}
+          className='h-14'
+        >
+          <Option value='USER'>USER</Option>
+          <Option value='ADMIN'>ADMIN</Option>
+        </Select>
+
+        <div className='flex justify-end gap-4'>
+          <button
+            onClick={props.cancelButton}
+            className='flex px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:bg-primary hover:bg-opacity-40'
+          >
+            Odustani
+          </button>
           <button
             type='submit'
-            className='flex border-solid border-4 border-black h-12 w-24 justify-center items-center mt-4 '
+            className='flex bg-accent px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:opacity-70'
           >
             Dodaj
           </button>

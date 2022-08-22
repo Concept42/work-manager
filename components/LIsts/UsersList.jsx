@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import Avatar from '@mui/material/Avatar'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import DotMenu from '../Ui/DotMenu'
 
 function WorkOrderList(props) {
   const [workOrders, setWorkOrders] = useState([])
+  const [editMode, setEditMode] = useState(false)
+
   const singleUser = props.singleUser
 
   useEffect(() => {
@@ -26,6 +32,33 @@ function WorkOrderList(props) {
     }
   })
 
+  const handleEditUser = async () => {
+    setEditMode(true)
+    console.log(editMode)
+  }
+
+  const handleUpdateData = async (e) => {
+    const response = await fetch(`/api/customer/updateUserData`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    })
+    setEditMode(false)
+    const json = await response.json()
+  }
+
+  const handleDeleteUser = async (id) => {
+    const response = await fetch(`/api/customer/deleteUser`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    })
+  }
+
   return (
     <div>
       <ul
@@ -40,7 +73,14 @@ function WorkOrderList(props) {
           </div>
         </li>
         <li className='flex flex-[1]'>{singleUser.role}</li>
-        <li className='flex flex-[1]'>Akcije</li>
+        <li className='flex flex-[1]'>
+          <div>
+            <DotMenu
+              handleEditUser={() => props.handleOpenPopup}
+              handleDeleteUser={() => handleDeleteUser(singleUser.id)}
+            />
+          </div>
+        </li>
       </ul>
       {/* <div>
         <h1 className='text-[50px]'>Lista poslova</h1>

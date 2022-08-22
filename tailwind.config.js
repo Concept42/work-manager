@@ -13,7 +13,8 @@ module.exports = withMT({
         secondary: '#263238',
         font: '#CFD8DC',
         fontGray: '#90a4ae',
-        accent: '#64B5F6',
+        accent: '#1565C0',
+        buttonText: 'ffffff',
       },
       fontFamily: {
         nunito: 'Nunito',
