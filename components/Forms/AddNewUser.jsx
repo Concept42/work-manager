@@ -1,4 +1,20 @@
 import React, { useState } from 'react'
+import TextField from '@mui/material/TextField'
+import { makeStyles } from '@mui/styles'
+
+const useStyles = makeStyles(() => ({
+  textField: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingBottom: 0,
+    marginTop: 0,
+    fontWeight: 500,
+  },
+  input: {
+    color: 'white',
+  },
+}))
 
 export default function AddNewUser() {
   const [newUser, setNewUser] = useState({
@@ -38,16 +54,16 @@ export default function AddNewUser() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className='flex flex-col justify-center'>
-        <div className='flex justify-center'>
-          <h1 className='text-xl mb-4 p-2'>Dodaj novi kontakt</h1>
-        </div>
-        <div className='flex flex-col items-start pb-2'>
-          <label className='flex p-2'>Ime i Prezime</label>
-          <input
+    <div className='flex min-w-[650px] min-h-[800px] text-font justify-center items-center'>
+      <form onSubmit={handleSubmit} className='flex flex-col '>
+        <div className='flex flex-col items-start pb-2 text-font'>
+          <TextField
+            fullWidth
+            size='large'
+            label='Ime i prezime'
+            id='outlined-basic'
+            variant='outlined'
             onChange={handleChange}
-            className='border-solid border-2 w-96 h-12'
             type='text'
             name='name'
           />
@@ -56,7 +72,7 @@ export default function AddNewUser() {
           <label className='flex p-2'>Role</label>
           <input
             onChange={handleChange}
-            className='border-solid border-2 w-96 h-12 '
+            className='border-solid border-2 w-96 h-12'
             type='text'
             name='role'
           />

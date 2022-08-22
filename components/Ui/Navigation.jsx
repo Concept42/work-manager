@@ -14,8 +14,8 @@ function Navigation() {
 
   return (
     <div>
-      <div className='flex flex-col h-screen items-start ml-6 justify-between fixed'>
-        <ul className='flex flex-col  items-start gap-4'>
+      <div className='flex flex-col h-screen items-start ml-6 justify-between fixed font-nunito font-normal'>
+        <ul className='flex flex-col items-start gap-4'>
           <h1 className='flex my-12 text-[26px]'>WORK MANAGER</h1>
           <Link href='/'>
             <li className='flex h-16 w-60 items-center hover:border-solid hover:rounded-2xl hover:bg-primary cursor-pointer '>

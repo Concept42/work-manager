@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Avatar from '@mui/material/Avatar'
 
 function WorkOrderList(props) {
   const [workOrders, setWorkOrders] = useState([])
@@ -26,11 +27,20 @@ function WorkOrderList(props) {
   })
 
   return (
-    <div className=''>
-      <ul key={singleUser.id}>
-        <li>ID: {singleUser.id}</li>
-        <li>Ime: {singleUser.name}</li>
-        <li>Role: {singleUser.role}</li>
+    <div>
+      <ul
+        className='flex w-full h-24 justify-between items-center bg-secondary rounded-xl my-5 text-fontGray font-normal'
+        key={singleUser.id}
+      >
+        <li className='flex flex-[5] ml-6 gap-4 '>
+          <Avatar className='z-0' src={singleUser.image} />
+          <div>
+            <h3 className='text-font font-bold'>{singleUser.name}</h3>
+            <h3 className='text-fontGray'>{singleUser.email}</h3>
+          </div>
+        </li>
+        <li className='flex flex-[1]'>{singleUser.role}</li>
+        <li className='flex flex-[1]'>Akcije</li>
       </ul>
       {/* <div>
         <h1 className='text-[50px]'>Lista poslova</h1>

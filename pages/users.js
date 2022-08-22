@@ -23,29 +23,45 @@ function Users() {
   }
 
   return (
-    <>
-      <section>
-        {handleOpen ? (
-          <div className='flex w-screen border-solid border-2 h-screen justify-center items-center '>
-            <AddNewUser />
+    <div>
+      {' '}
+      {handleOpen ? (
+        <div>
+          <div className='flex w-full h-full fixed justify-center items-center  bg-black  opacity-60'></div>
+          <div className='flex w-full h-full fixed justify-center items-center '>
+            <div className='flex flex-col min-w-[650px] min-h-[800px] bg-secondary text-font text-[20px] font-bold p-5'>
+              <h1>Add new User</h1>
+              <AddNewUser />
+            </div>
           </div>
-        ) : (
-          ''
-        )}
-        <div className='flex justify-between'>
-          <h1 className='text-[24px] font-extrabold  text-font'>Zaposlenici</h1>
-          <Fab onClick={handleOpenPopup} color='primary' aria-label='add'>
-            <AddIcon />
-          </Fab>
         </div>
-      </section>
-      <section className='mt-10'>
-        {users.length > 0 &&
-          users.map((oneUser, id) => {
-            return <UsersList key={id} singleUser={oneUser} />
-          })}
-      </section>
-    </>
+      ) : (
+        ''
+      )}
+      <div className='px-16 py-10'>
+        <section>
+          <div className='flex justify-between'>
+            <h1 className='text-[24px] font-extrabold text-font'>
+              Zaposlenici
+            </h1>
+            <Fab onClick={handleOpenPopup} color='primary' aria-label='add'>
+              <AddIcon />
+            </Fab>
+          </div>
+        </section>
+        <section className='mt-10'>
+          <div className='flex w-full justify-between text-font'>
+            <span className='flex flex-[5] ml-4'>Zaposlenik</span>
+            <span className='flex flex-[1]'>Role</span>
+            <span className='flex flex-[1]'>Akcije</span>
+          </div>
+          {users.length > 0 &&
+            users.map((oneUser, id) => {
+              return <UsersList key={id} singleUser={oneUser} />
+            })}
+        </section>
+      </div>
+    </div>
   )
 }
 
