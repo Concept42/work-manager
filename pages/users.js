@@ -7,6 +7,7 @@ import AddNewUser from '../components/Forms/AddNewUser'
 function Users() {
   const [users, setUsers] = useState([])
   const [handleOpen, setHandleOpen] = useState(false)
+  const [roles, setRoles] = useState([])
 
   const fetchUsersData = async () => {
     const response = await fetch(`/api/customer/getUserData`)
@@ -16,7 +17,7 @@ function Users() {
 
   useEffect(() => {
     fetchUsersData()
-  }, [users])
+  }, [])
 
   const handleOpenPopup = () => {
     setHandleOpen(!handleOpen)
@@ -29,9 +30,9 @@ function Users() {
         <div>
           <div className='flex w-full h-full fixed justify-center items-center  bg-black  opacity-60'></div>
           <div className='flex w-full h-full fixed justify-center items-center '>
-            <div className='flex flex-col min-w-[650px] min-h-[800px] bg-secondary text-font text-[20px] font-bold p-5'>
-              <h1>Add new User</h1>
-              <AddNewUser />
+            <div className='flex flex-col min-w-[550px] min-h-[600px] bg-secondary text-font text-[20px] font-bold p-5 rounded-2xl '>
+              <h1 className='mb-10'>Add new User</h1>
+              <AddNewUser rolesList={roles} />
             </div>
           </div>
         </div>

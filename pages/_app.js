@@ -2,11 +2,11 @@ import { SessionProvider } from 'next-auth/react'
 import '../styles/globals.css'
 import AuthWrapper from '../components/AuthWrapper'
 import AppLayout from '../components/Layout/AppLayout'
-import { StyledEngineProvider } from '@mui/material'
+import { ThemeProvider } from '@material-tailwind/react'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <StyledEngineProvider injectFirst>
+    <ThemeProvider>
       <SessionProvider session={pageProps.session}>
         <AuthWrapper>
           <AppLayout>
@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           </AppLayout>
         </AuthWrapper>
       </SessionProvider>
-    </StyledEngineProvider>
+    </ThemeProvider>
   )
 }
 

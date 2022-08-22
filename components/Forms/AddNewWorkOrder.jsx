@@ -75,8 +75,8 @@ export default function AddNewCustomer({ listCustomer, listUser, listStatus }) {
           </select>
           <div>
             <span>Korisnik: </span>
-            <select name='userId' onChange={handleChange} defaultValue=''>
-              <option>Odaberi korisnikaaa</option>
+            <select name='userId' onChange={handleChange}>
+              <option>Odaberi korisnika</option>
               {users.length > 0 &&
                 users.map((user) => {
                   return (
