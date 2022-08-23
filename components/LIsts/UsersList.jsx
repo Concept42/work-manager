@@ -5,6 +5,7 @@ import { Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DotMenu from '../Ui/DotMenu'
 import { relativeTimeRounding } from 'moment'
+import Popup from '../Utility/Popup'
 
 function WorkOrderList(props) {
   const [workOrders, setWorkOrders] = useState([])
@@ -32,23 +33,6 @@ function WorkOrderList(props) {
       })
     }
   })
-
-  const handleEditUser = async () => {
-    setEditMode(true)
-    console.log(editMode)
-  }
-
-  const handleUpdateData = async (e) => {
-    const response = await fetch(`/api/customer/updateUserData`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({}),
-    })
-    setEditMode(false)
-    const json = await response.json()
-  }
 
   const handleDeleteUser = async (id) => {
     const response = await fetch(`/api/customer/deleteUser`, {
@@ -78,7 +62,7 @@ function WorkOrderList(props) {
         <li className='flex flex-[1]'>
           <div>
             <DotMenu
-              handleEditUser={() => props.handleOpenPopup}
+              singleUser={singleUser}
               handleDeleteUser={() => handleDeleteUser(singleUser.id)}
             />
           </div>

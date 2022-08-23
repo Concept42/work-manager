@@ -1,12 +1,14 @@
 import * as React from 'react'
-import { useState } from 'react'
-import { styled, alpha } from '@mui/material/styles'
+import { useState, useEffect } from 'react'
+import { styled } from '@mui/material/styles'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
-import AddNewUser from '../Forms/AddNewUser'
+import { useDispatch } from 'react-redux'
+import { updateUserForm } from '../../slices/userSlice'
+import { useSelector } from 'react-redux'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -43,9 +45,17 @@ const StyledMenu = styled((props) => (
 }))
 
 export default function CustomizedMenus(props) {
-  const [handleOpen, setHandleOpen] = useState(false)
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [editMode, setEditMode] = useState(false)
+
   const open = Boolean(anchorEl)
+  const dispatch = useDispatch()
+  const updatedUser = useSelector((state) => state.userContext)
+
+  useEffect(() => {
+    // console.log('props user in DotMenu', props.singleUser)
+    // console.log('updated User from globalState', updatedUser)
+  })
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -53,6 +63,19 @@ export default function CustomizedMenus(props) {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleEditMode = () => {
+    dispatch(
+      updateUserForm({
+        id: props.singleUser.id,
+        name: props.singleUser.name,
+        email: props.singleUser.email,
+        role: props.singleUser.role,
+        editMode: true,
+      })
+    )
+    console.log('updatedUser DotMEnu', updatedUser)
   }
 
   return (
@@ -65,7 +88,7 @@ export default function CustomizedMenus(props) {
           <DeleteIcon />
           Delete
         </MenuItem>
-        <MenuItem onClick={props.handleOpenPopup} disableRipple>
+        <MenuItem onClick={handleEditMode} disableRipple>
           <EditIcon />
           Edit
         </MenuItem>

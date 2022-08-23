@@ -5,12 +5,18 @@ import AddIcon from '@mui/icons-material/Add'
 import AddNewUser from '../components/Forms/AddNewUser'
 import useOutsideClick from '../utils/useOutsideClick'
 import Loading from '../components/Ui/Loading'
+import Popup from '../components/Utility/Popup'
+import { useSelector } from 'react-redux'
 
 function Users() {
+  const contextUser = useSelector((state) => state.userContext)
   const [users, setUsers] = useState([])
   const [roles, setRoles] = useState([])
   const [handleOpen, setHandleOpen] = useState(false)
+  const [handleUpdateOpen, setHandleUpdateOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [updatedUser, setUpdatedUser] = useState([])
+
   const ref = useRef()
 
   const fetchUsersData = async () => {
@@ -27,10 +33,25 @@ function Users() {
   const cancelButton = () => {
     setHandleOpen(false)
   }
+  const cancelUpdateButton = () => {
+    setHandleUpdateOpen(false)
+  }
 
   useEffect(() => {
     fetchUsersData()
-  }, [])
+    if (contextUser.editMode === true) {
+      setUpdatedUser({
+        id: contextUser.id,
+        name: contextUser.name,
+        email: contextUser.email,
+        role: contextUser.role,
+        editMode: contextUser.editMode,
+      })
+      setHandleUpdateOpen(true)
+      console.log('fetched Users', users)
+      console.log('updatedUser', updatedUser)
+    }
+  }, [contextUser.editMode])
 
   const handleOpenPopup = () => {
     setHandleOpen(!handleOpen)
@@ -42,17 +63,26 @@ function Users() {
         <>
           <div>
             {handleOpen ? (
-              <div>
-                <div className='flex w-full h-full fixed justify-center items-center  bg-black  opacity-60'></div>
-                <div className='flex w-full h-full fixed justify-center items-center '>
-                  <div className='flex flex-col min-w-[550px]  bg-secondary text-font text-[20px] font-bold p-5 rounded-2xl '>
-                    <h1 className='mb-10'>Dodaj novog zapolsenika</h1>
-                    <AddNewUser cancelButton={cancelButton} rolesList={roles} />
-                  </div>
-                </div>
-              </div>
+              <Popup>
+                <h1 className='mb-10'>Dodaj novog zaposlenika</h1>
+                <AddNewUser cancelButton={cancelButton} rolesList={roles} />
+              </Popup>
             ) : (
-              <div></div>
+              ''
+            )}
+          </div>
+          <div>
+            {handleUpdateOpen ? (
+              <Popup>
+                <h1 className='mb-10'>Izmjeni zaposlenika</h1>
+                <AddNewUser
+                  updatedUser={updatedUser}
+                  cancelUpdateButton={cancelUpdateButton}
+                  rolesList={roles}
+                />
+              </Popup>
+            ) : (
+              ''
             )}
           </div>
           <div className='px-16 py-10'>
