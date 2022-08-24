@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from '@material-tailwind/react'
 import { Select, Option } from '@material-tailwind/react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { updateUserForm } from '../../slices/userSlice'
+import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
 
 export default function AddNewUser(props) {
   const contextUser = useSelector((state) => state.userContext)
   const dispatch = useDispatch()
+
   const [newUser, setNewUser] = useState({
     id: '',
     name: '',
     email: '',
     role: '',
   })
+
   useEffect(() => {
     if (contextUser.editMode === true) {
       setNewUser({
@@ -29,18 +31,16 @@ export default function AddNewUser(props) {
     setNewUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
-    console.log('Change', newUser)
-    console.log('contextUser', contextUser)
   }
 
   const handleRoleChange = (e) => {
     setNewUser((prev) => {
       return { ...prev, role: e }
     })
-    console.log('RoleChange', newUser)
   }
 
   const handleSubmit = async (e) => {
+    e.preventDefault
     const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
       headers: {
@@ -59,7 +59,8 @@ export default function AddNewUser(props) {
       email: '',
       role: '',
     })
-    props.cancelButton
+    dispatch(updateUserForm({ editMode: false }))
+    dispatch(cancelButton())
   }
 
   const handleUpdateData = async (e) => {
@@ -83,14 +84,16 @@ export default function AddNewUser(props) {
       role: '',
     })
     dispatch(updateUserForm({ editMode: false }))
+    dispatch(cancelButton())
+  }
+
+  const cancel = () => {
+    dispatch(cancelButton())
   }
 
   return (
     <div className='flex flex-col min-w-[500px]  text-font items-start '>
-      <form
-        onSubmit={handleSubmit}
-        className='flex flex-col w-full h-full justify-between gap-8'
-      >
+      <div className='flex flex-col w-full h-full justify-between gap-8'>
         <div>
           <Input
             className='flex h-14 '
@@ -129,13 +132,13 @@ export default function AddNewUser(props) {
           {!contextUser.editMode ? (
             <>
               <button
-                onClick={props.cancelButton}
+                onClick={cancel}
                 className='flex px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:bg-primary hover:bg-opacity-40'
               >
-                Odustaniii
+                Odustani
               </button>
               <button
-                type='submit'
+                onClick={handleSubmit}
                 className='flex bg-accent px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:opacity-70'
               >
                 Dodaj
@@ -145,11 +148,11 @@ export default function AddNewUser(props) {
             ''
           )}
         </div>
-      </form>
+      </div>
       {contextUser.editMode ? (
         <div className='flex gap-4 w-full justify-end'>
           <button
-            onClick={() => props.cancelUpdateButton}
+            onClick={cancel}
             className='flex px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:bg-primary hover:bg-opacity-40'
           >
             Odustani

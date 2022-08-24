@@ -1,20 +1,14 @@
 import { useState, useEffect } from 'react'
 import Avatar from '@mui/material/Avatar'
-import DeleteIcon from '@mui/icons-material/Delete'
-import { Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DotMenu from '../Ui/DotMenu'
-import { relativeTimeRounding } from 'moment'
 import Popup from '../Utility/Popup'
 
-function WorkOrderList(props) {
-  const [workOrders, setWorkOrders] = useState([])
-  const [editMode, setEditMode] = useState(false)
-
+function UsersList(props) {
   const singleUser = props.singleUser
+  // const [singleUser, setSingleUser] = useState([])
+  const [workOrders, setWorkOrders] = useState([])
 
   useEffect(() => {
-    console.log(singleUser)
     let newWorkOrders = []
     if (workOrders.length === 0) {
       singleUser.workOrders.map((workOrder) => {
@@ -32,6 +26,9 @@ function WorkOrderList(props) {
         setWorkOrders(newWorkOrders)
       })
     }
+    // if (singleUser.length === 0) {
+    //   setSingleUser(props.singleUser)
+    // }
   })
 
   const handleDeleteUser = async (id) => {
@@ -42,7 +39,6 @@ function WorkOrderList(props) {
       },
       body: JSON.stringify({ id }),
     })
-    window.location.reload(false)
   }
 
   return (
@@ -87,4 +83,4 @@ function WorkOrderList(props) {
   )
 }
 
-export default WorkOrderList
+export default UsersList

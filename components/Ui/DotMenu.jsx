@@ -8,6 +8,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import { useDispatch } from 'react-redux'
 import { updateUserForm } from '../../slices/userSlice'
+import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
 import { useSelector } from 'react-redux'
 
 const StyledMenu = styled((props) => (
@@ -46,11 +47,9 @@ const StyledMenu = styled((props) => (
 
 export default function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = useState(null)
-  const [editMode, setEditMode] = useState(false)
 
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
-  const updatedUser = useSelector((state) => state.userContext)
 
   useEffect(() => {
     // console.log('props user in DotMenu', props.singleUser)
@@ -66,6 +65,7 @@ export default function CustomizedMenus(props) {
   }
 
   const handleEditMode = () => {
+    dispatch(handleUserPopup('EDIT'))
     dispatch(
       updateUserForm({
         id: props.singleUser.id,
@@ -75,8 +75,9 @@ export default function CustomizedMenus(props) {
         editMode: true,
       })
     )
-    console.log('updatedUser DotMEnu', updatedUser)
   }
+
+ 
 
   return (
     <div>

@@ -6,18 +6,18 @@ import AddNewUser from '../components/Forms/AddNewUser'
 import useOutsideClick from '../utils/useOutsideClick'
 import Loading from '../components/Ui/Loading'
 import Popup from '../components/Utility/Popup'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { handleUserPopup } from '../slices/themeSlice'
 
 function Users() {
-  const contextUser = useSelector((state) => state.userContext)
   const [users, setUsers] = useState([])
   const [roles, setRoles] = useState([])
-  const [handleOpen, setHandleOpen] = useState(false)
-  const [handleUpdateOpen, setHandleUpdateOpen] = useState(false)
+  const [handleOpen, setHandleOpen] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [updatedUser, setUpdatedUser] = useState([])
 
-  const ref = useRef()
+  const themeContext = useSelector((state) => state.themeContext)
+  const dispatch = useDispatch()
 
   const fetchUsersData = async () => {
     const response = await fetch(`/api/customer/getUserData`)
@@ -26,35 +26,13 @@ function Users() {
     setIsLoading(false)
   }
 
-  useOutsideClick(ref, () => {
-    setHandleOpen(false)
-  })
-
-  const cancelButton = () => {
-    setHandleOpen(false)
-  }
-  const cancelUpdateButton = () => {
-    setHandleUpdateOpen(false)
-  }
-
   useEffect(() => {
     fetchUsersData()
-    if (contextUser.editMode === true) {
-      setUpdatedUser({
-        id: contextUser.id,
-        name: contextUser.name,
-        email: contextUser.email,
-        role: contextUser.role,
-        editMode: contextUser.editMode,
-      })
-      setHandleUpdateOpen(true)
-      console.log('fetched Users', users)
-      console.log('updatedUser', updatedUser)
-    }
-  }, [contextUser.editMode])
+    setHandleOpen(themeContext.popupHandler)
+  }, [themeContext.popupHandler])
 
-  const handleOpenPopup = () => {
-    setHandleOpen(!handleOpen)
+  const handleAddOpenPopup = () => {
+    dispatch(handleUserPopup('ADD'))
   }
 
   return (
@@ -62,24 +40,20 @@ function Users() {
       {!isLoading ? (
         <>
           <div>
-            {handleOpen ? (
+            {handleOpen === 'ADD' ? (
               <Popup>
                 <h1 className='mb-10'>Dodaj novog zaposlenika</h1>
-                <AddNewUser cancelButton={cancelButton} rolesList={roles} />
+                <AddNewUser rolesList={roles} />
               </Popup>
             ) : (
               ''
             )}
           </div>
           <div>
-            {handleUpdateOpen ? (
+            {handleOpen === 'EDIT' ? (
               <Popup>
                 <h1 className='mb-10'>Izmjeni zaposlenika</h1>
-                <AddNewUser
-                  updatedUser={updatedUser}
-                  cancelUpdateButton={cancelUpdateButton}
-                  rolesList={roles}
-                />
+                <AddNewUser updatedUser={updatedUser} rolesList={roles} />
               </Popup>
             ) : (
               ''
@@ -91,7 +65,11 @@ function Users() {
                 <h1 className='text-[24px] font-extrabold text-font'>
                   Zaposlenici
                 </h1>
-                <Fab onClick={handleOpenPopup} color='primary' aria-label='add'>
+                <Fab
+                  onClick={handleAddOpenPopup}
+                  color='primary'
+                  aria-label='add'
+                >
                   <AddIcon />
                 </Fab>
               </div>
@@ -104,13 +82,7 @@ function Users() {
               </div>
               {users.length > 0 &&
                 users.map((oneUser, id) => {
-                  return (
-                    <UsersList
-                      key={id}
-                      singleUser={oneUser}
-                      handleOpenPopup={handleOpenPopup}
-                    />
-                  )
+                  return <UsersList key={id} singleUser={oneUser} />
                 })}
             </section>
           </div>
