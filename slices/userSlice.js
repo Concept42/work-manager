@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   id: '',
@@ -6,11 +6,36 @@ export const initialState = {
   email: '',
   role: '',
   editMode: false,
+  users: [],
+  isLoading: false,
+  error: '',
 }
+
+export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
+  const response = await fetch(`/api/customer/getUserData`)
+  const result = await response.json()
+  return result
+})
 
 export const userSlice = createSlice({
   name: 'userContext',
   initialState,
+  extraReducers: (builder) => {
+    builder.addCase(fetchUsers.pending, (state) => {
+      state.isLoading = false
+    })
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.users = action.payload
+      state.error = ''
+    })
+    builder.addCase(fetchUsers.rejected, (state, action) => {
+      state.isLoading = false
+      state.users = []
+      state.error = action.error.message
+    })
+  },
+
   reducers: {
     updateUserForm: (state, action) => {
       const { id, name, email, role, editMode } = action.payload
