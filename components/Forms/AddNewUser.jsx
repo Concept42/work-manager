@@ -3,7 +3,7 @@ import { Input } from '@material-tailwind/react'
 import { Select, Option } from '@material-tailwind/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUserForm } from '../../slices/userSlice'
-import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
+import { cancelButton } from '../../slices/themeSlice'
 
 export default function AddNewUser(props) {
   const contextUser = useSelector((state) => state.userContext)
@@ -52,7 +52,7 @@ export default function AddNewUser(props) {
         role: newUser.role,
       }),
     })
-    const result = await response.json()
+
     setNewUser({
       id: '',
       name: '',
@@ -60,7 +60,7 @@ export default function AddNewUser(props) {
       role: '',
     })
     dispatch(updateUserForm({ editMode: false }))
-    dispatch(cancelButton())
+    cancel()
   }
 
   const handleUpdateData = async (e) => {

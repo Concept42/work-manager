@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import { useDispatch } from 'react-redux'
-import { updateUserForm } from '../../slices/userSlice'
+import { updateUserForm, deleteId } from '../../slices/userSlice'
 import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
 import { useSelector } from 'react-redux'
 
@@ -47,14 +47,19 @@ const StyledMenu = styled((props) => (
 
 export default function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = useState(null)
+  const [singleUser, setSingleUser] = useState([])
 
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // console.log('props user in DotMenu', props.singleUser)
-    // console.log('updated User from globalState', updatedUser)
-  })
+    setSingleUser({
+      id: props.singleUser.id,
+      name: props.singleUser.name,
+      email: props.singleUser.email,
+      role: props.singleUser.role,
+    })
+  }, [props.singleUser])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -77,7 +82,11 @@ export default function CustomizedMenus(props) {
     )
   }
 
- 
+  const handleDeleteUser = () => {
+    dispatch(handleUserPopup('DELETE'))
+    setAnchorEl(null)
+    dispatch(deleteId(singleUser.id))
+  }
 
   return (
     <div>
@@ -85,7 +94,7 @@ export default function CustomizedMenus(props) {
         <MoreVertIcon />
       </div>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={props.handleDeleteUser} disableRipple>
+        <MenuItem onClick={handleDeleteUser} disableRipple>
           <DeleteIcon />
           Delete
         </MenuItem>

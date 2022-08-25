@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   id: '',
-  deleteId: '',
   name: '',
   email: '',
   role: '',
@@ -10,22 +9,13 @@ export const initialState = {
   users: [],
   isLoading: false,
   error: '',
+  roles: [],
 }
 
 export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
   const response = await fetch(`/api/customer/getUserData`)
   const result = await response.json()
   return result
-})
-
-export const deleteUser = createAsyncThunk('user/deleteUser', async (id) => {
-  const response = await fetch(`/api/customer/deleteUser`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id }),
-  })
 })
 
 export const userSlice = createSlice({
@@ -54,11 +44,8 @@ export const userSlice = createSlice({
       ;(state.name = name), (state.email = email), (state.role = role)
       state.editMode = editMode
     },
-    deleteId: (state, action) => {
-      state.deleteId = action.payload
-    },
   },
 })
 
-export const { updateUserForm, deleteId } = userSlice.actions
+export const { updateUserForm } = userSlice.actions
 export default userSlice.reducer

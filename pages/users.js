@@ -8,28 +8,24 @@ import Loading from '../components/Ui/Loading'
 import Popup from '../components/Utility/Popup'
 import { useSelector, useDispatch } from 'react-redux'
 import { handleUserPopup } from '../slices/themeSlice'
+import { fetchUsers } from '../slices/userSlice'
+import DeleteMessage from '../components/Ui/DeleteMessage'
 
 function Users() {
-  const [users, setUsers] = useState([])
-  const [roles, setRoles] = useState([])
-  const [handleOpen, setHandleOpen] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
-  const [updatedUser, setUpdatedUser] = useState([])
-
   const themeContext = useSelector((state) => state.themeContext)
+  const users = useSelector((state) => state.userContext.users)
+  const loading = useSelector((state) => state.userContext.isLoading)
   const dispatch = useDispatch()
 
-  const fetchUsersData = async () => {
-    const response = await fetch(`/api/customer/getUserData`)
-    const result = await response.json()
-    setUsers(result)
-    setIsLoading(false)
-  }
+  const [handleOpen, setHandleOpen] = useState('')
+  const [isLoading, setIsLoading] = useState()
+  // const [updatedUser, setUpdatedUser] = useState([])
 
   useEffect(() => {
-    fetchUsersData()
+    dispatch(fetchUsers())
     setHandleOpen(themeContext.popupHandler)
-  }, [themeContext.popupHandler])
+    setIsLoading(loading)
+  }, [themeContext.popupHandler, users])
 
   const handleAddOpenPopup = () => {
     dispatch(handleUserPopup('ADD'))
@@ -43,7 +39,16 @@ function Users() {
             {handleOpen === 'ADD' ? (
               <Popup>
                 <h1 className='mb-10'>Dodaj novog zaposlenika</h1>
-                <AddNewUser rolesList={roles} />
+                <AddNewUser />
+              </Popup>
+            ) : (
+              ''
+            )}
+          </div>
+          <div>
+            {handleOpen === 'DELETE' ? (
+              <Popup>
+                <DeleteMessage />
               </Popup>
             ) : (
               ''
@@ -53,7 +58,7 @@ function Users() {
             {handleOpen === 'EDIT' ? (
               <Popup>
                 <h1 className='mb-10'>Izmjeni zaposlenika</h1>
-                <AddNewUser updatedUser={updatedUser} rolesList={roles} />
+                <AddNewUser />
               </Popup>
             ) : (
               ''
