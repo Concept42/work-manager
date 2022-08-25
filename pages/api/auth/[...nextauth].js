@@ -7,12 +7,52 @@ import GithubProvider from 'next-auth/providers/github'
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: 'jwt',
+  },
   providers: [
+    CredentialsProvider({
+      type: 'credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'Email' },
+        password: { label: 'Password', type: 'password' },
+      },
+
+      async authorize(credentials, req, res) {
+        const { email, password } = credentials
+
+        const user = await prisma.user.findFirst({
+          where: {
+            email,
+          },
+          select: {
+            id: true,
+            email: true,
+            password: true,
+            name: true,
+            role: true,
+          },
+        })
+        if (!user) throw new Error('No Access')
+        if (user.email !== email || user.password !== password)
+          throw new Error('Invalid credentials')
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        }
+      },
+    }),
     GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+  pages: {
+    signIn: '/auth/signin',
+  },
 
   //   CredentialsProvider({
   //     // The name to display on the sign in form (e.g. 'Sign in with...')
