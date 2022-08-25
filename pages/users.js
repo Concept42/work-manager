@@ -7,28 +7,35 @@ import useOutsideClick from '../utils/useOutsideClick'
 import Loading from '../components/Ui/Loading'
 import Popup from '../components/Utility/Popup'
 import { useSelector, useDispatch } from 'react-redux'
-import { handleUserPopup } from '../slices/themeSlice'
-import { fetchUsers } from '../slices/userSlice'
+import { handleUserPopup, cancelButton } from '../slices/themeSlice'
+import { fetchUsers, deleteId, deleteUser } from '../slices/userSlice'
 import DeleteMessage from '../components/Ui/DeleteMessage'
 
 function Users() {
   const themeContext = useSelector((state) => state.themeContext)
+  const userContext = useSelector((state) => state.userContext)
   const users = useSelector((state) => state.userContext.users)
+  const userId = useSelector((state) => state.userContext.deleteId)
   const loading = useSelector((state) => state.userContext.isLoading)
   const dispatch = useDispatch()
 
   const [handleOpen, setHandleOpen] = useState('')
-  const [isLoading, setIsLoading] = useState()
-  // const [updatedUser, setUpdatedUser] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     dispatch(fetchUsers())
     setHandleOpen(themeContext.popupHandler)
-    setIsLoading(loading)
-  }, [themeContext.popupHandler, users])
+    setIsLoading(false)
+  }, [themeContext.popupHandler])
 
   const handleAddOpenPopup = () => {
     dispatch(handleUserPopup('ADD'))
+  }
+  const handleDeleteUser = () => {
+    dispatch(deleteUser(userId))
+    dispatch(deleteId(''))
+    dispatch(cancelButton())
+    dispatch(fetchUsers())
   }
 
   return (
@@ -48,7 +55,7 @@ function Users() {
           <div>
             {handleOpen === 'DELETE' ? (
               <Popup>
-                <DeleteMessage />
+                <DeleteMessage handleDeleteUser={handleDeleteUser} />
               </Popup>
             ) : (
               ''

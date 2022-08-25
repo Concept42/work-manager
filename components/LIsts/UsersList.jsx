@@ -31,16 +31,6 @@ function UsersList(props) {
     // }
   })
 
-  const handleDeleteUser = async (id) => {
-    const response = await fetch(`/api/customer/deleteUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-  }
-
   return (
     <div>
       <ul
@@ -57,10 +47,7 @@ function UsersList(props) {
         <li className='flex flex-[1]'>{singleUser.role}</li>
         <li className='flex flex-[1]'>
           <div>
-            <DotMenu
-              singleUser={singleUser}
-              handleDeleteUser={() => handleDeleteUser(singleUser.id)}
-            />
+            <DotMenu singleUser={singleUser} />
           </div>
         </li>
       </ul>

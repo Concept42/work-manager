@@ -83,12 +83,29 @@ export default function AddNewUser(props) {
       email: '',
       role: '',
     })
-    dispatch(updateUserForm({ editMode: false }))
+    dispatch(
+      updateUserForm({
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        editMode: false,
+      })
+    )
     dispatch(cancelButton())
   }
 
   const cancel = () => {
     dispatch(cancelButton())
+    dispatch(
+      updateUserForm({
+        id: '',
+        name: '',
+        email: '',
+        role: '',
+        editMode: false,
+      })
+    )
   }
 
   return (

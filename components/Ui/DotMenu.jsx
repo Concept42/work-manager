@@ -71,6 +71,7 @@ export default function CustomizedMenus(props) {
 
   const handleEditMode = () => {
     dispatch(handleUserPopup('EDIT'))
+    setAnchorEl(null)
     dispatch(
       updateUserForm({
         id: props.singleUser.id,

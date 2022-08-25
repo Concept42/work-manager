@@ -1,20 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { cancelButton } from '../../slices/themeSlice'
-import { deleteId, deleteUser } from '../../slices/userSlice'
+import { deleteId, deleteUser, fetchUsers } from '../../slices/userSlice'
 import { useSelector } from 'react-redux'
 
-function DeleteMessage() {
+function DeleteMessage(props) {
   const dispatch = useDispatch()
-  const userId = useSelector((state) => state.userContext.deleteId)
+ 
 
   const cancelDelete = () => {
-    dispatch(cancelButton())
-  }
-
-  const handleDeleteUser = () => {
-    dispatch(deleteUser(userId))
-    dispatch(deleteId(''))
     dispatch(cancelButton())
   }
 
@@ -34,7 +28,7 @@ function DeleteMessage() {
           Odustani
         </button>
         <button
-          onClick={handleDeleteUser}
+          onClick={props.handleDeleteUser}
           className='flex bg-accent px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:opacity-70'
         >
           Izbriši
