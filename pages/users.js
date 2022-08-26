@@ -16,26 +16,30 @@ function Users() {
   const userContext = useSelector((state) => state.userContext)
   const users = useSelector((state) => state.userContext.users)
   const userId = useSelector((state) => state.userContext.deleteId)
-  const loading = useSelector((state) => state.userContext.isLoading)
+
   const dispatch = useDispatch()
 
   const [handleOpen, setHandleOpen] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [localUsers, setLocalUsers] = useState(users)
 
   useEffect(() => {
-    dispatch(fetchUsers())
+    if (localUsers) {
+      dispatch(fetchUsers())
+      setLocalUsers(users)
+    }
     setHandleOpen(themeContext.popupHandler)
+    setLocalUsers(users)
     setIsLoading(false)
-  }, [themeContext.popupHandler])
+  })
 
   const handleAddOpenPopup = () => {
     dispatch(handleUserPopup('ADD'))
   }
   const handleDeleteUser = () => {
     dispatch(deleteUser(userId))
-    dispatch(deleteId(''))
-    dispatch(cancelButton())
     dispatch(fetchUsers())
+    dispatch(cancelButton())
   }
 
   return (
@@ -92,8 +96,8 @@ function Users() {
                 <span className='flex flex-[1]'>Role</span>
                 <span className='flex flex-[1]'>Akcije</span>
               </div>
-              {users.length > 0 &&
-                users.map((oneUser, id) => {
+              {localUsers.length > 0 &&
+                localUsers.map((oneUser, id) => {
                   return <UsersList key={id} singleUser={oneUser} />
                 })}
             </section>

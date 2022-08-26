@@ -32,7 +32,7 @@ function UsersList(props) {
   })
 
   return (
-    <div>
+    <>
       <ul
         className='flex w-full h-24 justify-between items-center bg-secondary rounded-xl my-5 text-fontGray font-normal'
         key={singleUser.id}
@@ -66,7 +66,7 @@ function UsersList(props) {
           )
         })}
       </div> */}
-    </div>
+    </>
   )
 }
 

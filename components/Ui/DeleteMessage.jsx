@@ -1,12 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { cancelButton } from '../../slices/themeSlice'
-import { deleteId, deleteUser, fetchUsers } from '../../slices/userSlice'
+import { deleteUserState } from '../../slices/userSlice'
 import { useSelector } from 'react-redux'
 
 function DeleteMessage(props) {
   const dispatch = useDispatch()
- 
 
   const cancelDelete = () => {
     dispatch(cancelButton())

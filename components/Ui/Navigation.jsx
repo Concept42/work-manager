@@ -37,7 +37,7 @@ function Navigation() {
             <li className='flex h-16 w-60 items-center hover:border-solid hover:rounded-2xl hover:bg-primary cursor-pointer'>
               <div className='flex gap-4'>
                 <SettingsAccessibilityIcon className='ml-6' />
-                Kupci
+                Stranke
               </div>
             </li>
           </Link>

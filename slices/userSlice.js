@@ -54,12 +54,13 @@ export const userSlice = createSlice({
       ;(state.name = name), (state.email = email), (state.role = role)
       state.editMode = editMode
     },
-    deleteId: (state, action) => {
+
+    deleteUserState: (state, action) => {
       state.deleteId = action.payload
-      state.users.splice()
+      state.users = state.users.filter((user) => user.id !== state.deleteId)
     },
   },
 })
 
-export const { updateUserForm, deleteId } = userSlice.actions
+export const { updateUserForm, deleteId, deleteUserState } = userSlice.actions
 export default userSlice.reducer

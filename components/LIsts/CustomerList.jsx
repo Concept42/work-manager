@@ -1,214 +1,139 @@
 import { useState, useEffect } from 'react'
-import moment from 'moment'
+import DotMenu from '../Ui/DotMenu'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import CustomerWorkOrderList from './CustomerWorkOrderList'
 
-function WorkOrderList(props) {
+function CustomerList(props) {
+  const singleCustomer = props.singleCustomer
+
+  const [open, setOpen] = useState()
   const [workOrders, setWorkOrders] = useState([])
-  const [singleCustomer, setSingleCustomer] = useState([])
-  const [editMode, setEditMode] = useState(false)
 
-  const customer = props.singleCustomer
+  const theme = {
+    rotate: { transform: 'rotate(90deg)' },
+  }
 
   useEffect(() => {
-    setSingleCustomer({
-      id: customer.id,
-      firstName: customer.firstName,
-      lastName: customer.lastName,
-      companyName: customer.companyName,
-      email: customer.email,
-      adress: customer.adress,
-      city: customer.city,
-      oib: customer.oib,
-      phoneNumber: customer.phoneNumber,
-    })
-    let newWorkOrders = []
     if (workOrders.length === 0) {
-      customer.workOrders.map((workOrder) => {
-        let result = {
-          id: workOrder.id,
-          createdAt: workOrder.createdAt,
-          updatedAt: workOrder.updatedAt,
-          title: workOrder.title,
-          discription: workOrder.discription,
-          statusFlag: workOrder.statusFlag,
-          customerId: workOrder.customerId,
-          userId: workOrder.userId,
-        }
-        newWorkOrders.push(result)
-        setWorkOrders(newWorkOrders)
-      })
+      setWorkOrders(singleCustomer.workOrders)
     }
+    console.log('WorkOrders:', workOrders)
   }, [])
 
-  const handleDeleteCustomer = async (id) => {
-    const response = await fetch(`/api/customer/deleteCustomerData`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-  }
+  // const handleDeleteCustomer = async (id) => {
+  //   const response = await fetch(`/api/customer/deleteCustomerData`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ id }),
+  //   })
+  // }
 
-  const handleChange = async (e) => {
-    setSingleCustomer((prev) => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      }
-    })
-    console.log(singleCustomer)
-  }
+  // const handleChange = async (e) => {
+  //   setSingleCustomer((prev) => {
+  //     return {
+  //       ...prev,
+  //       [e.target.name]: e.target.value,
+  //     }
+  //   })
+  //   console.log(singleCustomer)
+  // }
 
-  const handleEditCustomer = async () => {
-    setEditMode(true)
-  }
+  // const handleEditCustomer = async () => {
+  //   setEditMode(true)
+  // }
 
-  const handleUpdateData = async (e) => {
-    e.preventDefault()
+  // const handleUpdateData = async (e) => {
+  //   e.preventDefault()
 
-    const response = await fetch(`/api/customer/updateCustomerData`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: singleCustomer.id,
-        firstName: singleCustomer.firstName,
-        lastName: singleCustomer.lastName,
-        companyName: singleCustomer.companyName,
-        email: singleCustomer.email,
-        adress: singleCustomer.adress,
-        city: singleCustomer.city,
-        oib: singleCustomer.oib,
-        phoneNumber: singleCustomer.phoneNumber,
-      }),
-    })
-    setEditMode(false)
-    const json = await response.json()
+  //   const response = await fetch(`/api/customer/updateCustomerData`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       id: singleCustomer.id,
+  //       firstName: singleCustomer.firstName,
+  //       lastName: singleCustomer.lastName,
+  //       companyName: singleCustomer.companyName,
+  //       email: singleCustomer.email,
+  //       adress: singleCustomer.adress,
+  //       city: singleCustomer.city,
+  //       oib: singleCustomer.oib,
+  //       phoneNumber: singleCustomer.phoneNumber,
+  //     }),
+  //   })
+  //   setEditMode(false)
+  //   const json = await response.json()
+  // }
+  const openWorkOrders = () => {
+    setOpen(!open)
   }
   return (
-    <div>
-      {!editMode ? (
-        <ul key={customer.id}>
-          <li>ID: {customer.id}</li>
-          <li>Ime: {customer.firstName}</li>
-          <li>Prezime: {customer.lastName}</li>
-          <li>Ime tvrtke: {customer.companyName}</li>
-          <li>Email: {customer.email}</li>
-          <li>Adresa: {customer.adress}</li>
-          <li>Grad: {customer.city}</li>
-          <li>OIB: {customer.oib}</li>
-          <li>Broj Telefona: {customer.phoneNumber}</li>
-          <div>
-            <button
-              onClick={() => handleDeleteCustomer(singleCustomer.id)}
-              className='border-solid border-2 border-red-500'
-            >
-              Delete
-            </button>
-            <button
-              onClick={() => handleEditCustomer()}
-              className='border-solid border-2 border-red-500'
-            >
-              Edit
-            </button>
-          </div>
-          <div>
-            <h1 className='text-[2rem]'>Work Orders</h1>
-            {workOrders &&
-              workOrders.map((singleWorkOrder, id) => {
-                return (
-                  <ul key={id}>
-                    <li className='text-[30px]'>ID: {singleWorkOrder.id}</li>
-                    <li>Kreirano: {singleWorkOrder.createdAt}</li>
-                    <li>Završeno: {singleWorkOrder.updatedAt}</li>
-                    <li>Naslov: {singleWorkOrder.title}</li>
-                    <li>Opis: {singleWorkOrder.discription}</li>
-                    <li>Status: {singleWorkOrder.statusFlag}</li>
-                  </ul>
-                )
-              })}
-          </div>
+    <>
+      {/* Single Customer List */}
+      <section>
+        <ul
+          key={singleCustomer.id}
+          className='grid grid-cols-9  min-h-[80px] w-full  mt-5  bg-secondary rounded-xl items-center text-fontGray font-normal'
+        >
+          <li className='flex justify-center'>
+            <div className='flex  w-10 h-10 items-center justify-center hover:bg-blue-gray-800 rounded-full'>
+              <ArrowForwardIcon
+                sx={open ? theme.rotate : ''}
+                onClick={openWorkOrders}
+              />
+            </div>
+          </li>
+          <li className='flex justify-center'>{singleCustomer.companyName}</li>
+          <li className='flex justify-center'>
+            {singleCustomer.firstName + '  ' + singleCustomer.lastName}
+          </li>
+          <li className='flex justify-center'>{singleCustomer.oib}</li>
+          <li className='flex justify-center'>{singleCustomer.email}</li>
+          <li className='flex justify-center'>{singleCustomer.adress}</li>
+          <li className='flex justify-center'>{singleCustomer.city}</li>
+          <li className='flex justify-center'>{singleCustomer.phoneNumber}</li>
+          <li className='flex justify-center'>
+            {' '}
+            <div>
+              <DotMenu />
+            </div>
+          </li>
         </ul>
+      </section>
+      {open ? (
+        <section>
+          <div className='flex flex-col justify-center w-full m-auto bg-secondary rounded-xl  text-fontGray font-normal'>
+            <h1 className='flex justify-center text-[20px] py-20'>
+              Radni nalozi
+            </h1>
+            <ul className='grid grid-cols-7 pb-8 '>
+              <li className='flex justify-center'>Broj</li>
+              <li className='flex justify-center'>Kreirano</li>
+              <li className='flex justify-center'>Ažurirano</li>
+              <li className='flex justify-center'>Naslov</li>
+              <li className='flex justify-center'>Status</li>
+              <li className='flex justify-center'>Zaposlenik</li>
+              <li className='flex justify-center'>Detalji</li>
+            </ul>
+            {workOrders.map((singleWorkOrder, id) => {
+              return (
+                <CustomerWorkOrderList
+                  key={id}
+                  ListId={id}
+                  singleWorkOrder={singleWorkOrder}
+                />
+              )
+            })}
+          </div>
+        </section>
       ) : (
-        <form onSubmit={handleUpdateData}>
-          <div>
-            <h3>ID: {singleCustomer.id}</h3>
-          </div>
-          <div>
-            <span>Ime: </span>
-            <input
-              value={singleCustomer.firstName}
-              onChange={handleChange}
-              name='firstName'
-            />
-          </div>
-          <div>
-            <span>Prezime: </span>
-            <input
-              value={singleCustomer.lastName}
-              onChange={handleChange}
-              name='lastName'
-            />
-          </div>
-          <div>
-            <span>Ime Tvrtke: </span>
-            <input
-              value={singleCustomer.companyName}
-              onChange={handleChange}
-              name='companyName'
-            />
-          </div>
-          <div>
-            <span>Email: </span>
-            <input
-              value={singleCustomer.email}
-              onChange={handleChange}
-              name='email'
-            />
-          </div>
-          <div>
-            <span>Adresa: </span>
-            <input
-              value={singleCustomer.adress}
-              onChange={handleChange}
-              name='adress'
-            />
-          </div>
-          <div>
-            <span>Grad: </span>
-            <input
-              value={singleCustomer.city}
-              onChange={handleChange}
-              name='city'
-            />
-          </div>
-          <div>
-            <span>OIB: </span>
-            <input
-              value={singleCustomer.oib}
-              onChange={handleChange}
-              name='oib'
-            />
-          </div>
-          <div>
-            <span>Broj Telefona: </span>
-            <input
-              value={singleCustomer.phoneNumber}
-              onChange={handleChange}
-              name='phoneNumber'
-            />
-          </div>
-          <button
-            type='submit'
-            className='border-solid border-2 border-red-500'
-          >
-            Update
-          </button>
-        </form>
+        ''
       )}
-    </div>
+    </>
   )
 }
 
-export default WorkOrderList
+export default CustomerList

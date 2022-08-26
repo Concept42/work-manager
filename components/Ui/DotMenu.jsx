@@ -7,9 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import { useDispatch } from 'react-redux'
-import { updateUserForm, deleteId } from '../../slices/userSlice'
+import { updateUserForm, deleteUserState } from '../../slices/userSlice'
 import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
-import { useSelector } from 'react-redux'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -53,12 +52,14 @@ export default function CustomizedMenus(props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setSingleUser({
-      id: props.singleUser.id,
-      name: props.singleUser.name,
-      email: props.singleUser.email,
-      role: props.singleUser.role,
-    })
+    if (props.singleUser) {
+      setSingleUser({
+        id: props.singleUser.id,
+        name: props.singleUser.name,
+        email: props.singleUser.email,
+        role: props.singleUser.role,
+      })
+    }
   }, [props.singleUser])
 
   const handleClick = (event) => {
@@ -86,7 +87,7 @@ export default function CustomizedMenus(props) {
   const handleDeleteUser = () => {
     dispatch(handleUserPopup('DELETE'))
     setAnchorEl(null)
-    dispatch(deleteId(singleUser.id))
+    dispatch(deleteUserState(singleUser.id))
   }
 
   return (
