@@ -2,13 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   id: '',
-  deleteId: '',
+  deleteComponentId: '',
+  deleteUserId: '',
   name: '',
   email: '',
   role: '',
   editMode: false,
   users: [],
-  isLoading: false,
+  status: '',
   error: '',
 }
 
@@ -33,16 +34,15 @@ export const userSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state) => {
-      state.isLoading = false
+      state.status = 'loading'
     })
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.isLoading = false
+      state.status = 'succeeded'
       state.users = action.payload
       state.error = ''
     })
     builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.isLoading = false
-      state.users = []
+      state.status = 'failed'
       state.error = action.error.message
     })
   },
@@ -54,13 +54,36 @@ export const userSlice = createSlice({
       ;(state.name = name), (state.email = email), (state.role = role)
       state.editMode = editMode
     },
+    addNewUser: (state, action) => {
+      state.users.push(action.payload)
+    },
 
     deleteUserState: (state, action) => {
-      state.deleteId = action.payload
-      state.users = state.users.filter((user) => user.id !== state.deleteId)
+      state.users.splice(state.deleteComponentId, 1)
+    },
+    setDeleteComponentId: (state, action) => {
+      state.deleteComponentId = action.payload
+    },
+    setDeleteUserId: (state, action) => {
+      state.deleteUserId = action.payload
+    },
+    updateUser: (state, action) => {
+      state.users[state.deleteComponentId] = action.payload
     },
   },
 })
 
-export const { updateUserForm, deleteId, deleteUserState } = userSlice.actions
+export const users = (state) => state.userContext.users
+export const getUsersStatus = (state) => state.userContext.status
+export const getDeleteId = (state) => state.userContext.deleteId
+
+export const {
+  updateUserForm,
+  deleteId,
+  deleteUserState,
+  setDeleteComponentId,
+  setDeleteUserId,
+  addNewUser,
+  updateUser,
+} = userSlice.actions
 export default userSlice.reducer

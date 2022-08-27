@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '@material-tailwind/react'
 import { Select, Option } from '@material-tailwind/react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateUserForm } from '../../slices/userSlice'
+import { updateUserForm, addNewUser, updateUser } from '../../slices/userSlice'
 import { cancelButton } from '../../slices/themeSlice'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function AddNewUser(props) {
   const contextUser = useSelector((state) => state.userContext)
@@ -14,6 +15,10 @@ export default function AddNewUser(props) {
     name: '',
     email: '',
     role: '',
+    workOrders: [],
+    accounts: [],
+    sessions: [],
+    image: '',
   })
 
   useEffect(() => {
@@ -41,12 +46,22 @@ export default function AddNewUser(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault
+    const newId = uuidv4()
+    setNewUser((prev) => {
+      return {
+        ...prev,
+        id: newId,
+      }
+    })
+    cancel()
+    dispatch(addNewUser(newUser))
     const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id: newUser.id,
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
@@ -58,12 +73,18 @@ export default function AddNewUser(props) {
       name: '',
       email: '',
       role: '',
+      workOrders: [],
+      accounts: [],
+      sessions: [],
+      image: '',
     })
     dispatch(updateUserForm({ editMode: false }))
-    cancel()
   }
 
   const handleUpdateData = async (e) => {
+    e.preventDefault()
+    dispatch(updateUser(newUser))
+    dispatch(cancelButton())
     const response = await fetch(`/api/customer/updateUserData`, {
       method: 'POST',
       headers: {
@@ -92,7 +113,6 @@ export default function AddNewUser(props) {
         editMode: false,
       })
     )
-    dispatch(cancelButton())
   }
 
   const cancel = () => {

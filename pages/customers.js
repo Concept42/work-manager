@@ -9,8 +9,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import Popup from '../components/Utility/Popup'
 import WorkOrderDetail from '../components/LIsts/WorkOrderDetail'
 
-function Customers() {
-  const customers = useSelector((state) => state.customerContext.customers)
+export async function getServerSideProps() {
+  const res = await fetch(`http://localhost:3000/api/customer/getCustomerData`)
+  const customers = await res.json()
+
+  return {
+    props: { customers },
+  }
+}
+
+function Customers({ customers }) {
+  // const customers = useSelector((state) => state.customerContext.customers)
   const themeContext = useSelector((state) => state.themeContext)
 
   const [localCustomers, setLocalCustomers] = useState(customers)
@@ -19,9 +28,6 @@ function Customers() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (localCustomers) {
-      dispatch(fetchCustomers())
-    }
     setHandleOpen(themeContext.popupHandler)
     setLocalCustomers(customers)
   }, [themeContext])

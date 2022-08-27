@@ -6,8 +6,12 @@ import MenuItem from '@mui/material/MenuItem'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
-import { useDispatch } from 'react-redux'
-import { updateUserForm, deleteUserState } from '../../slices/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  updateUserForm,
+  setDeleteComponentId,
+  setDeleteUserId,
+} from '../../slices/userSlice'
 import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
 
 const StyledMenu = styled((props) => (
@@ -45,6 +49,7 @@ const StyledMenu = styled((props) => (
 }))
 
 export default function CustomizedMenus(props) {
+  const contextUsers = useSelector((state) => state.userContext.users)
   const [anchorEl, setAnchorEl] = useState(null)
   const [singleUser, setSingleUser] = useState([])
 
@@ -71,6 +76,9 @@ export default function CustomizedMenus(props) {
   }
 
   const handleEditMode = () => {
+    dispatch(setDeleteComponentId(props.index))
+    console.log('Component IDX: ', props.index)
+    console.log('Context Users: ', contextUsers)
     dispatch(handleUserPopup('EDIT'))
     setAnchorEl(null)
     dispatch(
@@ -87,7 +95,10 @@ export default function CustomizedMenus(props) {
   const handleDeleteUser = () => {
     dispatch(handleUserPopup('DELETE'))
     setAnchorEl(null)
-    dispatch(deleteUserState(singleUser.id))
+    dispatch(setDeleteComponentId(props.index))
+    console.log('Component IDX: ', props.index)
+    console.log('Context Users: ', contextUsers)
+    dispatch(setDeleteUserId(singleUser.id))
   }
 
   return (

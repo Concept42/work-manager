@@ -5,6 +5,9 @@ import AppLayout from '../components/Layout/AppLayout'
 import { ThemeProvider } from '@material-tailwind/react'
 import { store } from '../store'
 import { Provider } from 'react-redux'
+import { fetchUsers } from '../slices/userSlice'
+
+store.dispatch(fetchUsers())
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
