@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import CustomerList from '../components/LIsts/CustomerList'
 import AddNewCustomer from '../components/Forms/AddNewCustomer'
 import SearchBar from '../components/Ui/SearchBar'
 import { Fab } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import { fetchCustomers } from '../slices/customerSlice'
+import { customersList } from '../slices/customerSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Popup from '../components/Utility/Popup'
 import WorkOrderDetail from '../components/LIsts/WorkOrderDetail'
+import DotMenu from '../components/Ui/DotMenu'
 
 function Customers({ customers }) {
-  // const customers = useSelector((state) => state.customerContext.customers)
   const themeContext = useSelector((state) => state.themeContext)
+  const contextCustomers = useSelector(customersList)
 
   const [localCustomers, setLocalCustomers] = useState(customers)
   const [handleOpen, setHandleOpen] = useState('')
@@ -20,9 +22,41 @@ function Customers({ customers }) {
 
   useEffect(() => {
     setHandleOpen(themeContext.popupHandler)
-    setLocalCustomers(customers)
-  }, [themeContext])
+  }, [themeContext.popupHandler])
 
+  let RenderCustomers = () => {
+    const customerList = contextCustomers.map((oneCustomer, index) => (
+      <li
+        key={index}
+        className='grid grid-cols-9  min-h-[80px] w-full  mt-5  bg-secondary rounded-xl items-center text-fontGray font-normal'
+      >
+        <li className='flex justify-center'>
+          {/* <div className='flex  w-10 h-10 items-center justify-center hover:bg-blue-gray-800 rounded-full'>
+            <ArrowForwardIcon
+              sx={open ? theme.rotate : ''}
+              onClick={openWorkOrders}
+            />
+          </div> */}
+        </li>
+        <li className='flex justify-center'>{oneCustomer.companyName}</li>
+        <li className='flex justify-center'>
+          {oneCustomer.firstName + '  ' + oneCustomer.lastName}
+        </li>
+        <li className='flex justify-center'>{oneCustomer.oib}</li>
+        <li className='flex justify-center'>{oneCustomer.email}</li>
+        <li className='flex justify-center'>{oneCustomer.adress}</li>
+        <li className='flex justify-center'>{oneCustomer.city}</li>
+        <li className='flex justify-center'>{oneCustomer.phoneNumber}</li>
+        <li className='flex justify-center'>
+          {' '}
+          <div>
+            <DotMenu />
+          </div>
+        </li>
+      </li>
+    ))
+    return customerList
+  }
   return (
     <>
       <div>
@@ -58,11 +92,10 @@ function Customers({ customers }) {
             <span className='flex justify-center'>Tel</span>
             <span className='flex justify-center'>Akcije</span>
           </div>
-          {localCustomers.length > 0 &&
-            localCustomers.map((oneCustomer, id) => {
-              return <CustomerList key={id} singleCustomer={oneCustomer} />
-            })}
         </section>
+        <ul>
+          <RenderCustomers />
+        </ul>
       </div>
     </>
   )

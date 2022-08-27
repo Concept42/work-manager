@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 export const initialState = {
   customers: [],
   error: '',
-  isLoading: false,
+  status: '',
   detailWorkOrder: [],
 }
 
@@ -31,15 +31,15 @@ export const customerSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchCustomers.pending, (state) => {
-      state.isLoading = false
+      state.status = 'loading'
     })
     builder.addCase(fetchCustomers.fulfilled, (state, action) => {
-      state.isLoading = false
+      state.status = 'succeeded'
       state.customers = action.payload
       state.error = ''
     })
     builder.addCase(fetchCustomers.rejected, (state, action) => {
-      state.isLoading = false
+      state.status = 'failed'
       state.customers = []
       state.error = action.error.message
     })
@@ -61,6 +61,8 @@ export const customerSlice = createSlice({
     // },
   },
 })
+
+export const customersList = (state) => state.customerContext.customers
 
 export const { setDetailWorkOrder } = customerSlice.actions
 export default customerSlice.reducer

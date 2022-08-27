@@ -6,8 +6,10 @@ import { ThemeProvider } from '@material-tailwind/react'
 import { store } from '../store'
 import { Provider } from 'react-redux'
 import { fetchUsers } from '../slices/userSlice'
+import { fetchCustomers } from '../slices/customerSlice'
 
 store.dispatch(fetchUsers())
+store.dispatch(fetchCustomers())
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
