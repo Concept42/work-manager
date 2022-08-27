@@ -9,15 +9,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import Popup from '../components/Utility/Popup'
 import WorkOrderDetail from '../components/LIsts/WorkOrderDetail'
 
-export async function getServerSideProps() {
-  const res = await fetch(`http://localhost:3000/api/customer/getCustomerData`)
-  const customers = await res.json()
-
-  return {
-    props: { customers },
-  }
-}
-
 function Customers({ customers }) {
   // const customers = useSelector((state) => state.customerContext.customers)
   const themeContext = useSelector((state) => state.themeContext)
