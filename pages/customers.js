@@ -14,6 +14,8 @@ import CustomerWorkOrderList from '../components/LIsts/CustomerWorkOrderList'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 import GradingIcon from '@mui/icons-material/Grading'
 import moment from 'moment'
+import DeleteMessage from '../components/Ui/DeleteMessage'
+import { handleUserPopup } from '../slices/themeSlice'
 
 function Customers({ customers }) {
   const themeContext = useSelector((state) => state.themeContext)
@@ -39,6 +41,10 @@ function Customers({ customers }) {
 
   const console = () => {
     console.log(contextCustomers)
+  }
+
+  const handleAddOpenPopup = () => {
+    dispatch(handleUserPopup('ADD'))
   }
 
   let RenderCustomers = () => {
@@ -86,7 +92,7 @@ function Customers({ customers }) {
                 <li className='flex justify-center'>Detalji</li>
               </ul>
               <ul>
-                {oneCustomer.workOrders.map((allCustomerOrders, index) => {
+                {oneCustomer.workOrders?.map((allCustomerOrders, index) => {
                   return (
                     <CustomerWorkOrderList
                       key={index}
@@ -103,12 +109,38 @@ function Customers({ customers }) {
         </section>
       </div>
     ))
-
     return customerList
   }
   return (
     <>
       <div>
+        {handleOpen === 'ADD' ? (
+          <Popup>
+            <h1 className='mb-10'>Dodaj novu stranku</h1>
+            <AddNewCustomer />
+          </Popup>
+        ) : (
+          ''
+        )}
+      </div>
+      <div>
+        {handleOpen === 'DELETE' ? (
+          <Popup>
+            <DeleteMessage handleDeleteUser={handleDeleteUser} />
+          </Popup>
+        ) : (
+          ''
+        )}
+      </div>
+      <div>
+        {handleOpen === 'EDIT' ? (
+          <Popup>
+            <h1 className='mb-10'>Izmjeni zaposlenika</h1>
+            <AddNewCustomer />
+          </Popup>
+        ) : (
+          ''
+        )}
         {handleOpen === 'DETAIL' ? (
           <Popup>
             {/* <h1 className='flex flex-col justify-center items-center'>
@@ -124,7 +156,7 @@ function Customers({ customers }) {
         <section>
           <div className='flex justify-between'>
             <h1 className='text-[24px] font-extrabold text-font '>Stranke</h1>
-            <Fab color='primary' aria-label='add'>
+            <Fab onClick={handleAddOpenPopup} color='primary' aria-label='add'>
               <AddIcon />
             </Fab>
           </div>

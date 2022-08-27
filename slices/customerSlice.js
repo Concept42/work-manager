@@ -5,6 +5,7 @@ export const initialState = {
   error: '',
   status: '',
   detailWorkOrder: [],
+  editMode: false,
 }
 
 export const fetchCustomers = createAsyncThunk(
@@ -49,6 +50,9 @@ export const customerSlice = createSlice({
     setDetailWorkOrder: (state, action) => {
       state.detailWorkOrder = action.payload
     },
+    addNewCustomer: (state, action) => {
+      state.customers.push(action.payload)
+    },
     // updateUserForm: (state, action) => {
     //   const { id, name, email, role, editMode } = action.payload
     //   state.id = id
@@ -64,5 +68,5 @@ export const customerSlice = createSlice({
 
 export const customersList = (state) => state.customerContext.customers
 
-export const { setDetailWorkOrder } = customerSlice.actions
+export const { setDetailWorkOrder, addNewCustomer } = customerSlice.actions
 export default customerSlice.reducer
