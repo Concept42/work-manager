@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Input } from '@material-tailwind/react'
-import { Select, Option } from '@material-tailwind/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUserForm, addNewUser, updateUser } from '../../slices/userSlice'
 import { cancelButton } from '../../slices/themeSlice'
@@ -36,11 +34,12 @@ export default function AddNewUser(props) {
     setNewUser((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
+    console.log(newUser)
   }
 
   const handleRoleChange = (e) => {
     setNewUser((prev) => {
-      return { ...prev, role: e }
+      return { ...prev, role: e.target.value }
     })
   }
 
@@ -129,30 +128,43 @@ export default function AddNewUser(props) {
   return (
     <div className='flex flex-col min-w-[500px]  text-font items-start '>
       <div className='flex flex-col w-full h-full justify-between gap-8'>
-        <div>
-          <Input
-            className='flex h-14 '
-            label='Ime i prezime*'
-            variant='outlined'
-            onChange={handleChange}
-            type='text'
+        <div className='form-control w-full max-w-2xl'>
+          <input
+            className='input input-bordered w-full max-w-lg'
             name='name'
+            type='text'
+            placeholder='Ime i prezime*'
+            onChange={handleChange}
             value={newUser.name}
           />
         </div>
-        <div>
-          <Input
-            className='flex h-14'
-            label='Email*'
-            variant='outlined'
-            onChange={handleChange}
-            type='email'
+        <div className='form-control w-full max-w-2xl'>
+          <input
+            className='input input-bordered w-full max-w-lg'
             name='email'
+            type='email'
+            placeholder='Email*'
+            onChange={handleChange}
             value={newUser.email}
           />
         </div>
+        <div className='form-control w-full max-w-lg'>
+          <select
+            className='select select-bordered'
+            id='role'
+            name='role'
+            onChange={handleRoleChange}
+            defaultValue=''
+          >
+            <option disabled value=''>
+              Odaberi ulogu
+            </option>
+            <option value='USER'>Korisnik</option>
+            <option value='ADMIN'>Administrator</option>
+          </select>
+        </div>
 
-        <Select
+        {/* <Select
           id='role'
           label='Role'
           onChange={handleRoleChange}
@@ -161,21 +173,14 @@ export default function AddNewUser(props) {
         >
           <Option value='USER'>USER</Option>
           <Option value='ADMIN'>ADMIN</Option>
-        </Select>
-
+        </Select> */}
         <div className='flex justify-end gap-4'>
           {!contextUser.editMode ? (
             <>
-              <button
-                onClick={cancel}
-                className='flex px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:bg-primary hover:bg-opacity-40'
-              >
+              <button onClick={cancel} className='btn btn-outline btn-md'>
                 Odustani
               </button>
-              <button
-                onClick={handleSubmit}
-                className='flex bg-accent px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:opacity-70'
-              >
+              <button onClick={handleSubmit} className='btn btn-info btn-md'>
                 Dodaj
               </button>
             </>

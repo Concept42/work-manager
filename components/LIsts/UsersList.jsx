@@ -6,7 +6,7 @@ function UsersList(props) {
   const componentId = props.index
 
   return (
-    <li className='flex w-full h-24 justify-between items-center bg-secondary rounded-xl my-5 text-fontGray font-normal'>
+    <div className='flex w-full h-24 justify-between items-center bg-secondary rounded-xl my-5 text-fontGray font-normal'>
       <li className='flex flex-[5] ml-6 gap-4 '>
         <Avatar className='z-0' src={oneUser?.image} alt='' />
         <div>
@@ -20,7 +20,7 @@ function UsersList(props) {
           <DotMenu singleUser={oneUser} index={componentId} />
         </div>
       </li>
-    </li>
+    </div>
   )
 }
 export default UsersList
