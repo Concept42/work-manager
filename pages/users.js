@@ -71,18 +71,44 @@ function Users() {
               <h1 className='text-[24px] font-extrabold text-font'>
                 Zaposlenici
               </h1>
-              <Fab
+              {/* <Fab
                 onClick={handleAddOpenPopup}
                 color='primary'
                 aria-label='add'
-              >
-                <AddIcon />
-              </Fab>
+              ></Fab> */}
             </div>
           </section>
-          <section className='mt-10 bg-white'>
-            {/* Table header */}
-            <div className='flex w-full justify-between text-font '>
+          <section className='mt-10 pt-10 border-solid border-2 bg-white rounded-lg shadow-md px-10 pb-10'>
+            <div>
+              <table className='table w-full  '>
+                <thead className=''>
+                  <tr className=''>
+                    <th className='border-solid border-r-[1px] border-gray-300 text-[14px] font-medium'>
+                      Ime i prezime
+                    </th>
+                    <th className='border-solid border-r-[1px] border-gray-300 text-[14px] font-medium '>
+                      Email
+                    </th>
+                    <th className='border-solid border-r-[1px] border-gray-300 text-[14px] font-medium'>
+                      Role
+                    </th>
+                    <th className='text-[14px] font-medium'>Akcije</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {contextUsers.map((singleUser, index) => {
+                    return (
+                      <UsersList
+                        key={index}
+                        singleUser={singleUser}
+                        index={index}
+                      />
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+            {/* <div className='flex w-full justify-between text-font '>
               <span className='flex flex-[5] ml-4'>Zaposlenik</span>
               <span className='flex flex-[1]'>Role</span>
               <span className='flex flex-[1]'>Akcije</span>
@@ -97,7 +123,7 @@ function Users() {
                   />
                 )
               })}
-            </ul>
+            </ul> */}
           </section>
         </div>
       </>

@@ -1,6 +1,26 @@
 const withMT = require('@material-tailwind/react/utils/withMT')
 
 module.exports = {
+  daisyui: {
+    themes: [
+      {
+        myTheme: {
+          primary: '#F1F5FA',
+          secondary: '#F1F5FA',
+          accent: '#F1F5FA',
+          primary: '#f7b5a3',
+          secondary: '#0361ba',
+          accent: '#3d94c6',
+          neutral: '#2A2938',
+          'base-100': '#ffffff',
+          info: '#6A99F6',
+          success: '#82E3DB',
+          warning: '#FCA52C',
+          error: '#E94B3A',
+        },
+      },
+    ],
+  },
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
