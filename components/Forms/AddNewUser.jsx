@@ -24,10 +24,10 @@ export default function AddNewUser(props) {
   useEffect(() => {
     if (contextUser.editMode === true) {
       setNewUser({
-        id: contextUser.id,
-        name: contextUser.name,
-        email: contextUser.email,
-        role: contextUser.role,
+        id: contextUser.userForm.id,
+        name: contextUser.userForm.name,
+        email: contextUser.userForm.email,
+        role: contextUser.userForm.role,
       })
     }
   }, [contextUser.editMode])
@@ -45,7 +45,7 @@ export default function AddNewUser(props) {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault
+    e.preventDefault()
     const newId = uuidv4()
     setNewUser((prev) => {
       return {
@@ -78,7 +78,6 @@ export default function AddNewUser(props) {
       sessions: [],
       image: '',
     })
-    dispatch(updateUserForm({ editMode: false }))
   }
 
   const handleUpdateData = async (e) => {
@@ -97,7 +96,6 @@ export default function AddNewUser(props) {
         role: newUser.role,
       }),
     })
-    const json = await response.json()
     setNewUser({
       id: '',
       name: '',

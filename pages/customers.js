@@ -59,9 +59,9 @@ function Customers() {
         )}
       </div>
       <div>
-        {handleOpen === 'EDIT' ? (
+        {handleOpen === 'EDIT CUSTOMER' ? (
           <Popup>
-            <h1 className='mb-10'>Izmjeni zaposlenika</h1>
+            <h1 className='mb-10'>Izmjeni stranku</h1>
             <AddNewCustomer />
           </Popup>
         ) : (

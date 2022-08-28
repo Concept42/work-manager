@@ -2,7 +2,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   customers: [],
-  deleteComponentId: '',
+  customerForm: {
+    id: '',
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    email: '',
+    adress: '',
+    city: '',
+    oib: '',
+    phoneNumber: '',
+  },
+
+  deleteCustomerComponentId: '',
   deleteCustomerId: '',
   error: '',
   status: '',
@@ -62,21 +74,40 @@ export const customerSlice = createSlice({
       state.customers.splice(state.deleteComponentId, 1)
     },
     setDeleteCustomerComponentId: (state, action) => {
-      state.deleteComponentId = action.payload
+      state.deleteCustomerComponentId = action.payload
     },
     setDeleteCustomerId: (state, action) => {
       state.deleteCustomerId = action.payload
     },
-    // updateUserForm: (state, action) => {
-    //   const { id, name, email, role, editMode } = action.payload
-    //   state.id = id
-    //   ;(state.name = name), (state.email = email), (state.role = role)
-    //   state.editMode = editMode
-    // },
-    // deleteCustomerState: (state, action) => {
-    //   state.deleteId = action.payload
-    //   state.users = state.users.filter((user) => user.id !== state.deleteId)
-    // },
+    updateCustomerForm: (state, action) => {
+      const {
+        id,
+        firstName,
+        lastName,
+        companyName,
+        email,
+        adress,
+        city,
+        oib,
+        phoneNumber,
+        editMode,
+      } = action.payload
+      state.customerForm = {
+        id,
+        firstName,
+        lastName,
+        companyName,
+        email,
+        adress,
+        city,
+        oib,
+        phoneNumber,
+      }
+      state.editMode = editMode
+    },
+    updateCustomer: (state, action) => {
+      state.customers[state.deleteCustomerComponentId] = action.payload
+    },
   },
 })
 
@@ -88,5 +119,7 @@ export const {
   deleteCustomerState,
   setDeleteCustomerComponentId,
   setDeleteCustomerId,
+  updateCustomerForm,
+  updateCustomer,
 } = customerSlice.actions
 export default customerSlice.reducer

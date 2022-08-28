@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '@material-tailwind/react'
 import { useSelector, useDispatch } from 'react-redux'
 import { cancelButton } from '../../slices/themeSlice'
-import { addNewCustomer } from '../../slices/customerSlice'
+import {
+  addNewCustomer,
+  updateCustomer,
+  updateCustomerForm,
+} from '../../slices/customerSlice'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function AddNewCustomer() {
-  const contextUser = useSelector((state) => state.userContext)
+  const contextCustomer = useSelector((state) => state.customerContext)
   const dispatch = useDispatch()
 
   const [newCustomer, setNewCustomer] = useState({
@@ -19,13 +23,29 @@ export default function AddNewCustomer() {
     city: '',
     oib: '',
     phoneNumber: '',
+    workOrders: [],
   })
+
+  useEffect(() => {
+    if (contextCustomer.editMode === true) {
+      setNewCustomer({
+        id: contextCustomer.customerForm.id,
+        firstName: contextCustomer.customerForm.firstName,
+        lastName: contextCustomer.customerForm.lastName,
+        companyName: contextCustomer.customerForm.companyName,
+        email: contextCustomer.customerForm.email,
+        adress: contextCustomer.customerForm.adress,
+        city: contextCustomer.customerForm.city,
+        oib: contextCustomer.customerForm.oib,
+        phoneNumber: contextCustomer.customerForm.phoneNumber,
+      })
+    }
+  }, [contextCustomer.editMode])
 
   const handleChange = (e) => {
     setNewCustomer((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
-    console.log(newCustomer)
   }
 
   const handleSubmit = async (e) => {
@@ -57,6 +77,41 @@ export default function AddNewCustomer() {
     })
 
     setNewCustomer({
+      id: '',
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      email: '',
+      adress: '',
+      city: '',
+      oib: '',
+      phoneNumber: '',
+      workOrders: [],
+    })
+  }
+  const handleUpdateData = async (e) => {
+    e.preventDefault()
+    dispatch(updateCustomer(newCustomer))
+    dispatch(cancelButton())
+    const response = await fetch(`/api/customer/updateCustomerData`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: newCustomer.id,
+        firstName: newCustomer.firstName,
+        lastName: newCustomer.lastName,
+        companyName: newCustomer.companyName,
+        email: newCustomer.email,
+        adress: newCustomer.adress,
+        city: newCustomer.city,
+        oib: newCustomer.oib,
+        phoneNumber: newCustomer.phoneNumber,
+      }),
+    })
+    setNewCustomer({
+      id: '',
       firstName: '',
       lastName: '',
       companyName: '',
@@ -66,9 +121,38 @@ export default function AddNewCustomer() {
       oib: '',
       phoneNumber: '',
     })
+    dispatch(
+      updateCustomerForm({
+        id: '',
+        firstName: '',
+        lastName: '',
+        companyName: '',
+        email: '',
+        adress: '',
+        city: '',
+        oib: '',
+        phoneNumber: '',
+        editMode: false,
+      })
+    )
   }
+
   const cancel = () => {
     dispatch(cancelButton())
+    dispatch(
+      updateCustomerForm({
+        id: '',
+        firstName: '',
+        lastName: '',
+        companyName: '',
+        email: '',
+        adress: '',
+        city: '',
+        oib: '',
+        phoneNumber: '',
+        editMode: false,
+      })
+    )
   }
 
   return (
@@ -164,7 +248,7 @@ export default function AddNewCustomer() {
         </div>
 
         <div className='flex justify-end gap-4'>
-          {!contextUser.editMode ? (
+          {!contextCustomer.editMode ? (
             <>
               <button
                 onClick={cancel}
@@ -184,7 +268,7 @@ export default function AddNewCustomer() {
           )}
         </div>
       </div>
-      {contextUser.editMode ? (
+      {contextCustomer.editMode ? (
         <div className='flex gap-4 w-full justify-end'>
           <button
             onClick={cancel}

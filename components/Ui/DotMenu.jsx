@@ -16,6 +16,7 @@ import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
 import {
   setDeleteCustomerComponentId,
   setDeleteCustomerId,
+  updateCustomerForm,
 } from '../../slices/customerSlice'
 
 const StyledMenu = styled((props) => (
@@ -70,16 +71,35 @@ export default function DotMenu(props) {
     setAnchorEl(null)
   }
 
-  const handleEditMode = () => {
+  const handleUserEditMode = () => {
     dispatch(setDeleteComponentId(props.index))
     dispatch(handleUserPopup('EDIT'))
     setAnchorEl(null)
     dispatch(
       updateUserForm({
-        id: props.singleUser.id,
-        name: props.singleUser.name,
-        email: props.singleUser.email,
-        role: props.singleUser.role,
+        id: singleUser.id,
+        name: singleUser.name,
+        email: singleUser.email,
+        role: singleUser.role,
+        editMode: true,
+      })
+    )
+  }
+  const handleCustomerEditMode = () => {
+    dispatch(setDeleteCustomerComponentId(props.customerIndex))
+    dispatch(handleUserPopup('EDIT CUSTOMER'))
+    setAnchorEl(null)
+    dispatch(
+      updateCustomerForm({
+        id: singleCustomer.id,
+        firstName: singleCustomer.firstName,
+        lastName: singleCustomer.lastName,
+        companyName: singleCustomer.companyName,
+        email: singleCustomer.email,
+        adress: singleCustomer.adress,
+        city: singleCustomer.city,
+        oib: singleCustomer.oib,
+        phoneNumber: singleCustomer.phoneNumber,
         editMode: true,
       })
     )
@@ -115,10 +135,17 @@ export default function DotMenu(props) {
             Delete
           </MenuItem>
         )}
-        <MenuItem onClick={handleEditMode} disableRipple>
-          <EditIcon />
-          Edit
-        </MenuItem>
+        {singleUser ? (
+          <MenuItem onClick={handleUserEditMode} disableRipple>
+            <EditIcon />
+            Edit
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={handleCustomerEditMode} disableRipple>
+            <EditIcon />
+            Edit
+          </MenuItem>
+        )}
       </StyledMenu>
     </div>
   )

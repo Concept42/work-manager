@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
-  id: '',
+  userForm: {
+    id: '',
+    name: '',
+    email: '',
+    role: '',
+  },
   deleteComponentId: '',
   deleteUserId: '',
-  name: '',
-  email: '',
-  role: '',
   editMode: false,
   users: [],
   status: '',
@@ -50,8 +52,7 @@ export const userSlice = createSlice({
   reducers: {
     updateUserForm: (state, action) => {
       const { id, name, email, role, editMode } = action.payload
-      state.id = id
-      ;(state.name = name), (state.email = email), (state.role = role)
+      state.userForm = { id, name, email, role }
       state.editMode = editMode
     },
     addNewUser: (state, action) => {
