@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   customers: [],
+  deleteComponentId: '',
+  deleteCustomerId: '',
   error: '',
   status: '',
   detailWorkOrder: [],
@@ -17,15 +19,18 @@ export const fetchCustomers = createAsyncThunk(
   }
 )
 
-// export const deleteUser = createAsyncThunk('user/deleteUser', async (id) => {
-//   const response = await fetch(`/api/customer/deleteUser`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ id }),
-//   })
-// })
+export const deleteCustomer = createAsyncThunk(
+  'user/deleteUser',
+  async (id) => {
+    const response = await fetch(`/api/customer/deleteCustomer`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    })
+  }
+)
 
 export const customerSlice = createSlice({
   name: 'customerContext',
@@ -53,6 +58,15 @@ export const customerSlice = createSlice({
     addNewCustomer: (state, action) => {
       state.customers.push(action.payload)
     },
+    deleteCustomerState: (state) => {
+      state.customers.splice(state.deleteComponentId, 1)
+    },
+    setDeleteCustomerComponentId: (state, action) => {
+      state.deleteComponentId = action.payload
+    },
+    setDeleteCustomerId: (state, action) => {
+      state.deleteCustomerId = action.payload
+    },
     // updateUserForm: (state, action) => {
     //   const { id, name, email, role, editMode } = action.payload
     //   state.id = id
@@ -68,5 +82,11 @@ export const customerSlice = createSlice({
 
 export const customersList = (state) => state.customerContext.customers
 
-export const { setDetailWorkOrder, addNewCustomer } = customerSlice.actions
+export const {
+  setDetailWorkOrder,
+  addNewCustomer,
+  deleteCustomerState,
+  setDeleteCustomerComponentId,
+  setDeleteCustomerId,
+} = customerSlice.actions
 export default customerSlice.reducer

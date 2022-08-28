@@ -58,7 +58,7 @@ export const userSlice = createSlice({
       state.users.push(action.payload)
     },
 
-    deleteUserState: (state, action) => {
+    deleteUserState: (state) => {
       state.users.splice(state.deleteComponentId, 1)
     },
     setDeleteComponentId: (state, action) => {

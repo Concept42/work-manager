@@ -13,6 +13,10 @@ import {
   setDeleteUserId,
 } from '../../slices/userSlice'
 import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
+import {
+  setDeleteCustomerComponentId,
+  setDeleteCustomerId,
+} from '../../slices/customerSlice'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -48,24 +52,15 @@ const StyledMenu = styled((props) => (
   },
 }))
 
-export default function CustomizedMenus(props) {
-  const contextUsers = useSelector((state) => state.userContext.users)
+export default function DotMenu(props) {
+  const singleUser = props.singleUser
+  const singleCustomer = props.singleCustomer
+
+  const popupHandler = useSelector((state) => state.themeContext.popupHandler)
   const [anchorEl, setAnchorEl] = useState(null)
-  const [singleUser, setSingleUser] = useState([])
 
   const open = Boolean(anchorEl)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (props.singleUser) {
-      setSingleUser({
-        id: props.singleUser.id,
-        name: props.singleUser.name,
-        email: props.singleUser.email,
-        role: props.singleUser.role,
-      })
-    }
-  }, [props.singleUser])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -77,8 +72,6 @@ export default function CustomizedMenus(props) {
 
   const handleEditMode = () => {
     dispatch(setDeleteComponentId(props.index))
-    console.log('Component IDX: ', props.index)
-    console.log('Context Users: ', contextUsers)
     dispatch(handleUserPopup('EDIT'))
     setAnchorEl(null)
     dispatch(
@@ -96,9 +89,13 @@ export default function CustomizedMenus(props) {
     dispatch(handleUserPopup('DELETE'))
     setAnchorEl(null)
     dispatch(setDeleteComponentId(props.index))
-    console.log('Component IDX: ', props.index)
-    console.log('Context Users: ', contextUsers)
-    dispatch(setDeleteUserId(singleUser.id))
+    dispatch(setDeleteUserId(singleUser?.id))
+  }
+  const handleDeleteCustomer = () => {
+    dispatch(handleUserPopup('DELETE CUSTOMER'))
+    setAnchorEl(null)
+    dispatch(setDeleteCustomerComponentId(props.customerIndex))
+    dispatch(setDeleteCustomerId(singleCustomer.id))
   }
 
   return (
@@ -107,10 +104,17 @@ export default function CustomizedMenus(props) {
         <MoreVertIcon />
       </div>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleDeleteUser} disableRipple>
-          <DeleteIcon />
-          Delete
-        </MenuItem>
+        {singleUser ? (
+          <MenuItem onClick={handleDeleteUser} disableRipple>
+            <DeleteIcon />
+            Delete
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={handleDeleteCustomer} disableRipple>
+            <DeleteIcon />
+            Delete
+          </MenuItem>
+        )}
         <MenuItem onClick={handleEditMode} disableRipple>
           <EditIcon />
           Edit
