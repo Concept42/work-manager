@@ -10,7 +10,7 @@ const AppLayout = ({ children }) => {
     <>
       {session ? (
         <MainContainer>
-          <Sidebar></Sidebar>
+          <Sidebar />
           <Application>{children}</Application>
         </MainContainer>
       ) : (

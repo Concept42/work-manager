@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import Topbar from '../components/Ui/Topbar'
 
 function Test() {
   return (
     <div>
-      <button className='btn'>Hello daisyUI</button>
+      
     </div>
   )
 }
