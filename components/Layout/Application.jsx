@@ -3,9 +3,11 @@ import Topbar from '../Ui/Topbar'
 
 const Application = ({ children }) => {
   return (
-    <div className='flex flex-col bg-primary font-nunito '>
-      <Topbar />
-      {children}
+    <div className=' flex flex-col '>
+      <div className='flex'>
+        <Topbar />
+      </div>
+      <div className='flex flex-col font-nunito w-full h-full'>{children}</div>
     </div>
   )
 }

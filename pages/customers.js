@@ -75,40 +75,39 @@ function Customers() {
           ''
         )}
       </div>
-      <div className='px-16 py-10'>
-        <section>
-          <div className='flex justify-between'>
-            <h1 className='text-[24px] font-extrabold text-font '>Stranke</h1>
-            <Fab onClick={handleAddOpenPopup} color='primary' aria-label='add'>
-              <AddIcon />
-            </Fab>
-          </div>
-        </section>
-        <section className='mt-10'>
-          <div className='grid grid-cols-9  m-auto w-full  text-font'>
-            <span className='flex justify-center'>Radni nalozi</span>
-            <span className='flex justify-center'>Stranka</span>
-            <span className='flex justify-center'>Ime i prezime</span>
-            <span className='flex justify-center'>OIB</span>
-            <span className='flex justify-center'>Email</span>
-            <span className='flex justify-center'>Adresa</span>
-            <span className='flex justify-center'>Grad</span>
-            <span className='flex justify-center'>Tel</span>
-            <span className='flex justify-center'>Akcije</span>
-          </div>
-        </section>
-        <ul>
-          {contextCustomers.map((singleCustomer, index) => {
-            return (
-              <CustomerList
-                key={index}
-                singleCustomer={singleCustomer}
-                customerIndex={index}
-              />
-            )
-          })}
-        </ul>
-      </div>
+
+      {/* <section>
+        <div className='flex justify-between'>
+          <h1 className='text-[24px] font-extrabold text-font '>Stranke</h1>
+          <Fab onClick={handleAddOpenPopup} color='primary' aria-label='add'>
+            <AddIcon />
+          </Fab>
+        </div>
+      </section> */}
+      <section>
+        <div className='grid grid-cols-9  m-auto w-full  text-font'>
+          <span className='flex justify-center'>Radni nalozi</span>
+          <span className='flex justify-center'>Stranka</span>
+          <span className='flex justify-center'>Ime i prezime</span>
+          <span className='flex justify-center'>OIB</span>
+          <span className='flex justify-center'>Email</span>
+          <span className='flex justify-center'>Adresa</span>
+          <span className='flex justify-center'>Grad</span>
+          <span className='flex justify-center'>Tel</span>
+          <span className='flex justify-center'>Akcije</span>
+        </div>
+      </section>
+      <ul>
+        {contextCustomers.map((singleCustomer, index) => {
+          return (
+            <CustomerList
+              key={index}
+              singleCustomer={singleCustomer}
+              customerIndex={index}
+            />
+          )
+        })}
+      </ul>
     </>
   )
 }
