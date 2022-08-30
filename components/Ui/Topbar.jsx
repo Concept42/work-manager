@@ -4,17 +4,18 @@ import { openSidebar } from '../../slices/themeSlice'
 import { useDispatch } from 'react-redux'
 import { useSession, signOut } from 'next-auth/react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 
 function Topbar() {
   const { status, data } = useSession()
   const dispatch = useDispatch()
 
+  const user = data?.user.name
+
   const handleOpen = () => {
     dispatch(openSidebar())
   }
   return (
-    <div className='flex w-screen h-full items-center bg-white'>
+    <div className='flex w-screen h-full items-center bg-white '>
       <div className='flex flex-[1] max-w-[427px] justify-between items-center   '>
         <h1 className='flex w-[85%] justify-center '>WORK MANAGER</h1>
         <div className='flex' onClick={handleOpen}>
@@ -50,12 +51,12 @@ function Topbar() {
           </div>
           <div className='dropdown'>
             <label tabIndex='0' className='flex pr-2 pl-5'>
-              {data.user.name}
+              {user}
               <ArrowDropDownIcon />
             </label>
             <ul
               tabIndex='0'
-              className='dropdown-content menu shadow mt-5 ml-10 p-1 bg-white  '
+              className='dropdown-content menu shadow mt-5 ml-10 p-1 bg-white '
             >
               <li>
                 <a>Profile</a>

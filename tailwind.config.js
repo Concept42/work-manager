@@ -14,6 +14,7 @@ module.exports = {
           success: '#82E3DB',
           warning: '#FCA52C',
           error: '#E94B3A',
+          font: '#1761fd',
         },
       },
     ],
@@ -31,7 +32,7 @@ module.exports = {
         secondary: '#ffffff',
         font: '#414E74',
         fontGray: '#90a4ae',
-        accent: '#1565C0',
+        accent: '#4E83FD',
         buttonText: 'ffffff',
       },
       fontFamily: {

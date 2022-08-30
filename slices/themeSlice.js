@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   popupHandler: '',
-  openSidebar: false,
+  openSidebar: true,
 }
 
 export const themeSlice = createSlice({
