@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { openSidebar } from '../../slices/themeSlice'
 import { useDispatch } from 'react-redux'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 
 function Topbar() {
   const { status, data } = useSession()
@@ -35,27 +36,42 @@ function Topbar() {
           </label>
         </div>
       </div>
-      <div className='flex flex-[5] w-screen justify-end'>
-        <div className='flex h-full bg-yellow-400'>
+      <div className='flex flex-[5] w-screen justify-end '>
+        <div className='flex h-full items-center '>
           <div className='avatar'>
-            <div className='w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
-              <Image src={data.user.image} alt='Slika' />
+            <div className='w-10 rounded-full'>
+              <Image
+                width={100}
+                height={100}
+                src='http://avatars.githubusercontent.com/u/105056049?v=4'
+                alt='avatar'
+              />
             </div>
           </div>
           <div className='dropdown'>
-            <label tabIndex='0' className='flex px-2'>
+            <label tabIndex='0' className='flex pr-2 pl-5'>
               {data.user.name}
               <ArrowDropDownIcon />
             </label>
             <ul
               tabIndex='0'
-              className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52'
+              className='dropdown-content menu shadow mt-5 ml-10 p-1 bg-white  '
             >
               <li>
-                <a>Item 1</a>
+                <a>Profile</a>
               </li>
               <li>
-                <a>Item 2</a>
+                <a>Settings</a>
+              </li>
+              <li
+                onClick={() => {
+                  signOut({
+                    callbackUrl: 'http://localhost:3000/',
+                  })
+                }}
+                className=' border-t-[1px] border-t-slate-200'
+              >
+                <a>Logout</a>
               </li>
             </ul>
           </div>
