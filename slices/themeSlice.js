@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   popupHandler: '',
+  openSidebar: false,
 }
 
 export const themeSlice = createSlice({
@@ -14,8 +15,11 @@ export const themeSlice = createSlice({
     cancelButton: (state) => {
       state.popupHandler = ''
     },
+    openSidebar: (state) => {
+      state.openSidebar = !state.openSidebar
+    },
   },
 })
 
-export const { handleUserPopup, cancelButton } = themeSlice.actions
+export const { handleUserPopup, cancelButton, openSidebar } = themeSlice.actions
 export default themeSlice.reducer
