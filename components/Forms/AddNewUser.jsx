@@ -163,17 +163,6 @@ export default function AddNewUser(props) {
             <option value='ADMIN'>Administrator</option>
           </select>
         </div>
-
-        {/* <Select
-          id='role'
-          label='Role'
-          onChange={handleRoleChange}
-          className='h-14'
-          value={newUser.role}
-        >
-          <Option value='USER'>USER</Option>
-          <Option value='ADMIN'>ADMIN</Option>
-        </Select> */}
         <div className='flex justify-end gap-4'>
           {!contextUser.editMode ? (
             <>

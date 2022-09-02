@@ -34,8 +34,8 @@ function Users() {
   }
 
   return (
-    <div>
-      <>
+    <>
+      <div>
         <div>
           {handleOpen === 'ADD' ? (
             <Popup>
@@ -66,21 +66,15 @@ function Users() {
           )}
         </div>
 
-        <section className='  border-solid border-2 bg-white rounded-lg shadow-md px-10 pb-10'>
-          <div>
+        <section className='flex border-solid border-2 bg-white rounded-lg shadow-md py-10 w-[50%]'>
+          <div className='overflow-x-auto w-full px-10 '>
             <table className='table w-full'>
-              <thead className=''>
-                <tr className=''>
-                  <th className='border-solid border-r-[1px] border-gray-300 text-[14px] font-medium'>
-                    Ime i prezime
-                  </th>
-                  <th className='border-solid border-r-[1px] border-gray-300 text-[14px] font-medium '>
-                    Email
-                  </th>
-                  <th className='border-solid border-r-[1px] border-gray-300 text-[14px] font-medium'>
-                    Role
-                  </th>
-                  <th className='text-[14px] font-medium'>Akcije</th>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,25 +90,9 @@ function Users() {
               </tbody>
             </table>
           </div>
-          {/* <div className='flex w-full justify-between text-font '>
-              <span className='flex flex-[5] ml-4'>Zaposlenik</span>
-              <span className='flex flex-[1]'>Role</span>
-              <span className='flex flex-[1]'>Akcije</span>
-            </div>
-            <ul>
-              {contextUsers.map((singleUser, index) => {
-                return (
-                  <UsersList
-                    key={index}
-                    singleUser={singleUser}
-                    index={index}
-                  />
-                )
-              })}
-            </ul> */}
         </section>
-      </>
-    </div>
+      </div>
+    </>
   )
 }
 

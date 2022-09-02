@@ -8,15 +8,15 @@ import BoyIcon from '@mui/icons-material/Boy'
 
 function Sidebar() {
   const linkStyle =
-    'flex w-[80%] py-4 pl-4 rounded-xl cursor-pointer hover:bg-primary active:bg-accent text-font  '
+    'flex w-[80%] py-4 pl-4 rounded-xl cursor-pointer  hover:text-fontAccent hover:bg-blue-100'
 
   return (
-    <div className='fixed left-0 top-16 h-full min-w-[250px] bg-white'>
+    <div className='fixed left-0 top-16 h-full min-w-[250px] bg-white font-poppins font-normal text-[14px]'>
       <ul className='flex flex-col gap-5 mt-11 justify-center items-center  '>
         <li className={linkStyle}>
           <ActiveLink href='/'>
             <div className='flex justify-center items-center gap-3'>
-              <DashboardIcon />
+              <DashboardIcon className='' />
               <span>Analytics</span>
             </div>
           </ActiveLink>

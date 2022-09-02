@@ -18,6 +18,8 @@ import {
   setDeleteCustomerId,
   updateCustomerForm,
 } from '../../slices/customerSlice'
+import AddNewUser from '../Forms/AddNewUser'
+import { Modal } from '../Ui/Modal'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -120,7 +122,7 @@ export default function DotMenu(props) {
 
   return (
     <div>
-      <div className='hover:bg-primary p-2 rounded-full' onClick={handleClick}>
+      <div className='hover:bg-primary  rounded-full' onClick={handleClick}>
         <MoreVertIcon />
       </div>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -147,6 +149,9 @@ export default function DotMenu(props) {
           </MenuItem>
         )}
       </StyledMenu>
+      <Modal>
+        <AddNewUser />
+      </Modal>
     </div>
   )
 }
