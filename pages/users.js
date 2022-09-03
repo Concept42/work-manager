@@ -10,6 +10,8 @@ import { handleUserPopup, cancelButton } from '../slices/themeSlice'
 import { deleteUser, deleteUserState } from '../slices/userSlice'
 import { users, getUsersStatus } from '../slices/userSlice'
 import DeleteMessage from '../components/Ui/DeleteMessage'
+import AddButton from '../components/Ui/AddButton'
+import { Modal } from '../components/Ui/Modal'
 
 function Users() {
   const themeContext = useSelector((state) => state.themeContext)
@@ -24,9 +26,6 @@ function Users() {
     setHandleOpen(themeContext.popupHandler)
   }, [themeContext.popupHandler])
 
-  const handleAddOpenPopup = () => {
-    dispatch(handleUserPopup('ADD'))
-  }
   const handleDeleteUser = () => {
     dispatch(deleteUserState())
     dispatch(cancelButton())
@@ -36,42 +35,26 @@ function Users() {
   return (
     <>
       <div>
-        <div>
-          {handleOpen === 'ADD' ? (
-            <Popup>
-              <h1 className='mb-10'>Dodaj novog zaposlenika</h1>
-              <AddNewUser />
-            </Popup>
+        <section>
+          {handleOpen !== '' ? (
+            <Modal
+              isOpen={handleOpen}
+              close={() => setHandleOpen(!handleOpen)}
+            />
           ) : (
             ''
           )}
-        </div>
-        <div>
-          {handleOpen === 'DELETE' ? (
-            <Popup>
-              <DeleteMessage handleDeleteUser={handleDeleteUser} />
-            </Popup>
-          ) : (
-            ''
-          )}
-        </div>
-        <div>
-          {handleOpen === 'EDIT' ? (
-            <Popup>
-              <h1 className='mb-10'>Izmjeni zaposlenika</h1>
-              <AddNewUser />
-            </Popup>
-          ) : (
-            ''
-          )}
-        </div>
-
-        <section className='flex border-solid border-2 bg-white rounded-lg shadow-md py-10 w-[50%]'>
+        </section>
+        <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
+          <div className='flex justify-end pr-10 pb-10'>
+            <AddButton />
+          </div>
           <div className='overflow-x-auto w-full px-10 '>
             <table className='table w-full'>
               <thead>
                 <tr>
-                  <th></th>
+                  <th>#</th>
+                  <th>Avatar</th>
                   <th>Name</th>
                   <th>Role</th>
                   <th>Actions</th>

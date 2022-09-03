@@ -9,10 +9,13 @@ function UsersList(props) {
     <>
       <tr>
         <th>{componentId + 1}</th>
+        <td>
+          <Avatar src={oneUser.image} />
+        </td>
         <td>{oneUser.name}</td>
         <td>{oneUser.role}</td>
         <td>
-          <DotMenu singleUser={oneUser} />
+          <DotMenu singleUser={oneUser} index={componentId} />
         </td>
       </tr>
     </>

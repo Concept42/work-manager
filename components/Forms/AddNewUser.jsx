@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUserForm, addNewUser, updateUser } from '../../slices/userSlice'
-import { cancelButton } from '../../slices/themeSlice'
+import { handleUserPopup } from '../../slices/themeSlice'
 import { v4 as uuidv4 } from 'uuid'
 
-export default function AddNewUser(props) {
+export default function AddNewUser() {
   const contextUser = useSelector((state) => state.userContext)
   const dispatch = useDispatch()
 
@@ -26,6 +26,10 @@ export default function AddNewUser(props) {
         name: contextUser.userForm.name,
         email: contextUser.userForm.email,
         role: contextUser.userForm.role,
+        workOrders: contextUser.userForm.workOrders,
+        accounts: contextUser.userForm.accounts,
+        sessions: contextUser.userForm.sessions,
+        image: contextUser.userForm.image,
       })
     }
   }, [contextUser.editMode])
@@ -52,8 +56,8 @@ export default function AddNewUser(props) {
         id: newId,
       }
     })
-    cancel()
     dispatch(addNewUser(newUser))
+    cancel()
     const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
       headers: {
@@ -82,7 +86,7 @@ export default function AddNewUser(props) {
   const handleUpdateData = async (e) => {
     e.preventDefault()
     dispatch(updateUser(newUser))
-    dispatch(cancelButton())
+    cancel()
     const response = await fetch(`/api/customer/updateUserData`, {
       method: 'POST',
       headers: {
@@ -100,6 +104,10 @@ export default function AddNewUser(props) {
       name: '',
       email: '',
       role: '',
+      workOrders: [],
+      accounts: [],
+      sessions: [],
+      image: '',
     })
     dispatch(
       updateUserForm({
@@ -113,7 +121,7 @@ export default function AddNewUser(props) {
   }
 
   const cancel = () => {
-    dispatch(cancelButton())
+    dispatch(handleUserPopup(''))
     dispatch(
       updateUserForm({
         id: '',
@@ -180,16 +188,10 @@ export default function AddNewUser(props) {
       </div>
       {contextUser.editMode ? (
         <div className='flex gap-4 w-full justify-end'>
-          <button
-            onClick={cancel}
-            className='flex px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:bg-primary hover:bg-opacity-40'
-          >
+          <button onClick={cancel} className='btn btn-outline btn-md'>
             Odustani
           </button>
-          <button
-            onClick={handleUpdateData}
-            className='flex bg-accent px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText  hover:opacity-70'
-          >
+          <button onClick={handleUpdateData} className='btn btn-info btn-md'>
             Update
           </button>
         </div>

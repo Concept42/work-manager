@@ -13,7 +13,7 @@ export const themeSlice = createSlice({
       state.popupHandler = action.payload
     },
     cancelButton: (state) => {
-      state.popupHandler = ''
+      state.popupHandler = !state.popupHandler
     },
     openSidebar: (state) => {
       state.openSidebar = !state.openSidebar

@@ -29,13 +29,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#EEF0F6',
+        primary: '#4E83FD',
         secondary: '#ffffff',
         font: '#414E74',
         fontGray: '#90a4ae',
         accent: '#4E83FD',
         buttonText: 'ffffff',
         fontAccent: '#7367f0',
+        ui: '#21212C',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

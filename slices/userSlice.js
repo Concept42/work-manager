@@ -6,6 +6,10 @@ export const initialState = {
     name: '',
     email: '',
     role: '',
+    workOrders: '',
+    accounts: '',
+    sessions: '',
+    image: '',
   },
   deleteComponentId: '',
   deleteUserId: '',
@@ -51,8 +55,27 @@ export const userSlice = createSlice({
 
   reducers: {
     updateUserForm: (state, action) => {
-      const { id, name, email, role, editMode } = action.payload
-      state.userForm = { id, name, email, role }
+      const {
+        id,
+        name,
+        email,
+        role,
+        workOrders,
+        accounts,
+        sessions,
+        image,
+        editMode,
+      } = action.payload
+      state.userForm = {
+        id,
+        name,
+        email,
+        role,
+        workOrders,
+        accounts,
+        sessions,
+        image,
+      }
       state.editMode = editMode
     },
     addNewUser: (state, action) => {
@@ -69,7 +92,11 @@ export const userSlice = createSlice({
       state.deleteUserId = action.payload
     },
     updateUser: (state, action) => {
-      state.users[state.deleteComponentId] = action.payload
+      state.users.splice(state.deleteComponentId, 1, action.payload)
+    },
+    setUserInit: (state) => {
+      state.deleteUserId = ''
+      state.deleteComponentId = ''
     },
   },
 })
@@ -86,5 +113,6 @@ export const {
   setDeleteUserId,
   addNewUser,
   updateUser,
+  setUserInit,
 } = userSlice.actions
 export default userSlice.reducer

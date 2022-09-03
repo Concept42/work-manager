@@ -18,15 +18,13 @@ import {
   setDeleteCustomerId,
   updateCustomerForm,
 } from '../../slices/customerSlice'
-import AddNewUser from '../Forms/AddNewUser'
-import { Modal } from '../Ui/Modal'
 
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'right',
+      horizontal: 'center',
     }}
     transformOrigin={{
       vertical: 'top',
@@ -37,7 +35,7 @@ const StyledMenu = styled((props) => (
 ))(({ theme }) => ({
   '& .MuiPaper-root': {
     borderRadius: 20,
-    backgroundColor: '#263238',
+    backgroundColor: '#21212C',
     minWidth: 150,
     color: 'white',
     boxShadow:
@@ -83,6 +81,10 @@ export default function DotMenu(props) {
         name: singleUser.name,
         email: singleUser.email,
         role: singleUser.role,
+        workOrders: singleUser.workOrders,
+        accounts: singleUser.accounts,
+        sessions: singleUser.sessions,
+        image: singleUser.image,
         editMode: true,
       })
     )
@@ -122,36 +124,33 @@ export default function DotMenu(props) {
 
   return (
     <div>
-      <div className='hover:bg-primary  rounded-full' onClick={handleClick}>
+      <div className='flex justify-start' onClick={handleClick}>
         <MoreVertIcon />
       </div>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {singleUser ? (
           <MenuItem onClick={handleDeleteUser} disableRipple>
             <DeleteIcon />
-            Delete
+            Delete user
           </MenuItem>
         ) : (
           <MenuItem onClick={handleDeleteCustomer} disableRipple>
             <DeleteIcon />
-            Delete
+            Delete customer
           </MenuItem>
         )}
         {singleUser ? (
           <MenuItem onClick={handleUserEditMode} disableRipple>
             <EditIcon />
-            Edit
+            Edit user
           </MenuItem>
         ) : (
           <MenuItem onClick={handleCustomerEditMode} disableRipple>
             <EditIcon />
-            Edit
+            Edit customer
           </MenuItem>
         )}
       </StyledMenu>
-      <Modal>
-        <AddNewUser />
-      </Modal>
     </div>
   )
 }
