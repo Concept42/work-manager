@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userPopupFormReducer from './slices/popupSlice'
-import userReducer from './slices/userSlice'
+import { useDispatch } from 'react-redux'
+import useReducer from './slices/userSlice'
 import themeReducer from './slices/themeSlice'
 import customerReducer from './slices/customerSlice'
 
 export const store = configureStore({
   reducer: {
-    userPopupForm: userPopupFormReducer,
-    userContext: userReducer,
+    userContext: useReducer,
     themeContext: themeReducer,
     customerContext: customerReducer,
   },
@@ -15,4 +14,3 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
- 

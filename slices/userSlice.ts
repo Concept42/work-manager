@@ -38,18 +38,15 @@ export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
   return result
 })
 
-export const deleteUser = createAsyncThunk(
-  'user/deleteUser',
-  async (id: string) => {
-    const response = await fetch(`/api/customer/deleteUser`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-  }
-)
+export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string) => {
+  const response = await fetch(`/api/customer/deleteUser`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id }),
+  })
+})
 
 export const userSlice = createSlice({
   name: 'userContext',
@@ -71,17 +68,7 @@ export const userSlice = createSlice({
 
   reducers: {
     updateUserForm: (state: RootState, action: PayloadAction<User>) => {
-      const {
-        id,
-        name,
-        email,
-        role,
-        workOrders,
-        accounts,
-        sessions,
-        image,
-        editMode,
-      } = action.payload
+      const { id, name, email, role, workOrders, accounts, sessions, image } = action.payload
       state.userForm = {
         id,
         name,
@@ -92,7 +79,6 @@ export const userSlice = createSlice({
         sessions,
         image,
       }
-      state.editMode = editMode
     },
     addNewUser: (state, action) => {
       state.users.push(action.payload)
@@ -119,6 +105,9 @@ export const userSlice = createSlice({
     },
   },
 })
+
+export const popupHandler = (state: RootState) => state.themeContext.popupHandler
+export const contextUsers = (state: RootState) => state.userContext.users
 
 export const {
   updateUserForm,

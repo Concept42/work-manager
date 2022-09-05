@@ -1,38 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import UsersList from '../components/LIsts/UsersList'
-import { Fab } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
-import AddNewUser from '../components/Forms/AddNewUser'
-import Loading from '../components/Ui/Loading'
-import Popup from '../components/Utility/Popup'
-import { useAppSelector, useAppDispatch } from '../utils/hooks'
-import { handleUserPopup, cancelButton } from '../slices/themeSlice'
-import { deleteUser, deleteUserState } from '../slices/userSlice'
-import { users, getUsersStatus } from '../slices/userSlice'
-import DeleteMessage from '../components/Ui/DeleteMessage'
+import { useAppSelector } from '../utils/hooks'
 import AddButton from '../components/Ui/AddButton'
 import { Modal } from '../components/Ui/Modal'
+import type { User } from '../slices/DbTypes'
 
 const Users: React.FC = () => {
-  const popupHandler = useAppSelector(
-    (state) => state.themeContext.popupHandler
-  )
-  const contextUsers = useAppSelector(users)
-  const deleteId = useAppSelector((state) => state.userContext.deleteUserId)
-  const contextUsersStatus = useAppSelector(getUsersStatus)
-  const dispatch = useAppDispatch()
+  const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
+  const contextUsers: User[] = useAppSelector((state) => state.userContext.users)
 
-  const [handleOpen, setHandleOpen] = useState('')
+  const [handleOpen, setHandleOpen] = useState<string>('')
 
   useEffect(() => {
     setHandleOpen(popupHandler)
   }, [popupHandler])
-
-  const handleDeleteUser = () => {
-    dispatch(deleteUserState())
-    dispatch(cancelButton())
-    dispatch(deleteUser(deleteId))
-  }
 
   return (
     <>
@@ -54,14 +35,8 @@ const Users: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {contextUsers.map((singleUser, index) => {
-                  return (
-                    <UsersList
-                      key={index}
-                      singleUser={singleUser}
-                      index={index}
-                    />
-                  )
+                {contextUsers.map((singleUser: User, index: number) => {
+                  return <UsersList key={index} singleUser={singleUser} index={index} />
                 })}
               </tbody>
             </table>

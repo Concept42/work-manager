@@ -12,13 +12,13 @@ export type User = {
 export type Customer = {
   id: string
   firstName: string
-  lastName: String
-  companyName: String
-  email: String
-  adress: String
-  city: String
-  oib: String
-  phoneNumber: String
+  lastName: string
+  companyName: string
+  email: string
+  adress: string
+  city: string
+  oib: string
+  phoneNumber: string
   workOrders?: WorkOrders[]
 }
 export type WorkOrders = {

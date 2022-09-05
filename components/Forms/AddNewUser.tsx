@@ -1,67 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {
-  updateUserForm,
-  addNewUser,
-  updateUser,
-  setEditMode,
-} from '../../slices/userSlice'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
+import { updateUserForm, addNewUser, updateUser, setEditMode } from '../../slices/userSlice'
 import { handleUserPopup } from '../../slices/themeSlice'
-import { v4 as uuidv4 } from 'uuid'
+import useForm from '../../utils/useForm'
+import type { User } from '../../slices/DbTypes'
 
-export default function AddNewUser() {
-  const contextUser = useSelector((state) => state.userContext)
-  const dispatch = useDispatch()
+const AddNewUser: React.FC = () => {
+  const contextUser: User = useAppSelector((state) => state.userContext)
+  const dispatch = useAppDispatch()
 
-  const [newUser, setNewUser] = useState({
-    id: '',
-    name: '',
-    email: '',
-    role: '',
-    workOrders: [],
-    accounts: [],
-    sessions: [],
-    image: '',
-  })
+  const [values, handleChange, handleRoleChange] = useForm()
+  // const [newUser, setNewUser] = useState({
+  //   id: '',
+  //   name: '',
+  //   email: '',
+  //   role: '',
+  //   workOrders: [],
+  //   accounts: [],
+  //   sessions: [],
+  //   image: '',
+  // })
 
-  useEffect(() => {
-    if (contextUser.editMode === true) {
-      setNewUser({
-        id: contextUser.userForm.id,
-        name: contextUser.userForm.name,
-        email: contextUser.userForm.email,
-        role: contextUser.userForm.role,
-        workOrders: contextUser.userForm.workOrders,
-        accounts: contextUser.userForm.accounts,
-        sessions: contextUser.userForm.sessions,
-        image: contextUser.userForm.image,
-      })
-    }
-  }, [contextUser.editMode])
-
-  const handleChange = (e) => {
-    setNewUser((prev) => {
-      return { ...prev, [e.target.name]: e.target.value }
-    })
-    console.log(newUser)
-  }
-
-  const handleRoleChange = (e) => {
-    setNewUser((prev) => {
-      return { ...prev, role: e.target.value }
-    })
-  }
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const newId = uuidv4()
-    setNewUser((prev) => {
-      return {
-        ...prev,
-        id: newId,
-      }
-    })
-    dispatch(addNewUser(newUser))
+    e.persist()
+    dispatch(addUser(values))
     cancel()
     const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
@@ -69,28 +31,17 @@ export default function AddNewUser() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        role: newUser.role,
+        id: values.id,
+        name: values.name,
+        email: values.email,
+        role: values.role,
       }),
-    })
-
-    setNewUser({
-      id: '',
-      name: '',
-      email: '',
-      role: '',
-      workOrders: [],
-      accounts: [],
-      sessions: [],
-      image: '',
     })
   }
 
   const handleUpdateData = async (e) => {
     e.preventDefault()
-    dispatch(updateUser(newUser))
+    dispatch(updateUser(values))
     dispatch(setEditMode(true))
     cancel()
     const response = await fetch(`/api/customer/updateUserData`, {
@@ -99,22 +50,13 @@ export default function AddNewUser() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        role: newUser.role,
+        id: values.id,
+        name: values.name,
+        email: values.email,
+        role: values.role,
       }),
     })
-    setNewUser({
-      id: '',
-      name: '',
-      email: '',
-      role: '',
-      workOrders: [],
-      accounts: [],
-      sessions: [],
-      image: '',
-    })
+
     dispatch(
       updateUserForm({
         id: '',
@@ -122,7 +64,7 @@ export default function AddNewUser() {
         email: '',
         role: '',
         editMode: false,
-      })
+      }),
     )
   }
 
@@ -135,7 +77,7 @@ export default function AddNewUser() {
         email: '',
         role: '',
         editMode: false,
-      })
+      }),
     )
   }
 
@@ -149,7 +91,7 @@ export default function AddNewUser() {
             type='text'
             placeholder='Ime i prezime*'
             onChange={handleChange}
-            value={newUser.name}
+            value={values.name}
           />
         </div>
         <div className='form-control w-full max-w-2xl'>
@@ -159,17 +101,11 @@ export default function AddNewUser() {
             type='email'
             placeholder='Email*'
             onChange={handleChange}
-            value={newUser.email}
+            value={values.email}
           />
         </div>
         <div className='form-control w-full max-w-lg'>
-          <select
-            className='select select-bordered'
-            id='role'
-            name='role'
-            onChange={handleRoleChange}
-            defaultValue=''
-          >
+          <select className='select select-bordered' id='role' name='role' onChange={handleRoleChange} defaultValue=''>
             <option disabled value=''>
               Odaberi ulogu
             </option>
@@ -207,3 +143,5 @@ export default function AddNewUser() {
     </div>
   )
 }
+
+export default AddNewUser
