@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import UsersList from '../components/LIsts/UsersList'
 import { Fab } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import AddNewUser from '../components/Forms/AddNewUser'
 import Loading from '../components/Ui/Loading'
 import Popup from '../components/Utility/Popup'
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../utils/hooks'
 import { handleUserPopup, cancelButton } from '../slices/themeSlice'
 import { deleteUser, deleteUserState } from '../slices/userSlice'
 import { users, getUsersStatus } from '../slices/userSlice'
@@ -13,18 +13,20 @@ import DeleteMessage from '../components/Ui/DeleteMessage'
 import AddButton from '../components/Ui/AddButton'
 import { Modal } from '../components/Ui/Modal'
 
-function Users() {
-  const themeContext = useSelector((state) => state.themeContext)
-  const contextUsers = useSelector(users)
-  const deleteId = useSelector((state) => state.userContext.deleteUserId)
-  const contextUsersStatus = useSelector(getUsersStatus)
-  const dispatch = useDispatch()
+const Users: React.FC = () => {
+  const popupHandler = useAppSelector(
+    (state) => state.themeContext.popupHandler
+  )
+  const contextUsers = useAppSelector(users)
+  const deleteId = useAppSelector((state) => state.userContext.deleteUserId)
+  const contextUsersStatus = useAppSelector(getUsersStatus)
+  const dispatch = useAppDispatch()
 
   const [handleOpen, setHandleOpen] = useState('')
 
   useEffect(() => {
-    setHandleOpen(themeContext.popupHandler)
-  }, [themeContext.popupHandler])
+    setHandleOpen(popupHandler)
+  }, [popupHandler])
 
   const handleDeleteUser = () => {
     dispatch(deleteUserState())
@@ -35,16 +37,7 @@ function Users() {
   return (
     <>
       <div>
-        <section>
-          {handleOpen !== '' ? (
-            <Modal
-              isOpen={handleOpen}
-              close={() => setHandleOpen(!handleOpen)}
-            />
-          ) : (
-            ''
-          )}
-        </section>
+        <section>{handleOpen !== '' ? <Modal /> : ''}</section>
         <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
           <div className='flex justify-end pr-10 pb-10'>
             <AddButton />

@@ -1,17 +1,30 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import type { RootState } from '../store'
+import type { User } from './DbTypes'
 
-export const initialState = {
+interface UserState {
+  userForm: User
+  deleteComponentId: number
+  deleteUserId: string
+  editMode: boolean
+  users: User[]
+  status: string
+  error: string
+}
+
+export const initialState: UserState = {
   userForm: {
     id: '',
     name: '',
     email: '',
     role: '',
-    workOrders: '',
-    accounts: '',
-    sessions: '',
+    workOrders: [],
+    accounts: [],
+    sessions: [],
     image: '',
   },
-  deleteComponentId: '',
+  deleteComponentId: null,
   deleteUserId: '',
   editMode: false,
   users: [],
@@ -25,15 +38,18 @@ export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
   return result
 })
 
-export const deleteUser = createAsyncThunk('user/deleteUser', async (id) => {
-  const response = await fetch(`/api/customer/deleteUser`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id }),
-  })
-})
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (id: string) => {
+    const response = await fetch(`/api/customer/deleteUser`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    })
+  }
+)
 
 export const userSlice = createSlice({
   name: 'userContext',
@@ -54,7 +70,7 @@ export const userSlice = createSlice({
   },
 
   reducers: {
-    updateUserForm: (state, action) => {
+    updateUserForm: (state: RootState, action: PayloadAction<User>) => {
       const {
         id,
         name,
@@ -81,6 +97,9 @@ export const userSlice = createSlice({
     addNewUser: (state, action) => {
       state.users.push(action.payload)
     },
+    setEditMode: (state, action: PayloadAction<boolean>) => {
+      state.editMode = action.payload
+    },
 
     deleteUserState: (state) => {
       state.users.splice(state.deleteComponentId, 1)
@@ -96,7 +115,7 @@ export const userSlice = createSlice({
     },
     setUserInit: (state) => {
       state.deleteUserId = ''
-      state.deleteComponentId = ''
+      state.deleteComponentId = null
     },
   },
 })
@@ -107,7 +126,7 @@ export const getDeleteId = (state) => state.userContext.deleteId
 
 export const {
   updateUserForm,
-  deleteId,
+  setEditMode,
   deleteUserState,
   setDeleteComponentId,
   setDeleteUserId,

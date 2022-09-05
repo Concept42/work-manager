@@ -1,9 +1,12 @@
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../utils/hooks'
 import AddNewUser from '../Forms/AddNewUser'
 import DeleteMessage from './DeleteMessage'
+import type { RootState } from '../../store'
 
-export const Modal = ({ children, title }) => {
-  const handle = useSelector((state) => state.themeContext.popupHandler)
+export const Modal = () => {
+  const handle = useAppSelector(
+    (state: RootState) => state.themeContext.popupHandler
+  )
 
   return (
     <>

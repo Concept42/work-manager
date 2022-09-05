@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateUserForm, addNewUser, updateUser } from '../../slices/userSlice'
+import {
+  updateUserForm,
+  addNewUser,
+  updateUser,
+  setEditMode,
+} from '../../slices/userSlice'
 import { handleUserPopup } from '../../slices/themeSlice'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -86,6 +91,7 @@ export default function AddNewUser() {
   const handleUpdateData = async (e) => {
     e.preventDefault()
     dispatch(updateUser(newUser))
+    dispatch(setEditMode(true))
     cancel()
     const response = await fetch(`/api/customer/updateUserData`, {
       method: 'POST',
