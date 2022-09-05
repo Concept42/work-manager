@@ -120,10 +120,6 @@ export const userSlice = createSlice({
   },
 })
 
-export const users = (state) => state.userContext.users
-export const getUsersStatus = (state) => state.userContext.status
-export const getDeleteId = (state) => state.userContext.deleteId
-
 export const {
   updateUserForm,
   setEditMode,
