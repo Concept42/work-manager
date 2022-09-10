@@ -6,20 +6,13 @@ import MenuItem from '@mui/material/MenuItem'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  updateUserForm,
-  setDeleteComponentId,
-  setDeleteUserId,
-} from '../../slices/userSlice'
-import { handleUserPopup, cancelButton } from '../../slices/themeSlice'
-import {
-  setDeleteCustomerComponentId,
-  setDeleteCustomerId,
-  updateCustomerForm,
-} from '../../slices/customerSlice'
+import { useAppDispatch } from '../../utils/hooks'
+import { updateUserForm, setDeleteComponentId, setDeleteUserId, setEditMode } from '../../slices/userSlice'
+import { handleUserPopup } from '../../slices/themeSlice'
+import { setDeleteCustomerComponentId, setDeleteCustomerId, updateCustomerForm } from '../../slices/customerSlice'
+import type { User, Customer } from '../../slices/DbTypes'
 
-const StyledMenu = styled((props) => (
+const StyledMenu = styled((props: any) => (
   <Menu
     elevation={0}
     anchorOrigin={{
@@ -53,17 +46,22 @@ const StyledMenu = styled((props) => (
   },
 }))
 
-export default function DotMenu(props) {
+interface Props {
+  singleUser: User
+  singleCustomer: Customer
+  index: number
+  customerIndex: number
+}
+
+export default function DotMenu(props: Props) {
   const singleUser = props.singleUser
   const singleCustomer = props.singleCustomer
 
-  const popupHandler = useSelector((state) => state.themeContext.popupHandler)
   const [anchorEl, setAnchorEl] = useState(null)
-
   const open = Boolean(anchorEl)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
@@ -72,8 +70,8 @@ export default function DotMenu(props) {
   }
 
   const handleUserEditMode = () => {
-    dispatch(setDeleteComponentId(props.index))
     dispatch(handleUserPopup('EDIT'))
+    dispatch(setDeleteComponentId(props.index))
     setAnchorEl(null)
     dispatch(
       updateUserForm({
@@ -85,13 +83,12 @@ export default function DotMenu(props) {
         accounts: singleUser.accounts,
         sessions: singleUser.sessions,
         image: singleUser.image,
-        editMode: true,
-      })
+      }),
     )
+    dispatch(setEditMode(true))
   }
   const handleCustomerEditMode = () => {
     dispatch(setDeleteCustomerComponentId(props.customerIndex))
-    dispatch(handleUserPopup('EDIT CUSTOMER'))
     setAnchorEl(null)
     dispatch(
       updateCustomerForm({
@@ -105,7 +102,7 @@ export default function DotMenu(props) {
         oib: singleCustomer.oib,
         phoneNumber: singleCustomer.phoneNumber,
         editMode: true,
-      })
+      }),
     )
   }
 
@@ -113,7 +110,7 @@ export default function DotMenu(props) {
     dispatch(handleUserPopup('DELETE'))
     setAnchorEl(null)
     dispatch(setDeleteComponentId(props.index))
-    dispatch(setDeleteUserId(singleUser?.id))
+    dispatch(setDeleteUserId(singleUser.id))
   }
   const handleDeleteCustomer = () => {
     dispatch(handleUserPopup('DELETE CUSTOMER'))
@@ -124,9 +121,9 @@ export default function DotMenu(props) {
 
   return (
     <div>
-      <div className='flex justify-start' onClick={handleClick}>
+      <button className='flex justify-start' onClick={handleClick}>
         <MoreVertIcon />
-      </div>
+      </button>
       <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
         {singleUser ? (
           <MenuItem onClick={handleDeleteUser} disableRipple>

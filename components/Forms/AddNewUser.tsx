@@ -1,29 +1,30 @@
 import { useAppSelector, useAppDispatch } from '../../utils/hooks'
 import { updateUserForm, addNewUser, updateUser, setEditMode } from '../../slices/userSlice'
 import { handleUserPopup } from '../../slices/themeSlice'
-import useForm from '../../utils/useForm'
-import type { User } from '../../slices/DbTypes'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import type { EditMode } from '../../slices/userSlice'
+
+interface FormInputs {
+  id: string
+  name: string
+  email: string
+  role: string
+}
 
 const AddNewUser: React.FC = () => {
-  const contextUser: User = useAppSelector((state) => state.userContext)
+  const contextUser: EditMode = useAppSelector((state) => state.userContext)
   const dispatch = useAppDispatch()
 
-  const [values, handleChange, handleRoleChange] = useForm()
-  // const [newUser, setNewUser] = useState({
-  //   id: '',
-  //   name: '',
-  //   email: '',
-  //   role: '',
-  //   workOrders: [],
-  //   accounts: [],
-  //   sessions: [],
-  //   image: '',
-  // })
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormInputs>()
+  console.log(watch('name'))
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    e.persist()
-    dispatch(addUser(values))
+  const formSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
+    dispatch(addNewUser(data))
     cancel()
     const response = await fetch(`/api/customer/addUser`, {
       method: 'POST',
@@ -31,10 +32,10 @@ const AddNewUser: React.FC = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: values.id,
-        name: values.name,
-        email: values.email,
-        role: values.role,
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        role: data.role,
       }),
     })
   }
@@ -82,33 +83,32 @@ const AddNewUser: React.FC = () => {
   }
 
   return (
-    <div className='flex flex-col min-w-[500px]  text-font items-start '>
+    <form onSubmit={handleSubmit(formSubmit)} className='flex flex-col min-w-[500px]  text-font items-start '>
       <div className='flex flex-col w-full h-full justify-between gap-8'>
         <div className='form-control w-full max-w-2xl'>
           <input
             className='input input-bordered w-full max-w-lg'
-            name='name'
+            {...register('name', { required: 'Enter your name' })}
             type='text'
             placeholder='Ime i prezime*'
-            onChange={handleChange}
-            value={values.name}
           />
         </div>
         <div className='form-control w-full max-w-2xl'>
           <input
             className='input input-bordered w-full max-w-lg'
-            name='email'
+            {...register('email', { required: true })}
             type='email'
             placeholder='Email*'
-            onChange={handleChange}
-            value={values.email}
           />
         </div>
         <div className='form-control w-full max-w-lg'>
-          <select className='select select-bordered' id='role' name='role' onChange={handleRoleChange} defaultValue=''>
-            <option disabled value=''>
-              Odaberi ulogu
-            </option>
+          <select
+            className='select select-bordered'
+            id='role'
+            {...register('role', { required: true })}
+            defaultValue=''
+          >
+            <option disabled>Odaberi ulogu</option>
             <option value='USER'>Korisnik</option>
             <option value='ADMIN'>Administrator</option>
           </select>
@@ -119,7 +119,7 @@ const AddNewUser: React.FC = () => {
               <button onClick={cancel} className='btn btn-outline btn-md'>
                 Odustani
               </button>
-              <button onClick={handleSubmit} className='btn btn-info btn-md'>
+              <button type='submit' className='btn btn-info btn-md'>
                 Dodaj
               </button>
             </>
@@ -140,7 +140,7 @@ const AddNewUser: React.FC = () => {
       ) : (
         ''
       )}
-    </div>
+    </form>
   )
 }
 

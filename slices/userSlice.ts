@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { User } from './DbTypes'
 
-interface UserState {
+export interface UserState {
   userForm: User
   deleteComponentId: number
   deleteUserId: string
@@ -11,6 +11,10 @@ interface UserState {
   users: User[]
   status: string
   error: string
+}
+
+export type EditMode = {
+  editMode: boolean
 }
 
 export const initialState: UserState = {
