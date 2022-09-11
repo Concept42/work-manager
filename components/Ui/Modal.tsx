@@ -3,10 +3,14 @@ import AddNewUser from '../Forms/AddNewUser'
 import DeleteMessage from './DeleteMessage'
 import type { RootState } from '../../store'
 
-export const Modal = () => {
-  const handle = useAppSelector(
-    (state: RootState) => state.themeContext.popupHandler
-  )
+import React from 'react'
+
+interface Props {
+  isLoading: any
+}
+
+const Modal: React.FC = (props: Props) => {
+  const handle = useAppSelector((state: RootState) => state.themeContext.popupHandler)
 
   return (
     <>
@@ -32,3 +36,4 @@ export const Modal = () => {
     </>
   )
 }
+export default Modal

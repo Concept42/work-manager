@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditIcon from '@mui/icons-material/Edit'
 import { useAppDispatch } from '../../utils/hooks'
-import { updateUserForm, setDeleteComponentId, setDeleteUserId, setEditMode } from '../../slices/userSlice'
+import { updateUserForm, setComponentId, setUserId, setEditMode } from '../../slices/userSlice'
 import { handleUserPopup } from '../../slices/themeSlice'
 import { setDeleteCustomerComponentId, setDeleteCustomerId, updateCustomerForm } from '../../slices/customerSlice'
 import type { User, Customer } from '../../slices/DbTypes'
@@ -47,10 +47,10 @@ const StyledMenu = styled((props: any) => (
 }))
 
 interface Props {
-  singleUser: User
-  singleCustomer: Customer
-  index: number
-  customerIndex: number
+  singleUser?: User
+  singleCustomer?: Customer
+  index?: number
+  customerIndex?: number
 }
 
 export default function DotMenu(props: Props) {
@@ -71,7 +71,7 @@ export default function DotMenu(props: Props) {
 
   const handleUserEditMode = () => {
     dispatch(handleUserPopup('EDIT'))
-    dispatch(setDeleteComponentId(props.index))
+    dispatch(setComponentId(props.index))
     setAnchorEl(null)
     dispatch(
       updateUserForm({
@@ -109,8 +109,8 @@ export default function DotMenu(props: Props) {
   const handleDeleteUser = () => {
     dispatch(handleUserPopup('DELETE'))
     setAnchorEl(null)
-    dispatch(setDeleteComponentId(props.index))
-    dispatch(setDeleteUserId(singleUser.id))
+    dispatch(setComponentId(props.index))
+    dispatch(setUserId(singleUser.id))
   }
   const handleDeleteCustomer = () => {
     dispatch(handleUserPopup('DELETE CUSTOMER'))

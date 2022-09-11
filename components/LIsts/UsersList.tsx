@@ -1,0 +1,31 @@
+import Avatar from '@mui/material/Avatar'
+import DotMenu from '../Ui/DotMenu'
+import type { User } from '../../slices/DbTypes'
+
+interface Props {
+  singleUser: User
+  index: number
+}
+
+const UsersList: React.FC = ({ singleUser, index }: Props) => {
+  const oneUser = singleUser
+  const componentId = index
+
+  return (
+    <>
+      <tr>
+        <th>{componentId + 1}</th>
+        <td>
+          <Avatar src={oneUser?.image} />
+        </td>
+        <td>{oneUser?.name}</td>
+        <td>{oneUser?.email}</td>
+        <td>{oneUser?.role}</td>
+        <td>
+          <DotMenu singleUser={oneUser} index={componentId} />
+        </td>
+      </tr>
+    </>
+  )
+}
+export default UsersList

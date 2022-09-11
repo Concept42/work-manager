@@ -27,6 +27,7 @@ export const initialState: UserState = {
     accounts: [],
     sessions: [],
     image: '',
+    password: '',
   },
   deleteComponentId: null,
   deleteUserId: '',
@@ -53,26 +54,26 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string)
 })
 
 export const userSlice = createSlice({
-  name: 'userContext',
+  name: 'User',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.pending, (state) => {
       state.status = 'loading'
     })
-    builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.status = 'succeeded'
+    builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+      state.status = 'fulfilled'
       state.users = action.payload
       state.error = ''
     })
     builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.status = 'failed'
+      state.status = 'rejected'
       state.error = action.error.message
     })
   },
 
   reducers: {
-    updateUserForm: (state: RootState, action: PayloadAction<User>) => {
-      const { id, name, email, role, workOrders, accounts, sessions, image } = action.payload
+    updateUserForm: (state, action: PayloadAction<User>) => {
+      const { id, name, email, role, workOrders, accounts, sessions, image, password } = action.payload
       state.userForm = {
         id,
         name,
@@ -82,9 +83,10 @@ export const userSlice = createSlice({
         accounts,
         sessions,
         image,
+        password,
       }
     },
-    addNewUser: (state, action) => {
+    addNewUser: (state, action: PayloadAction<User>) => {
       state.users.push(action.payload)
     },
     setEditMode: (state, action: PayloadAction<boolean>) => {
@@ -94,33 +96,38 @@ export const userSlice = createSlice({
     deleteUserState: (state) => {
       state.users.splice(state.deleteComponentId, 1)
     },
-    setDeleteComponentId: (state, action) => {
+    setComponentId: (state, action: PayloadAction<number>) => {
       state.deleteComponentId = action.payload
     },
-    setDeleteUserId: (state, action) => {
+    setUserId: (state, action) => {
       state.deleteUserId = action.payload
     },
-    updateUser: (state, action) => {
+    updateUser: (state, action: PayloadAction<User>) => {
       state.users.splice(state.deleteComponentId, 1, action.payload)
     },
     setUserInit: (state) => {
       state.deleteUserId = ''
       state.deleteComponentId = null
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.status = action.payload
+    },
   },
 })
 
 export const popupHandler = (state: RootState) => state.themeContext.popupHandler
 export const contextUsers = (state: RootState) => state.userContext.users
+export const updatedUser = (state: RootState) => state.userContext.userForm
 
 export const {
   updateUserForm,
   setEditMode,
   deleteUserState,
-  setDeleteComponentId,
-  setDeleteUserId,
+  setComponentId,
+  setUserId,
   addNewUser,
   updateUser,
   setUserInit,
+  setIsLoading,
 } = userSlice.actions
 export default userSlice.reducer

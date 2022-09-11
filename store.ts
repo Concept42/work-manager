@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
-import useReducer from './slices/userSlice'
+import User from './slices/userSlice'
 import themeReducer from './slices/themeSlice'
 import customerReducer from './slices/customerSlice'
 
 export const store = configureStore({
   reducer: {
-    userContext: useReducer,
+    userContext: User,
     themeContext: themeReducer,
     customerContext: customerReducer,
   },

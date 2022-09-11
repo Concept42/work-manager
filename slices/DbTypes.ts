@@ -3,6 +3,7 @@ export type User = {
   name: string
   email: string
   role: string
+  password: string
   workOrders?: WorkOrders[]
   accounts?: []
   sessions?: []

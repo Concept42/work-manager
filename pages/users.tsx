@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react'
 import UsersList from '../components/LIsts/UsersList'
 import { useAppSelector } from '../utils/hooks'
 import AddButton from '../components/Ui/AddButton'
-import { Modal } from '../components/Ui/Modal'
+import Modal from '../components/Ui/Modal'
 import type { User } from '../slices/DbTypes'
+import Loader from '../components/Ui/Loader'
 
 const Users: React.FC = () => {
   const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
   const contextUsers: User[] = useAppSelector((state) => state.userContext.users)
+  const handleLoading = useAppSelector((state) => state.userContext.status)
 
   const [handleOpen, setHandleOpen] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<string>('')
 
   useEffect(() => {
+    setIsLoading(handleLoading)
     setHandleOpen(popupHandler)
-  }, [popupHandler])
+  }, [popupHandler, handleLoading])
 
   return (
     <>
@@ -30,14 +34,21 @@ const Users: React.FC = () => {
                   <th>#</th>
                   <th>Avatar</th>
                   <th>Name</th>
+                  <th>Email</th>
                   <th>Role</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {contextUsers.map((singleUser: User, index: number) => {
-                  return <UsersList key={index} singleUser={singleUser} index={index} />
-                })}
+                {isLoading === 'loading' ? (
+                  <Loader />
+                ) : (
+                  contextUsers &&
+                  contextUsers.map((singleUser: User, index: number) => {
+                    return <UsersList key={index} singleUser={singleUser} index={index} />
+                  })
+                )}
+                {}
               </tbody>
             </table>
           </div>
