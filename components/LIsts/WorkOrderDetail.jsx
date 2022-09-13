@@ -7,9 +7,7 @@ import { setDetailWorkOrder } from '../../slices/customerSlice'
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
 
 function WorkOrderDetail() {
-  const workOrderDetail = useSelector(
-    (state) => state.customerContext.detailWorkOrder
-  )
+  const workOrderDetail = useSelector((state) => state.customerContext.detailWorkOrder)
   const dispatch = useDispatch()
 
   const cancel = () => {
@@ -27,28 +25,15 @@ function WorkOrderDetail() {
           </div>
           <div className='flex text-[16px] gap-3'>
             <h1 className='flex text-[16px]'>Ažurirano:</h1>
-            {moment(workOrderDetail.updatedAt).format('Do MMMM YYYY, h:mm') ===
-            'Invalid date'
+            {moment(workOrderDetail.updatedAt).format('Do MMMM YYYY, h:mm') === 'Invalid date'
               ? '-'
               : moment(workOrderDetail.updatedAt).format('Do MMMM YYYY, h:mm')}
           </div>
           <div className='flex items-center gap-3 text-[15px]'>
             <p>Status: </p>
-            {workOrderDetail.statusFlag === 'U izradi' ? (
-              <FiberManualRecordIcon color='warning' />
-            ) : (
-              ''
-            )}
-            {workOrderDetail.statusFlag === 'Prekinuto' ? (
-              <FiberManualRecordIcon color='error' />
-            ) : (
-              ''
-            )}
-            {workOrderDetail.statusFlag === 'Završeno' ? (
-              <FiberManualRecordIcon color='success' />
-            ) : (
-              ''
-            )}
+            {workOrderDetail.statusFlag === 'U izradi' ? <FiberManualRecordIcon color='warning' /> : ''}
+            {workOrderDetail.statusFlag === 'Prekinuto' ? <FiberManualRecordIcon color='error' /> : ''}
+            {workOrderDetail.statusFlag === 'Završeno' ? <FiberManualRecordIcon color='success' /> : ''}
             {workOrderDetail.statusFlag}
           </div>
         </div>
@@ -63,9 +48,7 @@ function WorkOrderDetail() {
         </div>
       </div>
       <div className='flex flex-col justify-start mt-11 gap-4'>
-        <h1 className='flex justify-center text-[30px] pb-20'>
-          {workOrderDetail.title}
-        </h1>
+        <h1 className='flex justify-center text-[30px] pb-20'>{workOrderDetail.title}</h1>
 
         <div className='flex items-center gap-3 text-[15px]'>
           <p className='text-[20px]'>Opis: </p>

@@ -12,7 +12,7 @@ export interface CustomerState {
   deleteCustomerId: string
   error: string
   status: string
-  detailWorkOrder: WorkOrders[]
+  detailCustomer: Customer[]
   editMode: boolean
 }
 
@@ -36,7 +36,7 @@ export const initialState: CustomerState = {
   deleteCustomerId: '',
   error: '',
   status: '',
-  detailWorkOrder: [],
+  detailCustomer: [],
   editMode: false,
 }
 
@@ -85,8 +85,8 @@ export const customerSlice = createSlice({
   },
 
   reducers: {
-    setDetailWorkOrder: (state, action) => {
-      state.detailWorkOrder = action.payload
+    setDetailCustomer: (state, action: PayloadAction<Customer>) => {
+      state.detailCustomer.push(action.payload)
     },
     getSortedCustomers: (state) => {
       state.sortedCustomers = state.customers.sort((a, b) => {
@@ -136,7 +136,7 @@ export const customersList = (state: RootState) => state.customerContext.custome
 export const updatedCustomer = (state: RootState) => state.customerContext.customerForm
 
 export const {
-  setDetailWorkOrder,
+  setDetailCustomer,
   addNewCustomer,
   deleteCustomerState,
   setDeleteCustomerComponentId,

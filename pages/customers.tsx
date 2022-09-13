@@ -35,6 +35,7 @@ const Customers: React.FC = () => {
   useEffect(() => {
     setIsLoading(handleLoading)
     setHandleOpen(popupHandler)
+    console.log(sortedCustomers)
   }, [popupHandler, handleLoading])
 
   const handleDeleteCustomer = () => {
@@ -83,7 +84,7 @@ const Customers: React.FC = () => {
             <table className='table w-full'>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>WorkList</th>
                   <th>Name</th>
                   <th>Surname</th>
                   <th>Company</th>
@@ -104,7 +105,6 @@ const Customers: React.FC = () => {
                     return <CustomerList key={index} singleCustomer={singleCustomer} index={index} />
                   })
                 )}
-                {}
               </tbody>
             </table>
           </div>

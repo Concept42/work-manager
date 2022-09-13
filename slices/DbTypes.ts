@@ -23,12 +23,12 @@ export type Customer = {
   workOrders?: WorkOrders[]
 }
 export type WorkOrders = {
-  id: string
-  createdAt: string
-  updatedAt: string
-  title: string
-  discription: string
-  statusFlag: string
+  id?: string
+  createdAt?: string
+  updatedAt?: string
+  title?: string
+  discription?: string
+  statusFlag?: string
   customer?: Customer[]
-  user: User[]
+  user?: User[]
 }
