@@ -6,6 +6,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { userSchema } from '../Forms/FormValidate'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 
 interface FormInputs {
   id: string
@@ -20,13 +21,8 @@ const AddNewUser: React.FC = () => {
   const globalUser = useAppSelector(updatedUser)
   const dispatch = useAppDispatch()
 
-  const [user, setUser] = useState<FormInputs>({
-    id: '',
-    name: '',
-    email: '',
-    role: '',
-    password: '',
-  })
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+
   const {
     register,
     handleSubmit,
@@ -41,18 +37,6 @@ const AddNewUser: React.FC = () => {
     },
     resolver: yupResolver(userSchema),
   })
-
-  useEffect(() => {
-    if (editMode) {
-      setUser({
-        id: globalUser.id,
-        name: globalUser.name,
-        email: globalUser.email,
-        role: globalUser.role,
-        password: globalUser.password,
-      })
-    }
-  }, [globalUser.id, globalUser.name, globalUser.email, globalUser.role, editMode])
 
   const onSubmit = handleSubmit(async (data) => {
     if (Object.keys(errors).length === 0) {
@@ -102,10 +86,15 @@ const AddNewUser: React.FC = () => {
         id: '',
         name: '',
         email: '',
+        password: '',
         role: '',
       }),
     )
     dispatch(setEditMode(false))
+  }
+
+  const handleVisibility = () => {
+    setIsVisible(!isVisible)
   }
 
   return (
@@ -135,7 +124,7 @@ const AddNewUser: React.FC = () => {
           />
           {errors.email && <p className='text-error pt-2 '>{errors.email.message}</p>}
         </div>
-        <div className='form-control w-full max-w-2xl'>
+        <div className='form-control w-full max-w-2xl relative'>
           <input
             className={
               errors.password
@@ -143,10 +132,13 @@ const AddNewUser: React.FC = () => {
                 : 'input input-bordered w-full max-w-lg'
             }
             {...register('password')}
-            type='password'
+            type={isVisible ? 'text' : 'password'}
             placeholder='Password*'
             name='password'
           />
+          <div onClick={handleVisibility} className='absolute right-3 top-[25%] hover:scale-125'>
+            <VisibilityIcon />
+          </div>
           {errors.password && <p className='text-error pt-2 '>{errors.password.message}</p>}
         </div>
         <div className='form-control w-full max-w-lg'>
@@ -174,21 +166,18 @@ const AddNewUser: React.FC = () => {
               </button>
             </>
           ) : (
-            ''
+            <>
+              <div className='flex gap-4 w-full justify-end'>
+                <button onClick={cancel} className='btn btn-outline btn-md'>
+                  Odustani
+                </button>
+                <button onClick={handleUpdateData} className='btn btn-info btn-md'>
+                  Update
+                </button>
+              </div>
+            </>
           )}
         </div>
-        {editMode ? (
-          <div className='flex gap-4 w-full justify-end'>
-            <button onClick={cancel} className='btn btn-outline btn-md'>
-              Odustani
-            </button>
-            <button onClick={handleUpdateData} className='btn btn-info btn-md'>
-              Update
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
       </div>
     </form>
   )

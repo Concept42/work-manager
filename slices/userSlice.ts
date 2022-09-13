@@ -109,7 +109,7 @@ export const userSlice = createSlice({
       state.deleteUserId = ''
       state.deleteComponentId = null
     },
-    setIsLoading: (state, action: PayloadAction<boolean>) => {
+    setIsLoading: (state, action: PayloadAction<string>) => {
       state.status = action.payload
     },
   },

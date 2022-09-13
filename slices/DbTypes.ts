@@ -18,8 +18,8 @@ export type Customer = {
   email: string
   adress: string
   city: string
-  oib: string
-  phoneNumber: string
+  oib: number
+  phoneNumber: number
   workOrders?: WorkOrders[]
 }
 export type WorkOrders = {

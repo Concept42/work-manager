@@ -24,68 +24,39 @@ function Signin() {
   }
 
   return (
-    <>
-      <div className='flex w-screen h-screen justify-center items-start'>
-        <div className='flex flex-col h-screen bg-secondary min-w-[500px] justify-start items-center pt-32'>
-          <h1 className='flex my-12 text-[26px] text-font'>WORK MANAGER</h1>
-          <h1 className='flex text-[26px] text-font'>Sign in</h1>
-          <div className='flex flex-col gap-10 mt-11 w-[70%]'>
-            <div>
-              <Input
-                className='flex h-14 '
-                label='Email'
-                variant='outlined'
-                onChange={handleChange}
-                type='email'
-                name='email'
-              />
-            </div>
-            <div>
-              <Input
-                className='flex h-14'
-                label='Password'
-                variant='outlined'
-                onChange={handleChange}
-                type='password'
-                name='password'
-              />
-            </div>
-            <button
-              onClick={handleSubmit}
-              className='flex justify-center bg-accent px-4 py-6 rounded-2xl text-[14px] font-semibold text-buttonText mt-8   hover:opacity-70'
-            >
-              Sign in
-            </button>
+    <div className='flex justify-center items-center fixed top-0 left-0  w-screen h-screen'>
+      <div className='flex items-center flex-col w-[25%] h-[50%] bg-white'>
+        <h1 className='flex my-12 text-[26px] text-font'>WORK MANAGER</h1>
+        <h1 className='flex text-[26px] text-font'>Sign in</h1>
+        <div className='flex flex-col gap-10 mt-11 w-[70%]'>
+          <div className='form-control w-full max-w-2xl'>
+            <input
+              className='input input-bordered w-full max-w-lg'
+              label='Email'
+              variant='outlined'
+              onChange={handleChange}
+              type='email'
+              name='email'
+              placeholder='Email'
+            />
           </div>
+          <div className='form-control w-full max-w-2xl'>
+            <input
+              className='input input-bordered w-full max-w-lg'
+              variant='outlined'
+              onChange={handleChange}
+              type='password'
+              name='password'
+              placeholder='Password'
+            />
+          </div>
+
+          <button onClick={handleSubmit} className='btn btn-primary btn-md text-white '>
+            Sign in
+          </button>
         </div>
       </div>
-    </>
-    // <div className='flex justify-center items-center w-screen h-screen'>
-    //   <form
-    //     onSubmit={handleSubmit}
-    //     className='flex flex-col border-solid border-2 border-black min-h-fit min-w-fit py-28 px-20 space-y-8 items-center'
-    //   >
-    //     <h1 className='flex justify-center text-[26px]'>Login</h1>
-    //     <input
-    //       className='border-solid border-2 '
-    //       type='text'
-    //       name='email'
-    //       placeholder='Email'
-    //       value={userInfo.email}
-    //       onChange={handleChange}
-    //     />
-    //     <input
-    //       className='border-solid border-2'
-    //       type='password'
-    //       name='password'
-    //       placeholder='Password'
-    //       onChange={handleChange}
-    //     />
-    //     <button type='submit' className='border-solid border-2 h-10 w-28'>
-    //       Log in
-    //     </button>
-    //   </form>
-    // </div>
+    </div>
   )
 }
 

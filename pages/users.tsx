@@ -25,7 +25,7 @@ const Users: React.FC = () => {
         <section>{handleOpen !== '' ? <Modal /> : ''}</section>
         <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
           <div className='flex justify-end pr-10 pb-10'>
-            <AddButton />
+            <AddButton add={'user'} />
           </div>
           <div className='overflow-x-auto w-full px-10 '>
             <table className='table w-full'>

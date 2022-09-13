@@ -78,6 +78,7 @@ export default function DotMenu(props: Props) {
         id: singleUser.id,
         name: singleUser.name,
         email: singleUser.email,
+        password: singleUser.password,
         role: singleUser.role,
         workOrders: singleUser.workOrders,
         accounts: singleUser.accounts,
@@ -128,23 +129,23 @@ export default function DotMenu(props: Props) {
         {singleUser ? (
           <MenuItem onClick={handleDeleteUser} disableRipple>
             <DeleteIcon />
-            Delete user
+            Delete
           </MenuItem>
         ) : (
           <MenuItem onClick={handleDeleteCustomer} disableRipple>
             <DeleteIcon />
-            Delete customer
+            Delete
           </MenuItem>
         )}
         {singleUser ? (
           <MenuItem onClick={handleUserEditMode} disableRipple>
             <EditIcon />
-            Edit user
+            Edit
           </MenuItem>
         ) : (
           <MenuItem onClick={handleCustomerEditMode} disableRipple>
             <EditIcon />
-            Edit customer
+            Edit
           </MenuItem>
         )}
       </StyledMenu>
