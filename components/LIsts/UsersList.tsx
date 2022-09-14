@@ -1,15 +1,15 @@
-import Avatar from '@mui/material/Avatar'
-import DotMenu from '../Ui/DotMenu'
-import type { User } from '../../slices/DbTypes'
+import Avatar from "@mui/material/Avatar";
+import DotMenu from "../Ui/DotMenu";
+import type { User } from "../../slices/DbTypes";
 
 interface Props {
-  singleUser: User
-  index: number
+  singleUser: User;
+  index: number;
 }
 
-const UsersList: React.FC = ({ singleUser, index }: Props) => {
-  const oneUser = singleUser
-  const componentId = index
+export default function UsersList(props: Props) {
+  const oneUser = props.singleUser;
+  const componentId = props.index;
 
   return (
     <>
@@ -26,6 +26,5 @@ const UsersList: React.FC = ({ singleUser, index }: Props) => {
         </td>
       </tr>
     </>
-  )
+  );
 }
-export default UsersList

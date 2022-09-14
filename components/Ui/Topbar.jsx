@@ -15,8 +15,8 @@ function Topbar() {
     dispatch(openSidebar())
   }
   return (
-    <div className='flex w-screen h-full items-center bg-white '>
-      <div className='flex flex-[1] max-w-[427px] justify-between items-center   '>
+    <div className='flex w-full h-full items-center bg-white '>
+      <div className='flex flex-[1]  justify-between items-center   '>
         <h1 className='flex w-[85%] justify-center '>WORK MANAGER</h1>
         <div className='flex' onClick={handleOpen}>
           <label tabIndex='0' className='btn btn-ghost btn-circle'>
@@ -56,7 +56,7 @@ function Topbar() {
             </label>
             <ul
               tabIndex='0'
-              className='dropdown-content menu shadow mt-5 ml-10 p-1 bg-white '
+              className='dropdown-content menu shadow mt-5 p-1 bg-white '
             >
               <li>
                 <a>Profile</a>
