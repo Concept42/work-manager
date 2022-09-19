@@ -1,29 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
 import type { WorkOrders } from './DbTypes'
 
 
-interface WorkOrderState {
-
-    workOrders : WorkOrders[],
-    workOrderForm:WorkOrders
-    componentId:number
-    workOrderId:string
-    editMode:boolean
-    status:string
-    error:string
+export interface WorkOrderState {
+    workOrders: WorkOrders[]
+    workOrderForm: WorkOrders
+    componentId: number
+    workOrderId: string
+    editMode: boolean
+    status: string
+    error: string
 }
 
-export const initialState:WorkOrderState={
-    workOrders:[],
-    workOrderForm:{
+export const initialState: WorkOrderState = {
+    workOrders: [],
+    workOrderForm: {
         id: "",
-        createdAt:"",
-        updatedAt:"",
+        createdAt: "",
+        updatedAt: "",
         title: "",
         discription: "",
-        statusFlag: ""
+        statusFlag: "",
     },
     componentId:null,
     workOrderId:"",
@@ -32,31 +30,31 @@ export const initialState:WorkOrderState={
     error:""
 }
 
-export const fetchWorkOrders = createAsyncThunk('workOrder/fetchWorkOrders', async () => {
+export const fetchWorkOrders = createAsyncThunk('workOrder/fetchWorkOrders', async () =>   {   
     const response = await fetch(`/api/customer/getOrderData`)
     const result = await response.json()
     return result
   })
 
-  export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string) => {
-    const response = await fetch(`/api/customer/deleteWorkOrder`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
-    })
-  })
+  // export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string) => {
+  //   const response = await fetch(`/api/customer/deleteWorkOrder`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ id }),
+  //   })
+  // })
 
 
   export const workOrderSlice = createSlice({
-    name:"WorkOrder",
+    name: "WorkOrder",
     initialState,
     extraReducers: (builder) => {
         builder.addCase(fetchWorkOrders.pending, (state)=>{
             state.status="loading"
         })
-        builder.addCase(fetchWorkOrders.fulfilled, (state, action:PayloadAction<WorkOrders[]> )=> {
+        builder.addCase(fetchWorkOrders.fulfilled, (state, action: PayloadAction<WorkOrders[]> )=> {
             state.status="fulfilled"
             state.workOrders = action.payload
             state.error=""
