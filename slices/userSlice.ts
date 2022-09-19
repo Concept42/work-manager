@@ -18,6 +18,7 @@ export type EditMode = {
 }
 
 export const initialState: UserState = {
+  users: [],
   userForm: {
     id: '',
     name: '',
@@ -32,7 +33,6 @@ export const initialState: UserState = {
   deleteComponentId: null,
   deleteUserId: '',
   editMode: false,
-  users: [],
   status: '',
   error: '',
 }

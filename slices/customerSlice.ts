@@ -14,12 +14,17 @@ export interface CustomerState {
   status: string
   detailCustomer: Customer[]
   editMode: boolean
+ 
+}
+
+export type EditMode = {
+  editCustomerMode: boolean
 }
 
 export const initialState: CustomerState = {
   customers: [],
   sortedCustomers: [],
-  sortType: '',
+  
   customerForm: {
     id: '',
     firstName: '',
@@ -38,6 +43,7 @@ export const initialState: CustomerState = {
   status: '',
   detailCustomer: [],
   editMode: false,
+  sortType: '',
 }
 
 export const fetchCustomers = createAsyncThunk('user/fetchCustomers', async () => {
@@ -97,7 +103,7 @@ export const customerSlice = createSlice({
     setSortType: (state, action: PayloadAction<string>) => {
       state.sortType = action.payload
     },
-    addNewCustomer: (state, action) => {
+    addNewCustomer: (state, action :PayloadAction<Customer>) => {
       state.customers.push(action.payload)
     },
     deleteCustomerState: (state) => {
@@ -109,7 +115,7 @@ export const customerSlice = createSlice({
     setDeleteCustomerId: (state, action) => {
       state.deleteCustomerId = action.payload
     },
-    setEditMode: (state, action: PayloadAction<boolean>) => {
+    setCustomerEditMode: (state, action: PayloadAction<boolean>) => {
       state.editMode = action.payload
     },
     updateCustomerForm: (state, action: PayloadAction<Customer>) => {
@@ -129,6 +135,10 @@ export const customerSlice = createSlice({
     updateCustomer: (state, action) => {
       state.customers[state.deleteCustomerComponentId] = action.payload
     },
+    setCustomerInit:(state) => {
+      state.deleteCustomerComponentId=null
+      state.deleteCustomerId=""
+    }
   },
 })
 
@@ -143,8 +153,10 @@ export const {
   setDeleteCustomerId,
   updateCustomerForm,
   updateCustomer,
-  setEditMode,
+  setCustomerEditMode,
   setSortType,
   getSortedCustomers,
+  setCustomerInit
+  
 } = customerSlice.actions
 export default customerSlice.reducer

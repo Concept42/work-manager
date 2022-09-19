@@ -19,8 +19,8 @@ model Customer {
   email String
   adress String
   city String
-  oib String
-  phoneNumber String
+  oib Int
+  phoneNumber Int
   workOrders WorkOrder[]
 }
 

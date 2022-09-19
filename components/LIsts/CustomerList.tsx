@@ -55,7 +55,7 @@ export default function CustomerList(props: Props) {
         <td>{singleCustomer?.oib}</td>
         <td>{singleCustomer?.phoneNumber}</td>
         <td>
-          <DotMenu singleCustomer={singleCustomer} index={index} />
+          <DotMenu singleCustomer={singleCustomer} customerIndex={index} />
         </td>
       </tr>
     </>

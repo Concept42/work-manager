@@ -7,7 +7,7 @@ import {
   updateCustomer,
   updateCustomerForm,
   updatedCustomer,
-  setEditMode,
+  setCustomerEditMode,
 } from "../../slices/customerSlice";
 import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,7 @@ interface CustomerFormInputs {
 }
 
 const AddNewCustomer: React.FC = () => {
-  const editMode = useAppSelector((state) => state.userContext.editMode);
+  const editMode = useAppSelector((state) => state.customerContext.editMode);
   const globalCustomer = useAppSelector(updatedCustomer);
   const dispatch = useAppDispatch();
 
@@ -51,6 +51,7 @@ const AddNewCustomer: React.FC = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log("customer Data", data);
     if (Object.keys(errors).length === 0) {
       dispatch(addNewCustomer(data));
       cancel();
@@ -114,7 +115,7 @@ const AddNewCustomer: React.FC = () => {
         phoneNumber: null,
       })
     );
-    dispatch(setEditMode(false));
+    dispatch(setCustomerEditMode(false));
   };
 
   return (

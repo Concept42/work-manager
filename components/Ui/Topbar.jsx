@@ -15,7 +15,7 @@ function Topbar() {
     dispatch(openSidebar())
   }
   return (
-    <div className='flex w-full h-full items-center bg-white '>
+    <div className='flex w-full h-16 items-center bg-white fixed top-0 '>
       <div className='flex flex-[1]  justify-between items-center   '>
         <h1 className='flex w-[85%] justify-center '>WORK MANAGER</h1>
         <div className='flex' onClick={handleOpen}>

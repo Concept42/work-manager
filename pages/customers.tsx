@@ -55,21 +55,21 @@ const Customers: React.FC = () => {
     dispatch(fetchCustomers());
   };
 
-  const search = (data: Customer[]) => {
-    const keys = [
-      "firstName",
-      "lastName",
-      "companyName",
-      "email",
-      "oib",
-      "city",
-      "adress",
-      "phoneNumber",
-    ];
-    return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(searchQuery))
-    );
-  };
+  // const search = (data: Customer[]) => {
+  //   const keys = [
+  //     "firstName",
+  //     "lastName",
+  //     "companyName",
+  //     "email",
+  //     "oib",
+  //     "city",
+  //     "adress",
+  //     "phoneNumber",
+  //   ];
+  //   return data.filter((item) =>
+  //     keys.some((key) => item[key].toLowerCase().includes(searchQuery))
+  //   );
+  // };
 
   return (
     <>
@@ -116,8 +116,8 @@ const Customers: React.FC = () => {
                 {isLoading === "loading" ? (
                   <Loader />
                 ) : (
-                  sortedCustomers &&
-                  search(sortedCustomers).map(
+                  contextCustomers &&
+                  contextCustomers.map(
                     (singleCustomer: Customer, index: number) => {
                       return (
                         <CustomerList
