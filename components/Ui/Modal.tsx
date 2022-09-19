@@ -2,7 +2,7 @@ import { useAppSelector } from "../../utils/hooks";
 import AddNewUser from "../Forms/AddNewUser";
 import DeleteMessage from "./DeleteMessage";
 import type { RootState } from "../../store";
-
+import AddNewWorkOrder from "../Forms/AddNewWorkOrder";
 import React from "react";
 import AddNewCustomer from "../Forms/AddNewCustomer";
 
@@ -20,12 +20,14 @@ const Modal: React.FC = () => {
             <div className="flex flex-col min-w-[600px] min-h-[500px] justify-center items-center gap-2">
               <h1 className="text-[24px]">
                 {handle === "ADDUSER" ? "Add new user" : ""}
+                {handle === "WORKORDER" ? "Add new work order" : ""}
                 {handle === "ADDCUSTOMER" ? "Add new customer" : ""}
                 {handle === "EDIT" ? "Edit user" : ""}
                 {handle === "EDITCUSTOMER" ? "Edit customer" : ""}
                 {handle === "DELETE" ? "" : ""}
               </h1>
               {handle === "ADDUSER" ? <AddNewUser /> : ""}
+              {handle === "WORKORDER" ? <AddNewWorkOrder /> : ""}
               {handle === "ADDCUSTOMER" ? <AddNewCustomer /> : ""}
               {handle === "EDIT" ? <AddNewUser /> : ""}
               {handle === "EDITCUSTOMER" ? <AddNewCustomer /> : ""}

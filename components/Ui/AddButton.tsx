@@ -13,6 +13,9 @@ function AddButton({ add }: Props) {
     if (add === "customer") {
       dispatch(handleUserPopup("ADDCUSTOMER"));
     }
+    if (add === "workOrder") {
+      dispatch(handleUserPopup("WORKORDER"));
+    }
   };
 
   const dispatch = useAppDispatch();
