@@ -46,7 +46,7 @@ model User {
   password      String?
   image         String?
   workOrders    WorkOrder[]
-  role          String      @default("USER")
+  role          String
   accounts      Account[]
   sessions      Session[]
 }
