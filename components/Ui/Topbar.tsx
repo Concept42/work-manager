@@ -50,14 +50,11 @@ function Topbar() {
             </div>
           </div>
           <div className="dropdown">
-            <label tabIndex="0" className="flex pr-2 pl-5">
+            <label className="flex pr-2 pl-5">
               {user}
               <ArrowDropDownIcon />
             </label>
-            <ul
-              tabIndex="0"
-              className="dropdown-content menu shadow mt-5 p-1 bg-white "
-            >
+            <ul className="dropdown-content menu shadow mt-5 p-1 bg-white ">
               <li>
                 <a>Profile</a>
               </li>
