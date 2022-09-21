@@ -1,12 +1,10 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import Auth0Provider from "next-auth/providers/auth0";
 import prisma from "../../../lib/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     CredentialsProvider({
       type: "credentials",
@@ -15,7 +13,7 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
 
-      async authorize(credentials, req, res) {
+      async authorize(credentials, res) {
         const { email, password } = credentials;
 
         const user = await prisma.user.findFirst({
@@ -31,6 +29,7 @@ export default NextAuth({
           },
         });
         res.status(200).json(user);
+
         if (!user) throw new Error("No Access");
         if (user.email !== email || user.password !== password)
           throw new Error("Invalid credentials");
