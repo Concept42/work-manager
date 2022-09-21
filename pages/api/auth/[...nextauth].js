@@ -30,6 +30,7 @@ export default NextAuth({
             role: true,
           },
         });
+        res.status(200).json(user);
         if (!user) throw new Error("No Access");
         if (user.email !== email || user.password !== password)
           throw new Error("Invalid credentials");
