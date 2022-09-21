@@ -2,9 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "darwin", "darwin-arm64" ]
-} 
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "darwin-arm64"]
+}
 
 datasource db {
   provider = "postgresql"
@@ -12,44 +12,43 @@ datasource db {
 }
 
 model Customer {
-  id String @id @default(cuid())
-  firstName String
-  lastName String
+  id          String      @id @default(cuid())
+  firstName   String
+  lastName    String
   companyName String
-  email String
-  adress String
-  city String
-  oib Int
+  email       String
+  adress      String
+  city        String
+  oib         Int
   phoneNumber Int
-  workOrders WorkOrder[]
+  workOrders  WorkOrder[]
 }
 
 model WorkOrder {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt  String?
-  title String
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   String?
+  title       String
   discription String
-  statusFlag String
-  customer Customer? @relation(fields: [customerId], references: [id])
-  customerId String?
-  user User? @relation(fields: [userId], references: [id])
-  userId String?
-  
+  statusFlag  String
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  customerId  String?
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
 }
 
 model User {
-  id String @id @default(uuid())
-  name String?
-  lastName String?
-  email String @unique  
+  id            String      @id @default(uuid())
+  name          String?
+  lastName      String?
+  email         String      @unique
   emailVerified DateTime?
-  password String?
-  image String?
-  workOrders WorkOrder[]
-  role Role @default(USER)
-  accounts Account[]
-  sessions Session[]
+  password      String?
+  image         String?
+  workOrders    WorkOrder[]
+  role          Role        @default(USER)
+  accounts      Account[]
+  sessions      Session[]
 }
 
 enum Role {
@@ -58,23 +57,23 @@ enum Role {
 }
 
 model Status {
-  id Int @id @default(autoincrement())
+  id     Int    @id @default(autoincrement())
   status String
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
