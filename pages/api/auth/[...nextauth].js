@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     CredentialsProvider({
       type: "credentials",
