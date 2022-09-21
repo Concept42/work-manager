@@ -1,25 +1,23 @@
-import NextAuth from 'next-auth'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import Auth0Provider from 'next-auth/providers/auth0'
-import prisma from '../../../lib/db'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import GithubProvider from 'next-auth/providers/github'
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import Auth0Provider from "next-auth/providers/auth0";
+import prisma from "../../../lib/db";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GithubProvider from "next-auth/providers/github";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: {
-    strategy: 'jwt',
-  },
+  secret: process.env.NEXT_PUBLIC_SECRET,
   providers: [
     CredentialsProvider({
-      type: 'credentials',
+      type: "credentials",
       credentials: {
-        email: { label: 'Email', type: 'email', placeholder: 'Email' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: "Email", type: "email", placeholder: "Email" },
+        password: { label: "Password", type: "password" },
       },
 
       async authorize(credentials, req, res) {
-        const { email, password } = credentials
+        const { email, password } = credentials;
 
         const user = await prisma.user.findFirst({
           where: {
@@ -32,17 +30,17 @@ export default NextAuth({
             name: true,
             role: true,
           },
-        })
-        if (!user) throw new Error('No Access')
+        });
+        if (!user) throw new Error("No Access");
         if (user.email !== email || user.password !== password)
-          throw new Error('Invalid credentials')
+          throw new Error("Invalid credentials");
 
         return {
           id: user.id,
           email: user.email,
           name: user.name,
           role: user.role,
-        }
+        };
       },
     }),
     GithubProvider({
@@ -50,8 +48,11 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
   pages: {
-    signIn: '/auth/signin',
+    signIn: "/auth/signin",
   },
 
   //   CredentialsProvider({
@@ -96,4 +97,4 @@ export default NextAuth({
   // session: {
   //   strategy: 'jwt',
   // },
-})
+});
