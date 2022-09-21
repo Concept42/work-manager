@@ -48,7 +48,7 @@ const Users: React.FC = () => {
                   <Loader />
                 ) : (
                   contextUsers &&
-                  contextUsers.map((singleUser: User, index: number) => {
+                  contextUsers?.map((singleUser: User, index: number) => {
                     return (
                       <UsersList
                         key={index}
