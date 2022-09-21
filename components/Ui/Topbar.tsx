@@ -19,7 +19,7 @@ function Topbar() {
       <div className="flex flex-[1]  justify-between items-center   ">
         <h1 className="flex w-[85%] justify-center ">WORK MANAGER</h1>
         <div className="flex" onClick={handleOpen}>
-          <label tabIndex="0" className="btn btn-ghost btn-circle">
+          <label className="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
