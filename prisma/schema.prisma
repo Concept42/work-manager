@@ -46,9 +46,20 @@ model User {
   password      String?
   image         String?
   workOrders    WorkOrder[]
+<<<<<<< HEAD
   role          String      @default("USER")
   accounts      Account[]
   sessions      Session[]
+=======
+  role          Role        @default(USER)
+  accounts      Account[]
+  sessions      Session[]
+}
+
+enum Role {
+  USER
+  ADMIN
+>>>>>>> Merge
 }
 
 model Status {
@@ -62,12 +73,21 @@ model Account {
   type              String
   provider          String
   providerAccountId String
+<<<<<<< HEAD
   refresh_token     String?
   access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
   id_token          String?
+=======
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+>>>>>>> Merge
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

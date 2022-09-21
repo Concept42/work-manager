@@ -19,7 +19,11 @@ function Topbar() {
       <div className="flex flex-[1]  justify-between items-center   ">
         <h1 className="flex w-[85%] justify-center ">WORK MANAGER</h1>
         <div className="flex" onClick={handleOpen}>
+<<<<<<< HEAD
           <label className="btn btn-ghost btn-circle">
+=======
+          <label tabIndex={0} className="btn btn-ghost btn-circle">
+>>>>>>> Merge
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -50,11 +54,22 @@ function Topbar() {
             </div>
           </div>
           <div className="dropdown">
+<<<<<<< HEAD
             <label className="flex pr-2 pl-5">
               {user}
               <ArrowDropDownIcon />
             </label>
             <ul className="dropdown-content menu shadow mt-5 p-1 bg-white ">
+=======
+            <label tabIndex={0} className="flex pr-2 pl-5">
+              {user}
+              <ArrowDropDownIcon />
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu shadow mt-5 p-1 bg-white "
+            >
+>>>>>>> Merge
               <li>
                 <a>Profile</a>
               </li>
