@@ -8,6 +8,11 @@ import { Provider } from "react-redux";
 import { fetchUsers } from "../slices/userSlice";
 import { fetchCustomers } from "../slices/customerSlice";
 import { fetchWorkOrders } from "../slices/workOrderSlice";
+import { withTRPC } from "@trpc/next";
+import type { AppRouter } from "../server/router/app.router";
+import type { Session } from "next-auth";
+import type AppType from "next/app";
+import superjson from "superjson";
 
 store.dispatch(fetchUsers());
 store.dispatch(fetchCustomers());
@@ -29,4 +34,30 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   );
 }
 
-export default MyApp;
+export default withTRPC<AppRouter>({
+  config({ ctx }) {
+    const url = process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
+      : "http://localhost:3000/api/trpc";
+    return {
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            staleTime: 60,
+          },
+        },
+      },
+      headers() {
+        if (ctx?.req) {
+          return {
+            ...ctx.req.headers,
+            "x-ssr": "1",
+          };
+        }
+        return {};
+      },
+      url,
+      transformer: superjson,
+    };
+  },
+})(MyApp);

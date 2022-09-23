@@ -10,7 +10,7 @@ export interface CustomerState {
   customers: Customer[]
   deleteCustomerComponentId: number
   deleteCustomerId: string
-  error: string
+  error: string | undefined
   status: string
   detailCustomer: Customer[]
   editMode: boolean
@@ -37,7 +37,7 @@ export const initialState: CustomerState = {
     phoneNumber: null,
   },
 
-  deleteCustomerComponentId: null,
+  deleteCustomerComponentId: 0,
   deleteCustomerId: '',
   error: '',
   status: '',
@@ -72,16 +72,7 @@ export const customerSlice = createSlice({
     builder.addCase(fetchCustomers.fulfilled, (state, action: PayloadAction<Customer[]>) => {
       state.status = 'succeeded'
       state.customers = action.payload
-      state.sortedCustomers = state.customers.sort((a, b) => {
-        if (state.sortType === 'asc') {
-          const isReversed = state.sortType === 'asc' ? 1 : -1
-          return isReversed * a.firstName.localeCompare(b.firstName)
-        }
-        if (state.sortType === 'dsc') {
-          const isReversed = state.sortType === 'dsc' ? -1 : 1
-          return isReversed * a.firstName.localeCompare(b.firstName)
-        }
-      })
+      
       state.error = ''
     })
     builder.addCase(fetchCustomers.rejected, (state, action) => {
@@ -136,7 +127,7 @@ export const customerSlice = createSlice({
       state.customers[state.deleteCustomerComponentId] = action.payload
     },
     setCustomerInit:(state) => {
-      state.deleteCustomerComponentId=null
+      state.deleteCustomerComponentId=0
       state.deleteCustomerId=""
     }
   },

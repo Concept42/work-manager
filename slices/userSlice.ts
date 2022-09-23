@@ -10,7 +10,7 @@ export interface UserState {
   editMode: boolean
   users: User[]
   status: string
-  error: string
+  error: string | undefined
 }
 
 export type EditMode = {
@@ -30,7 +30,7 @@ export const initialState: UserState = {
     image: '',
     password: '',
   },
-  deleteComponentId: null,
+  deleteComponentId: 0,
   deleteUserId: '',
   editMode: false,
   status: '',
@@ -107,7 +107,7 @@ export const userSlice = createSlice({
     },
     setUserInit: (state) => {
       state.deleteUserId = ''
-      state.deleteComponentId = null
+      state.deleteComponentId = 0
     },
     setIsLoading: (state, action: PayloadAction<string>) => {
       state.status = action.payload
