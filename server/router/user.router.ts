@@ -5,7 +5,7 @@ import * as trpc from '@trpc/server';
 
 
 export const userRouter = createRouter()
-.mutation("getUsersData", {
+.query("getUsersData", {
   async resolve({ctx}){
     const { email } = ctx.req.body
     const users = await ctx.prisma.user.findMany({

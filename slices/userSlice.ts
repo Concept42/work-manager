@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { User } from './DbTypes'
+import {trpc} from "../utils/trpc"
 
 export interface UserState {
   userForm: User
@@ -72,6 +73,11 @@ export const userSlice = createSlice({
   },
 
   reducers: {
+    fetchUsers:(state)=>{
+      const users = trpc.useQuery(['getUsersData']);
+      state.users = users.data
+    },
+
     updateUserForm: (state, action: PayloadAction<User>) => {
       const { id, name, email, role, workOrders, accounts, sessions, image, password } = action.payload
       state.userForm = {
@@ -92,6 +98,7 @@ export const userSlice = createSlice({
     setEditMode: (state, action: PayloadAction<boolean>) => {
       state.editMode = action.payload
     },
+
 
     deleteUserState: (state) => {
       state.users.splice(state.deleteComponentId, 1)
@@ -129,5 +136,6 @@ export const {
   updateUser,
   setUserInit,
   setIsLoading,
+ 
 } = userSlice.actions
 export default userSlice.reducer

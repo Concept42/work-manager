@@ -5,8 +5,13 @@ import AddButton from "../components/Ui/AddButton";
 import Modal from "../components/Ui/Modal";
 import type { User } from "../slices/DbTypes";
 import Loader from "../components/Ui/Loader";
+import { trpc } from "../utils/trpc";
 
 const Users: React.FC = () => {
+  const data = trpc.useQuery(["users.getUsersData"]);
+
+  console.log(data);
+
   const popupHandler = useAppSelector(
     (state) => state.themeContext.popupHandler
   );
