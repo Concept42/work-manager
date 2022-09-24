@@ -90,7 +90,7 @@ export const userSlice = createSlice({
         password,
       }
     },
-    addNewUser: (state, action: PayloadAction<User>) => {
+    addNewUser: (state, action: PayloadAction<User|never>) => {
       state.users.push(action.payload)
     },
     setEditMode: (state, action: PayloadAction<boolean>) => {
@@ -118,6 +118,7 @@ export const userSlice = createSlice({
     },
     setErrorMessage: (state, action: PayloadAction<string>) => {
       state.error = action.payload
+      
     },
   },
 })

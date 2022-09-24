@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch } from '../../utils/hooks'
+import { useAppSelector, useAppDispatch } from "../../utils/hooks";
 import {
   updateUserForm,
   addNewUser,
@@ -7,38 +7,38 @@ import {
   setUserInit,
   updatedUser,
   setErrorMessage,
-} from '../../slices/userSlice'
-import { handleUserPopup } from '../../slices/themeSlice'
-import { useEffect, useState } from 'react'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { userSchema } from '../Forms/FormValidate'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import { trpc } from '../../utils/trpc'
+} from "../../slices/userSlice";
+import { handleUserPopup } from "../../slices/themeSlice";
+import { useEffect, useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { userSchema } from "../Forms/FormValidate";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { trpc } from "../../utils/trpc";
 
 interface FormInputs {
-  [key: string]: string
-  id: string
-  name: string
-  email: string
-  role: string
-  password: string
+  [key: string]: string;
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  password: string;
 }
 
 const AddNewUser: React.FC = () => {
-  const globalError = useAppSelector((state) => state.userContext.error)
-  const [error, setError] = useState<string | unknown>('')
-  const editMode = useAppSelector((state) => state.userContext.editMode)
-  const globalUser = useAppSelector(updatedUser)
-  const dispatch = useAppDispatch()
-  const postUser = trpc.useMutation(['users.addNewUser'])
+  const globalError = useAppSelector((state) => state.userContext.error);
+  const [error, setError] = useState<string | unknown>("");
+  const editMode = useAppSelector((state) => state.userContext.editMode);
+  const globalUser = useAppSelector(updatedUser);
+  const dispatch = useAppDispatch();
+  const postUser = trpc.useMutation(["users.addNewUser"]);
 
-  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    setError(globalError)
-  }, [globalError])
+    setError(globalError);
+  }, [globalError]);
 
   const {
     register,
@@ -53,19 +53,24 @@ const AddNewUser: React.FC = () => {
       password: globalUser.password,
     },
     resolver: yupResolver(userSchema),
-  })
+  });
 
   const onSubmit = handleSubmit(async (data: never) => {
     if (Object.keys(errors).length === 0) {
-      try {
-        await postUser.mutateAsync(data)
-      } catch (error: any) {
-        dispatch(setErrorMessage(error.message))
-      }
-      if (error === '') {
-        dispatch(addNewUser(data))
-        cancel()
-      }
+      //  try {
+      postUser.mutate(data);
+      dispatch(addNewUser(data));
+      cancel();
+      // } catch (error: any) {
+      //   if (error !== "") {
+      //     dispatch(setErrorMessage(error.message));
+      //   }
+      // }
+      // if (globalError === "") {
+      //   dispatch(setErrorMessage(""));
+
+      //   cancel();
+      // }
 
       ////  NEXT.JS API ENDPOINT METHOD  /////
 
@@ -83,17 +88,17 @@ const AddNewUser: React.FC = () => {
       //   }),
       // })
     }
-  })
+  });
 
   const handleUpdateData = handleSubmit(async (data) => {
     if (Object.keys(errors).length === 0) {
-      dispatch(updateUser(data))
-      cancel()
+      dispatch(updateUser(data));
+      cancel();
 
       const response = await fetch(`/api/customer/updateUserData`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           id: data.id,
@@ -102,104 +107,129 @@ const AddNewUser: React.FC = () => {
           role: data.role,
           password: data.password,
         }),
-      })
+      });
     }
-  })
+  });
 
   const cancel = () => {
-    dispatch(handleUserPopup(''))
+    dispatch(handleUserPopup(""));
     dispatch(
       updateUserForm({
-        id: '',
-        name: '',
-        email: '',
-        password: '',
-        role: '',
-      }),
-    )
-    dispatch(setEditMode(false))
-  }
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        role: "",
+      })
+    );
+    dispatch(setEditMode(false));
+  };
 
   const handleVisibility = () => {
-    setIsVisible(!isVisible)
-  }
+    setIsVisible(!isVisible);
+  };
 
   return (
-    <form onSubmit={onSubmit} className='flex flex-col min-w-[500px]  text-font items-start '>
-      <div className='flex flex-col w-full h-full justify-between gap-8'>
-        <div className='form-control w-full max-w-2xl'>
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col min-w-[500px]  text-font items-start "
+    >
+      <div className="flex flex-col w-full h-full justify-between gap-8">
+        <div className="form-control w-full max-w-2xl">
           <input
             className={
-              errors.name ? 'input input-bordered input-error w-full max-w-lg' : 'input input-bordered w-full max-w-lg'
+              errors.name
+                ? "input input-bordered input-error w-full max-w-lg"
+                : "input input-bordered w-full max-w-lg"
             }
-            {...register('name')}
-            type='text'
-            placeholder='Ime i prezime*'
-            name='name'
+            {...register("name")}
+            type="text"
+            placeholder="Ime i prezime*"
+            name="name"
           />
-          {errors.name && <p className='text-error pt-2 '>{errors.name.message}</p>}
+          {errors.name && (
+            <p className="text-error pt-2 ">{errors.name.message}</p>
+          )}
         </div>
-        <div className='form-control w-full max-w-2xl'>
+        <div className="form-control w-full max-w-2xl">
           <input
             className={
-              errors.email ? 'input input-bordered input-error w-full max-w-lg' : 'input input-bordered w-full max-w-lg'
+              errors.email
+                ? "input input-bordered input-error w-full max-w-lg"
+                : "input input-bordered w-full max-w-lg"
             }
-            {...register('email')}
-            type='email'
-            placeholder='Email*'
-            name='email'
+            {...register("email")}
+            type="email"
+            placeholder="Email*"
+            name="email"
           />
-          {errors.email && <p className='text-error pt-2 '>{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-error pt-2 ">{errors.email.message}</p>
+          )}
         </div>
-        <div className='form-control w-full max-w-2xl relative'>
+        <div className="form-control w-full max-w-2xl relative">
           <input
             className={
               errors.password
-                ? 'input input-bordered input-error w-full max-w-lg'
-                : 'input input-bordered w-full max-w-lg'
+                ? "input input-bordered input-error w-full max-w-lg"
+                : "input input-bordered w-full max-w-lg"
             }
-            {...register('password')}
-            type={isVisible ? 'text' : 'password'}
-            placeholder='Password*'
-            name='password'
+            {...register("password")}
+            type={isVisible ? "text" : "password"}
+            placeholder="Password*"
+            name="password"
           />
-          <div onClick={handleVisibility} className='absolute right-3 top-[25%] hover:scale-125'>
+          <div
+            onClick={handleVisibility}
+            className="absolute right-3 top-[25%] hover:scale-125"
+          >
             <VisibilityIcon />
           </div>
-          {errors.password && <p className='text-error pt-2 '>{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-error pt-2 ">{errors.password.message}</p>
+          )}
         </div>
-        <div className='form-control w-full max-w-lg'>
+        <div className="form-control w-full max-w-lg">
           <select
-            {...register('role')}
-            className={errors.role ? 'select select-bordered input-error ' : 'select select-bordered'}
-            id='role'
-            name='role'
+            {...register("role")}
+            className={
+              errors.role
+                ? "select select-bordered input-error "
+                : "select select-bordered"
+            }
+            id="role"
+            name="role"
           >
             <option disabled>Odaberi ulogu</option>
-            <option value='USER'>Korisnik</option>
-            <option value='ADMIN'>Administrator</option>
+            <option value="USER">Korisnik</option>
+            <option value="ADMIN">Administrator</option>
           </select>
-          {errors.role && <p className='text-error pt-2'>{errors.role.message}</p>}
+          {errors.role && (
+            <p className="text-error pt-2">{errors.role.message}</p>
+          )}
         </div>
 
-        <div className='flex justify-end gap-4'>
+        <div className="flex justify-end gap-4">
           {!editMode ? (
             <>
-              <button onClick={cancel} className='btn btn-outline btn-md'>
+              <button onClick={cancel} className="btn btn-outline btn-md">
                 Odustani
               </button>
-              <button type='submit' className='btn btn-info btn-md'>
+              <button type="submit" className="btn btn-info btn-md">
                 Dodaj
               </button>
             </>
           ) : (
             <>
               „
-              <div className='flex gap-4 w-full justify-end'>
-                <button onClick={cancel} className='btn btn-outline btn-md'>
+              <div className="flex gap-4 w-full justify-end">
+                <button onClick={cancel} className="btn btn-outline btn-md">
                   Odustani
                 </button>
-                <button onClick={handleUpdateData} className='btn btn-info btn-md'>
+                <button
+                  onClick={handleUpdateData}
+                  className="btn btn-info btn-md"
+                >
                   Update
                 </button>
               </div>
@@ -208,6 +238,6 @@ const AddNewUser: React.FC = () => {
         </div>
       </div>
     </form>
-  )
-}
-export default AddNewUser
+  );
+};
+export default AddNewUser;
