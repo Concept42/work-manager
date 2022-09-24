@@ -1,13 +1,13 @@
 export type User = {
-  id: string
-  name: string
-  email: string
-  role: string
-  password: string
-  workOrders?: WorkOrders[]
-  accounts?: []
-  sessions?: []
-  image?: string
+  id: string | undefined
+  name: string | undefined
+  email: string | undefined
+  role: string | undefined
+  password: string | undefined
+  workOrders?: WorkOrders[] | undefined
+  accounts?: [] | undefined
+  sessions?: [] | undefined
+  image?: string | undefined
 }
 
 export type Customer = {

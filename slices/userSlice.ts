@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { User } from './DbTypes'
-import {trpc} from "../utils/trpc"
 
 export interface UserState {
   userForm: User
@@ -35,47 +34,46 @@ export const initialState: UserState = {
   deleteUserId: '',
   editMode: false,
   status: '',
-  error: '',
+  error: undefined,
 }
 
-export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => {
-  const response = await fetch(`/api/customer/getUserData`)
-  const result = await response.json()
-  return result
-})
+// export const fetchUsers = createAsyncThunk('user/fetchUsers', () => {
+//   const response = trpc.useQuery(['users.getUsersData'])
+//   const result = response
+//   return result.data
+// })
 
-export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string) => {
-  const response = await fetch(`/api/customer/deleteUser`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id }),
-  })
-})
+// export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string) => {
+//   const response = await fetch(`/api/customer/deleteUser`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ id }),
+//   })
+// })
 
 export const userSlice = createSlice({
   name: 'User',
   initialState,
-  extraReducers: (builder) => {
-    builder.addCase(fetchUsers.pending, (state) => {
-      state.status = 'loading'
-    })
-    builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
-      state.status = 'fulfilled'
-      state.users = action.payload
-      state.error = ''
-    })
-    builder.addCase(fetchUsers.rejected, (state, action) => {
-      state.status = 'rejected'
-      state.error = action.error.message
-    })
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(fetchUsers.pending, (state) => {
+  //     state.status = 'loading'
+  //   })
+  //   builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+  //     state.status = 'fulfilled'
+  //     state.users = action.payload
+  //     state.error = ''
+  //   })
+  //   builder.addCase(fetchUsers.rejected, (state, action) => {
+  //     state.status = 'rejected'
+  //     state.error = action.error.message
+  //   })
+  // },
 
   reducers: {
-    fetchUsers:(state)=>{
-      const users = trpc.useQuery(['getUsersData']);
-      state.users = users.data
+    fetchUsersToState: (state, action: PayloadAction<User[]>) => {
+      state.users = action.payload
     },
 
     updateUserForm: (state, action: PayloadAction<User>) => {
@@ -99,7 +97,6 @@ export const userSlice = createSlice({
       state.editMode = action.payload
     },
 
-
     deleteUserState: (state) => {
       state.users.splice(state.deleteComponentId, 1)
     },
@@ -119,6 +116,9 @@ export const userSlice = createSlice({
     setIsLoading: (state, action: PayloadAction<string>) => {
       state.status = action.payload
     },
+    setErrorMessage: (state, action: PayloadAction<string>) => {
+      state.error = action.payload
+    },
   },
 })
 
@@ -136,6 +136,7 @@ export const {
   updateUser,
   setUserInit,
   setIsLoading,
- 
+  fetchUsersToState,
+  setErrorMessage,
 } = userSlice.actions
 export default userSlice.reducer
