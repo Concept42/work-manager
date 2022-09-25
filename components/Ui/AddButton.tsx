@@ -14,7 +14,7 @@ function AddButton({ add }: Props) {
       dispatch(handleUserPopup("ADDCUSTOMER"));
     }
     if (add === "workOrder") {
-      dispatch(handleUserPopup("WORKORDER"));
+      dispatch(handleUserPopup("ADDWORKORDER"));
     }
   };
 

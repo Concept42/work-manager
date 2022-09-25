@@ -18,8 +18,8 @@ export const customerSchema = yup.object().shape({
   phoneNumber: yup.number().typeError('Oib must be a number').required('Phone Number is required'),
 })
 export const workOrderSchema = yup.object().shape({
- 
   title: yup.string().required('Title is required'),
   discription: yup.string().required('Description is required'),
   statusFlag: yup.string().required('Status is required'),
+  customerId: yup.string().required('Customer is required'),
 })
