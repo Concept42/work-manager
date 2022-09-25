@@ -31,7 +31,6 @@ export const userRouter = createRouter()
             password,
           },
         })
-
         return user
       } catch (error) {
         if (error instanceof PrismaClientKnownRequestError) {

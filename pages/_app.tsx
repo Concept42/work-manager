@@ -5,7 +5,7 @@ import AppLayout from '../components/Layout/AppLayout'
 import { ThemeProvider } from '@material-tailwind/react'
 import { store } from '../store'
 import { Provider } from 'react-redux'
-import {} from '../slices/userSlice'
+import { fetchUsersToState } from '../slices/userSlice'
 import { fetchCustomers } from '../slices/customerSlice'
 import { fetchWorkOrders } from '../slices/workOrderSlice'
 import { withTRPC } from '@trpc/next'
@@ -13,6 +13,7 @@ import type { AppRouter } from '../server/router/app.router'
 import type { Session } from 'next-auth'
 
 import superjson from 'superjson'
+import { trpc } from '../utils/trpc'
 
 store.dispatch(fetchCustomers())
 store.dispatch(fetchWorkOrders())

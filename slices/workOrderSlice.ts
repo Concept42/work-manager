@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { WorkOrders } from './DbTypes'
 
-
 export interface WorkOrderState {
   workOrders: WorkOrders[]
   workOrderForm: WorkOrders
@@ -10,24 +9,24 @@ export interface WorkOrderState {
   workOrderId: string
   editMode: boolean
   status: string
-  error: string
+  error: string | undefined
 }
 
 export const initialState: WorkOrderState = {
   workOrders: [],
   workOrderForm: {
-    id: "",
-    createdAt: "",
-    updatedAt: "",
-    title: "",
-    discription: "",
-    statusFlag: "",
+    id: '',
+    createdAt: '',
+    updatedAt: '',
+    title: '',
+    discription: '',
+    statusFlag: '',
   },
-  componentId: null,
-  workOrderId: "",
+  componentId: 0,
+  workOrderId: '',
   editMode: false,
-  status: "",
-  error: ""
+  status: '',
+  error: '',
 }
 
 export const fetchWorkOrders = createAsyncThunk('workOrder/fetchWorkOrders', async () => {
@@ -46,21 +45,20 @@ export const fetchWorkOrders = createAsyncThunk('workOrder/fetchWorkOrders', asy
 //   })
 // })
 
-
 export const workOrderSlice = createSlice({
-  name: "WorkOrder",
+  name: 'WorkOrder',
   initialState,
   extraReducers: (builder) => {
     builder.addCase(fetchWorkOrders.pending, (state) => {
-      state.status = "loading"
+      state.status = 'loading'
     })
     builder.addCase(fetchWorkOrders.fulfilled, (state, action: PayloadAction<WorkOrders[]>) => {
-      state.status = "fulfilled"
+      state.status = 'fulfilled'
       state.workOrders = action.payload
-      state.error = ""
+      state.error = ''
     })
     builder.addCase(fetchWorkOrders.rejected, (state, action) => {
-      state.status = "rejected"
+      state.status = 'rejected'
       state.error = action.error.message
     })
   },
@@ -82,10 +80,8 @@ export const workOrderSlice = createSlice({
     setEditMode: (state, action: PayloadAction<boolean>) => {
       state.editMode = action.payload
     },
-  }
+  },
 })
 
-export const {
-  addNewWorkOrder, updateWorkOrderForm, setEditMode
-} = workOrderSlice.actions
+export const { addNewWorkOrder, updateWorkOrderForm, setEditMode } = workOrderSlice.actions
 export default workOrderSlice.reducer

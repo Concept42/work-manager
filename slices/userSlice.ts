@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { User } from './DbTypes'
+import { trpc } from '../utils/trpc'
 
 export interface UserState {
   userForm: User
@@ -36,12 +37,6 @@ export const initialState: UserState = {
   status: '',
   error: undefined,
 }
-
-// export const fetchUsers = createAsyncThunk('user/fetchUsers', () => {
-//   const response = trpc.useQuery(['users.getUsersData'])
-//   const result = response
-//   return result.data
-// })
 
 // export const deleteUser = createAsyncThunk('user/deleteUser', async (id: string) => {
 //   const response = await fetch(`/api/customer/deleteUser`, {
@@ -90,7 +85,7 @@ export const userSlice = createSlice({
         password,
       }
     },
-    addNewUser: (state, action: PayloadAction<User|never>) => {
+    addNewUser: (state, action: PayloadAction<User>) => {
       state.users.push(action.payload)
     },
     setEditMode: (state, action: PayloadAction<boolean>) => {
@@ -118,7 +113,6 @@ export const userSlice = createSlice({
     },
     setErrorMessage: (state, action: PayloadAction<string>) => {
       state.error = action.payload
-      
     },
   },
 })

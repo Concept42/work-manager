@@ -72,7 +72,6 @@ export const customerSlice = createSlice({
     builder.addCase(fetchCustomers.fulfilled, (state, action: PayloadAction<Customer[]>) => {
       state.status = 'succeeded'
       state.customers = action.payload
-      
       state.error = ''
     })
     builder.addCase(fetchCustomers.rejected, (state, action) => {
