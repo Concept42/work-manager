@@ -6,13 +6,15 @@ import Loader from '../components/Ui/Loader'
 import SearchIcon from '@mui/icons-material/Search'
 import { WorkOrders } from '../slices/DbTypes'
 import WorkOrderList from '../components/LIsts/WorkOrderList'
+import SearchBar from '../components/Ui/SearchBar'
+import useSearch from '../utils/useSearch'
 
 const WorkOrders: React.FC = () => {
   const contextWorkOrders: WorkOrders[] = useAppSelector((state) => state.workOrderContext.workOrders)
   console.log('customerWorkorders', contextWorkOrders)
   const handleOpen = useAppSelector((state) => state.themeContext.popupHandler)
 
-  const [isLoading, setIsLoading] = useState<string>('')
+  const { setSearchQuery, search } = useSearch()
   const [workOrders, setWorkOrders] = useState([])
 
   useEffect(() => {
@@ -24,24 +26,11 @@ const WorkOrders: React.FC = () => {
         <section>{handleOpen !== '' ? <Modal /> : ''}</section>
         <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
           <div className='flex justify-between pr-10 pb-16'>
-            <div className='flex relative ml-10 items-center justify-end  '>
-              <SearchIcon className='absolute mr-2' />
-              <input
-                className='w-[300px] h-full input rounded-full'
-                type='text'
-                placeholder='Search'
-                // onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-              />
-            </div>
+            <SearchBar setSearchQuery={setSearchQuery} />
+            <div className='flex relative ml-10 items-center justify-end  '></div>
             <AddButton add={'workOrder'} />
           </div>
-          <div className='flex w-full h-full  justify-end'>
-            <select className='mr-10 mb-2 select w-36'>
-              <option disabled>Sort by</option>
-              <option value='asc'>Asc: Name</option>
-              <option value='dsc'>Dsc: Name</option>
-            </select>
-          </div>
+
           <div className='overflow-x-auto w-full px-10 '>
             <table className='table w-full'>
               <thead>
@@ -57,7 +46,7 @@ const WorkOrders: React.FC = () => {
               </thead>
               <tbody>
                 {workOrders &&
-                  workOrders.map((workOrders: WorkOrders, index: number) => {
+                  search(workOrders).map((workOrders: WorkOrders, index: number) => {
                     return <WorkOrderList key={index} workOrders={workOrders} index={index} />
                   })}
               </tbody>

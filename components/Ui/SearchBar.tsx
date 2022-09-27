@@ -13,7 +13,7 @@ function SearchBar({ setSearchQuery }: Props): JSX.Element {
         <input
           className='w-[300px] h-full input rounded-full'
           type='text'
-          placeholder='Search'
+          placeholder='Search with lowercase'
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
