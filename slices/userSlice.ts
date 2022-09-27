@@ -30,7 +30,7 @@ export const initialState: UserState = {
     image: '',
     password: '',
   },
-  deleteComponentId: null,
+  deleteComponentId: 0,
   deleteUserId: '',
   editMode: false,
   status: '',

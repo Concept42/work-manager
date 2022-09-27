@@ -14,7 +14,7 @@ const Users: React.FC = () => {
   const handleLoading = useAppSelector((state) => state.userContext.status)
   const { setSearchQuery, search } = useSearch()
   const [handleOpen, setHandleOpen] = useState<string>('')
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState<string>('')
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const Users: React.FC = () => {
                   <Loader />
                 ) : (
                   users &&
-                  search(users).map((singleUser: User, index: number) => {
+                  search(users)?.map((singleUser: User, index: number) => {
                     return <UsersList key={index} singleUser={singleUser} index={index} />
                   })
                 )}

@@ -3,14 +3,14 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { WorkOrders } from './DbTypes'
 
 export interface WorkOrderState {
-  singleWorkOrder: WorkOrders
-  workOrders: WorkOrders[]
-  workOrderForm: WorkOrders
-  componentId: number
-  workOrderId: string
-  editMode: boolean
-  status: string
-  error: string
+  singleWorkOrder?: WorkOrders
+  workOrders?: WorkOrders[] | undefined
+  workOrderForm?: WorkOrders
+  componentId?: number
+  workOrderId?: string
+  editMode?: boolean
+  status?: string
+  error?: string
 }
 
 export const initialState: WorkOrderState = {
@@ -31,7 +31,7 @@ export const initialState: WorkOrderState = {
     discription: '',
     statusFlag: '',
   },
-  componentId: null,
+  componentId: 0,
   workOrderId: '',
   editMode: false,
   status: '',

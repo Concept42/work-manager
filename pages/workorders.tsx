@@ -15,7 +15,7 @@ const WorkOrders: React.FC = () => {
   const handleOpen = useAppSelector((state) => state.themeContext.popupHandler)
 
   const { setSearchQuery, search } = useSearch()
-  const [workOrders, setWorkOrders] = useState([])
+  const [workOrders, setWorkOrders] = useState<WorkOrders[]>([])
 
   useEffect(() => {
     setWorkOrders(contextWorkOrders)
@@ -46,7 +46,7 @@ const WorkOrders: React.FC = () => {
               </thead>
               <tbody>
                 {workOrders &&
-                  search(workOrders).map((workOrders: WorkOrders, index: number) => {
+                  search(workOrders)?.map((workOrders: WorkOrders, index: number) => {
                     return <WorkOrderList key={index} workOrders={workOrders} index={index} />
                   })}
               </tbody>
