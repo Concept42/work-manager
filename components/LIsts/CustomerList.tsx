@@ -9,6 +9,7 @@ import WorkDetailModal from '../Ui/WorkDetailModal'
 import { handleDetailsPopup } from '../../slices/themeSlice'
 import { setDetailCustomer } from '../../slices/customerSlice'
 
+
 interface Props {
   singleCustomer?: Customer
   index?: number
