@@ -5,19 +5,21 @@ import AddButton from '../components/Ui/AddButton'
 import Modal from '../components/Ui/Modal'
 import type { User } from '../slices/DbTypes'
 import Loader from '../components/Ui/Loader'
+import SearchBar from '../components/Ui/SearchBar'
+import useSearch from '../utils/useSearch'
 
 const Users: React.FC = () => {
   const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
   const contextUsers: User[] = useAppSelector((state) => state.userContext.users)
   const handleLoading = useAppSelector((state) => state.userContext.status)
-
+  const { setSearchQuery, search } = useSearch()
   const [handleOpen, setHandleOpen] = useState<string>('')
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState<string>('')
 
   useEffect(() => {
     setUsers(contextUsers)
-  })
+  }, [contextUsers])
 
   useEffect(() => {
     setIsLoading(handleLoading)
@@ -29,7 +31,8 @@ const Users: React.FC = () => {
       <div>
         <section>{handleOpen !== '' ? <Modal /> : ''}</section>
         <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
-          <div className='flex justify-end pr-10 pb-10'>
+          <div className='flex justify-between pr-10 pb-16'>
+            <SearchBar setSearchQuery={setSearchQuery} />
             <AddButton add={'user'} />
           </div>
           <div className='overflow-x-auto w-full px-10 '>
@@ -49,7 +52,7 @@ const Users: React.FC = () => {
                   <Loader />
                 ) : (
                   users &&
-                  users?.map((singleUser: User, index: number) => {
+                  search(users).map((singleUser: User, index: number) => {
                     return <UsersList key={index} singleUser={singleUser} index={index} />
                   })
                 )}

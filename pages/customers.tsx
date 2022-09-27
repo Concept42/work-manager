@@ -8,20 +8,20 @@ import {
   fetchCustomers,
 } from '../slices/customerSlice'
 import { useAppSelector, useAppDispatch } from '../utils/hooks'
-import SearchIcon from '@mui/icons-material/Search'
 import { cancelButton } from '../slices/themeSlice'
 import type { Customer } from '../slices/DbTypes'
 import Modal from '../components/Ui/Modal'
 import AddButton from '../components/Ui/AddButton'
 import Loader from '../components/Ui/Loader'
 import useSearch from '../utils/useSearch'
+import SearchBar from '../components/Ui/SearchBar'
 
 const Customers: React.FC = () => {
   const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
   const handleLoading = useAppSelector((state) => state.userContext.status)
   const contextCustomers: Customer[] = useAppSelector(customersList)
 
-  const { searchQuery, setSearchQuery, search } = useSearch()
+  const { setSearchQuery, search } = useSearch()
   const [handleOpen, setHandleOpen] = useState<string>('')
   const [customers, setCustomers] = useState<Customer[]>([])
   const [isLoading, setIsLoading] = useState<string>('')
@@ -47,15 +47,7 @@ const Customers: React.FC = () => {
         <section>{handleOpen !== '' ? <Modal /> : ''}</section>
         <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
           <div className='flex justify-between pr-10 pb-16'>
-            <div className='flex relative ml-10 items-center justify-end  '>
-              <SearchIcon className='absolute mr-2' />
-              <input
-                className='w-[300px] h-full input rounded-full'
-                type='text'
-                placeholder='Search'
-                onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
-              />
-            </div>
+            <SearchBar setSearchQuery={setSearchQuery} />
             <AddButton add={'customer'} />
           </div>
           {/* <div className='flex w-full h-full  justify-end'>
@@ -87,7 +79,7 @@ const Customers: React.FC = () => {
                   <Loader />
                 ) : (
                   customers &&
-                  search(customers, searchQuery).map((singleCustomer: Customer, index: number) => {
+                  search(customers).map((singleCustomer: Customer, index: number) => {
                     console.log(singleCustomer)
                     return <CustomerList key={index} singleCustomer={singleCustomer} index={index} />
                   })

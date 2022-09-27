@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 const useSearch = () => {
   const [searchQuery, setSearchQuery] = useState<string>('')
 
-  const search = (data: any[], searchQuery: string) => {
+  const search = (data: any[]) => {
     const searchParameters = Object.keys(Object.assign({}, ...data))
     if (searchQuery === '') {
       return data
@@ -18,7 +18,6 @@ const useSearch = () => {
     setSearchQuery(searchQuery)
   }, [searchQuery])
 
-  return { searchQuery, setSearchQuery, search }
+  return { setSearchQuery, search }
 }
-
 export default useSearch
