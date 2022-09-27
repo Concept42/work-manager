@@ -14,21 +14,17 @@ import type { Customer } from '../slices/DbTypes'
 import Modal from '../components/Ui/Modal'
 import AddButton from '../components/Ui/AddButton'
 import Loader from '../components/Ui/Loader'
-import { search } from '../utils/search'
-
-
+import useSearch from '../utils/useSearch'
 
 const Customers: React.FC = () => {
   const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
   const handleLoading = useAppSelector((state) => state.userContext.status)
   const contextCustomers: Customer[] = useAppSelector(customersList)
-  const deleteId = useAppSelector((state) => state.customerContext.deleteCustomerId)
-  const dispatch = useAppDispatch()
 
+  const { searchQuery, setSearchQuery, search } = useSearch()
   const [handleOpen, setHandleOpen] = useState<string>('')
   const [customers, setCustomers] = useState<Customer[]>([])
   const [isLoading, setIsLoading] = useState<string>('')
-  const [searchQuery, setSearchQuery] = useState<string>('')
 
   useEffect(() => {
     setCustomers(contextCustomers)
@@ -44,10 +40,6 @@ const Customers: React.FC = () => {
   //   dispatch(cancelButton())
   //   dispatch(deleteCustomer(deleteId))
   // }
-
-  
-
-
 
   return (
     <>
@@ -95,7 +87,7 @@ const Customers: React.FC = () => {
                   <Loader />
                 ) : (
                   customers &&
-                  search(customers,searchQuery).map((singleCustomer:Customer, index:number) => {
+                  search(customers, searchQuery).map((singleCustomer: Customer, index: number) => {
                     console.log(singleCustomer)
                     return <CustomerList key={index} singleCustomer={singleCustomer} index={index} />
                   })
