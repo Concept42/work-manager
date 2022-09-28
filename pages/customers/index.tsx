@@ -62,7 +62,7 @@ const Customers: React.FC = () => {
             <table className='table w-full'>
               <thead>
                 <tr>
-                  <th>WorkList</th>
+                  <th>Details</th>
                   <th>Name</th>
                   <th>Surname</th>
                   <th>Company</th>
