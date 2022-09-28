@@ -1,20 +1,20 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import CustomerList from '../components/LIsts/CustomerList'
+import CustomerList from '../../components/LIsts/CustomerList'
 import {
   customersList,
   deleteCustomerState,
   deleteCustomer,
   setSortType,
   fetchCustomers,
-} from '../slices/customerSlice'
-import { useAppSelector, useAppDispatch } from '../utils/hooks'
-import { cancelButton } from '../slices/themeSlice'
-import type { Customer } from '../slices/DbTypes'
-import Modal from '../components/Ui/Modal'
-import AddButton from '../components/Ui/AddButton'
-import Loader from '../components/Ui/Loader'
-import useSearch from '../utils/useSearch'
-import SearchBar from '../components/Ui/SearchBar'
+} from '../../slices/customerSlice'
+import { useAppSelector, useAppDispatch } from '../../utils/hooks'
+import { cancelButton } from '../../slices/themeSlice'
+import type { Customer } from '../../slices/DbTypes'
+import Modal from '../../components/Ui/Modal'
+import AddButton from '../../components/Ui/AddButton'
+import Loader from '../../components/Ui/Loader'
+import useSearch from '../../utils/useSearch'
+import SearchBar from '../../components/Ui/SearchBar'
 
 const Customers: React.FC = () => {
   const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
