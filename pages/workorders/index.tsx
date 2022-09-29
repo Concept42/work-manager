@@ -9,16 +9,16 @@ import WorkOrderList from '../../components/LIsts/WorkOrderList'
 import SearchBar from '../../components/Ui/SearchBar'
 import useSearch from '../../utils/useSearch'
 
-const WorkOrders: React.FC = () => {
+const WorkOrderPage: React.FC = () => {
   const contextWorkOrders: WorkOrders[] = useAppSelector((state) => state.workOrderContext.workOrders)
   console.log('customerWorkorders', contextWorkOrders)
   const handleOpen = useAppSelector((state) => state.themeContext.popupHandler)
 
   const { setSearchQuery, search } = useSearch()
-  const [workOrders, setWorkOrders] = useState<WorkOrders[]>([])
+  const [allWorkOrders, setAllWorkOrders] = useState<WorkOrders[]>([])
 
   useEffect(() => {
-    setWorkOrders(contextWorkOrders)
+    setAllWorkOrders(contextWorkOrders)
   }, [contextWorkOrders])
   return (
     <>
@@ -45,8 +45,8 @@ const WorkOrders: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {workOrders &&
-                  search(workOrders)?.map((workOrders: WorkOrders, index: number) => {
+                {allWorkOrders &&
+                  search(allWorkOrders)?.map((workOrders: WorkOrders, index: number) => {
                     return <WorkOrderList key={index} workOrders={workOrders} index={index} />
                   })}
               </tbody>
@@ -57,4 +57,4 @@ const WorkOrders: React.FC = () => {
     </>
   )
 }
-export default WorkOrders
+export default WorkOrderPage

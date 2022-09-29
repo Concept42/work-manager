@@ -27,8 +27,8 @@ model Customer {
 
 model WorkOrder {
   id          String    @id @default(cuid()) 
-  createdAt   String?  
-  updatedAt   String?
+  createdAt   DateTime?  
+  updatedAt   DateTime?
   title       String
   discription String
   statusFlag  String
