@@ -22,7 +22,7 @@ const SingleWorkOrder = ({ workOrder }) => {
           <h3>{moment(workOrder.createdAt).format('Do MMMM YYYY, h:mm')}</h3>
         </div>
         <h1 className='flex text-2xl justify-center border-solid border-b-2'>Title: {workOrder.title}</h1>
-        <h3>User: {workOrder.user.name}</h3>
+        <h3>User: {workOrder.user?.name}</h3>
         <h3>Discription: </h3>
         <p>{workOrder.discription} </p>
       </div>

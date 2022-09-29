@@ -5,9 +5,10 @@ import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import prisma from '../../lib/db'
 import UserProfile from '../../components/Ui/UserProfile'
-import SingleWorkOrder from '../../components/Ui/SingleWorkOrder'
+import WorkorderDetail from '../../components/Ui/WorkorderDetail'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const back = context.req.headers.referer
   const id = context.params?.id
   const user = await prisma.user.findUnique({
     where: {
@@ -19,12 +20,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   })
 
   return {
-    props: { user },
+    props: { user, back },
   }
 }
 
-const CustomerDetails = ({ user }) => {
+const CustomerDetails = ({ user, back }) => {
   const [tab, setTab] = useState<boolean>(false)
+  const router = useRouter()
 
   const handleClick = () => {
     setTab(!tab)
@@ -34,7 +36,7 @@ const CustomerDetails = ({ user }) => {
     <>
       <main className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md p-10 w-full gap-20'>
         <section className='flex w-full h-full justify-between items-center'>
-          <Link href={'/users'}>
+          <Link href={back}>
             <button className='btn gap-2 w-fit text-white'>
               <ArrowBackIcon />
               Back
@@ -49,7 +51,7 @@ const CustomerDetails = ({ user }) => {
             </a>
           </div>
         </section>
-        <section>{!tab ? <UserProfile user={user} /> : <SingleWorkOrder workOrder={user} />}</section>
+        <section>{!tab ? <UserProfile user={user} /> : <WorkorderDetail workOrder={user} />}</section>
       </main>
     </>
   )
