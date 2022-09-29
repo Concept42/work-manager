@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from "next";
 import prisma from "../../lib/db"
-import CustomerProfile from '../../components/Ui/CustomerProfile';
+import UserProfile from '../../components/Ui/UserProfile';
 import WorkorderDetails from "../../components/Ui/WorkorderDetails"
 
 export const getServerSideProps :GetServerSideProps = async (context) =>{
-  const customerId = context.params?.customerId
-  const customer = await prisma.customer.findUnique({
+  const id = context.params?.id
+  const user = await prisma.user.findUnique({
     where:{
-      id:customerId
+        email: id
     },
     include:{
       workOrders:true
@@ -19,12 +19,12 @@ export const getServerSideProps :GetServerSideProps = async (context) =>{
   })
   
   return {
-    props: {customer}
+    props: {user}
 }
 }
 
 
-const CustomerDetails = ({customer}) => {
+const CustomerDetails = ({user}) => {
   const [tab, setTab] = useState<boolean>(false)
 
   const handleClick = () =>{
@@ -36,7 +36,7 @@ const CustomerDetails = ({customer}) => {
       
         <main className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md p-10 w-full gap-20'>
            <section className="flex w-full h-full justify-between items-center"> 
-           <Link href={"/customers"}>
+           <Link href={"/users"}>
             <button className="btn gap-2 w-fit text-white">
             <ArrowBackIcon/>
             Back</button>
@@ -48,7 +48,7 @@ const CustomerDetails = ({customer}) => {
 </div>
             </section>
           <section>
- {!tab ? <CustomerProfile customer={customer}  />:<WorkorderDetails customer={customer} /> }
+ {!tab ? <UserProfile user={user}  />:<WorkorderDetails customer={user} /> }
  
           </section>
             

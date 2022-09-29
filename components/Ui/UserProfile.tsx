@@ -1,10 +1,10 @@
 import React from "react"
-import { Customer } from "../../slices/DbTypes"
 
 
 
 
-const Profile = ({customer,tab}) =>   {
+
+const UserProfile = ({user}) =>   {
    
 
 
@@ -16,8 +16,8 @@ return(
     <img src="https://placeimg.com/192/192/people" />
   </div>
 </div></div>
-        <h2>{customer?.firstName + " " +  customer?.lastName}</h2>
-        <h2><strong>{customer?.companyName}</strong></h2>
+        <h2>{user?.name + " " + user?.lastName}</h2>
+        
         
         </div>
         <div className="flex flex-col flex-[4] w-full h-full justify-start pl-20 gap-10">
@@ -25,23 +25,15 @@ return(
          <div className="flex flex-col gap-7">
             <div>
                 <h1><strong>Email: </strong></h1>
-            <h1> {customer.email}</h1>
+            <h1> {user.email}</h1>
             </div>
             <div>
-                <h1><strong>Address: </strong></h1>
-            <h1> {customer.adress}</h1>
+                <h1><strong>Role: </strong></h1>
+            <h1> {user.role}</h1>
             </div>
             <div>
-                <h1><strong>City: </strong></h1>
-            <h1> {customer.city}</h1>
-            </div>
-            <div>
-                <h1><strong>OIB: </strong></h1>
-            <h1> {customer.oib}</h1>
-            </div>
-            <div>
-                <h1><strong>Phone Number: </strong></h1>
-            <h1> {customer.phoneNumber}</h1>
+                <h1><strong>Work Orders: </strong></h1>
+            <h1> {user.workOrders.length}</h1>
             </div>
             
          </div>
@@ -54,4 +46,4 @@ return(
 )
 }
 
-export default Profile
+export default UserProfile
