@@ -30,7 +30,6 @@ const WorkOrderPage: React.FC = () => {
             <div className='flex relative ml-10 items-center justify-end  '></div>
             <AddButton add={'workOrder'} />
           </div>
-
           <div className='overflow-x-auto w-full px-10 '>
             <table className='table w-full'>
               <thead>
