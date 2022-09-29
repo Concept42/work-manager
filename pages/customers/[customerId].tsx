@@ -3,47 +3,59 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from "next";
+import prisma from "../../lib/db"
+import Profile from '../../components/Ui/Profile';
+import WorkorderDetails from "../../components/Ui/WorkorderDetails"
 
 export const getServerSideProps :GetServerSideProps = async (context) =>{
   const customerId = context.params?.customerId
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/customer/getCustomerById`,{
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const customer = await prisma.customer.findUnique({
+    where:{
+      id:customerId
     },
-    body: JSON.stringify( customerId ),
-  
-  } 
-  )
-    const customer = JSON.parse(JSON.stringify( res ))
-
+    include:{
+      workOrders:true
+    }
+  })
   
   return {
-    props: {
-      customer 
-  }
+    props: {customer}
 }
 }
 
 
 const CustomerDetails = ({customer}) => {
+  const [tab, setTab] = useState<boolean>(false)
 
-
+  const handleClick = () =>{
+    setTab(!tab)
+  }
 
   return (
     <>
-      <div>
-        <section className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md py-10 w-full'>
-            <Link href={"/customers"}>
-            <button className="btn gap-2 w-fit ml-10 text-white">
-  <ArrowBackIcon/>
-  Back
-</button>
+      
+        <main className='flex flex-col border-solid border-2 bg-white rounded-lg shadow-md p-10 w-full gap-20'>
+           <section className="flex w-full h-full justify-between items-center"> 
+           <Link href={"/customers"}>
+            <button className="btn gap-2 w-fit text-white">
+            <ArrowBackIcon/>
+            Back</button>
             </Link>
-          <button onClick={()=> console.log("customer: ",customer)}>LOG</button>
-        </section>
+            <div className="tabs">
+  <a onClick={handleClick} className={!tab ? "tab tab-bordered tab-active" : "tab tab-bordered" }>Profile</a> 
+  <a onClick={handleClick} className={tab ? "tab tab-bordered tab-active" : "tab tab-bordered" }>Work Orders</a> 
+
+</div>
+            </section>
+          <section>
+ {!tab ? <Profile customer={customer}  />:<WorkorderDetails customer={customer} /> }
+ 
+          </section>
+            
+        </main>
+        
    
-      </div>
+      
     </>
   )
 }
