@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import UsersList from '../components/LIsts/UsersList'
-import { useAppSelector } from '../utils/hooks'
-import AddButton from '../components/Ui/AddButton'
-import Modal from '../components/Ui/Modal'
-import type { User } from '../slices/DbTypes'
-import Loader from '../components/Ui/Loader'
-import SearchBar from '../components/Ui/SearchBar'
-import useSearch from '../utils/useSearch'
+import UsersList from '../../components/LIsts/UsersList'
+import { useAppSelector } from '../../utils/hooks'
+import AddButton from '../../components/Ui/AddButton'
+import Modal from '../../components/Ui/Modal'
+import type { User } from '../../slices/DbTypes'
+import Loader from '../../components/Ui/Loader'
+import SearchBar from '../../components/Ui/SearchBar'
+import useSearch from '../../utils/useSearch'
 
 const Users: React.FC = () => {
   const popupHandler = useAppSelector((state) => state.themeContext.popupHandler)
@@ -40,6 +40,7 @@ const Users: React.FC = () => {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>Details</th>
                   <th>Avatar</th>
                   <th>Name</th>
                   <th>Email</th>

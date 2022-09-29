@@ -1,6 +1,8 @@
 import Avatar from '@mui/material/Avatar'
 import DotMenu from '../Ui/DotMenu'
 import type { User } from '../../slices/DbTypes'
+import Link from 'next/link'
+import ArticleIcon from '@mui/icons-material/Article';
 
 interface Props {
   singleUser: User
@@ -15,6 +17,14 @@ export default function UsersList(props: Props) {
     <>
       <tr>
         <th>{componentId + 1}</th>
+        <td> <Link
+            href={`/users/${oneUser.email}`}
+          >
+            <button className="btn w-fit text-white p-2">
+  <ArticleIcon/>
+  
+</button>
+          </Link></td>
         <td>
           <Avatar src={oneUser?.image} />
         </td>
