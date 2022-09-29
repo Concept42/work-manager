@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import DotMenu from '../Ui/DotMenu'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import { useAppSelector, useAppDispatch } from '../../utils/hooks'
-import ArticleIcon from '@mui/icons-material/Article';
-
 import { Customer, WorkOrders } from '../../slices/DbTypes'
 import WorkDetailModal from '../Ui/WorkDetailModal'
 import { handleDetailsPopup } from '../../slices/themeSlice'
 import { setDetailCustomer } from '../../slices/customerSlice'
 import Link from 'next/link'
+import ArticleIcon from '@mui/icons-material/Article';
+
 
 
 interface Props {

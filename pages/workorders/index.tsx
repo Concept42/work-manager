@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import AddButton from '../components/Ui/AddButton'
-import Modal from '../components/Ui/Modal'
-import { useAppSelector } from '../utils/hooks'
-import Loader from '../components/Ui/Loader'
+import AddButton from '../../components/Ui/AddButton'
+import Modal from '../../components/Ui/Modal'
+import { useAppSelector } from '../../utils/hooks'
+import Loader from '../../components/Ui/Loader'
 import SearchIcon from '@mui/icons-material/Search'
-import { WorkOrders } from '../slices/DbTypes'
-import WorkOrderList from '../components/LIsts/WorkOrderList'
-import SearchBar from '../components/Ui/SearchBar'
-import useSearch from '../utils/useSearch'
+import { WorkOrders } from '../../slices/DbTypes'
+import WorkOrderList from '../../components/LIsts/WorkOrderList'
+import SearchBar from '../../components/Ui/SearchBar'
+import useSearch from '../../utils/useSearch'
 
 const WorkOrders: React.FC = () => {
   const contextWorkOrders: WorkOrders[] = useAppSelector((state) => state.workOrderContext.workOrders)
