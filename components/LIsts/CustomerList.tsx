@@ -21,13 +21,12 @@ export default function CustomerList(props: Props) {
   const singleCustomer = props.singleCustomer
   const index = props.index
 
- 
   return (
     <>
       <tr>
         <th>
           <Link
-            href={"/customers/" + singleCustomer.id}
+            href={`/customers/${singleCustomer.id}`}
           >
             <button className="btn w-fit text-white p-2">
   <ArticleIcon/>

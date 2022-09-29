@@ -80,7 +80,7 @@ const Customers: React.FC = () => {
                 ) : (
                   customers &&
                   search(customers).map((singleCustomer: Customer, index: number) => {
-                    console.log(singleCustomer)
+                    
                     return <CustomerList key={index} singleCustomer={singleCustomer} index={index} />
                   })
                 )}

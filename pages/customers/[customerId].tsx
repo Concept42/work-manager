@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
-import { Customer } from '../../slices/DbTypes';
-import  { useRouter } from 'next/router';
-import { GetServerSideProps } from 'next/types';
+import { useRouter } from 'next/router';
+import { GetServerSideProps } from "next";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const res = await fetch(`http://localhost:3000/api/customer/getCustomerById?${context.params?.customerId}`)
-    let customer : Customer;
-    try {
-        customer = await res.json();  
-    } catch (e) {
-        console.log('Error', e);
-    }
+export const getServerSideProps :GetServerSideProps = async (context) =>{
+  const customerId = context.params?.customerId
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/customer/getCustomerById`,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify( customerId ),
+  
+  } 
+  )
+    const customer = JSON.parse(JSON.stringify( res ))
 
-    if (!customer) {
-        return {
-            notFound: true,
-        }
-    }
-
-    return {props: {customer}}
+  
+  return {
+    props: {
+      customer 
+  }
+}
 }
 
 
-
 const CustomerDetails = ({customer}) => {
-   
-    
+
 
 
   return (
@@ -40,7 +40,7 @@ const CustomerDetails = ({customer}) => {
   Back
 </button>
             </Link>
-            <div>{customer?.firstName}</div>
+          <button onClick={()=> console.log("customer: ",customer)}>LOG</button>
         </section>
    
       </div>
