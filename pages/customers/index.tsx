@@ -35,12 +35,6 @@ const Customers: React.FC = () => {
     setHandleOpen(popupHandler)
   }, [popupHandler, handleLoading])
 
-  // const handleDeleteCustomer = () => {
-  //   dispatch(deleteCustomerState())
-  //   dispatch(cancelButton())
-  //   dispatch(deleteCustomer(deleteId))
-  // }
-
   return (
     <>
       <div>
@@ -50,13 +44,6 @@ const Customers: React.FC = () => {
             <SearchBar setSearchQuery={setSearchQuery} />
             <AddButton add={'customer'} />
           </div>
-          {/* <div className='flex w-full h-full  justify-end'>
-            <select onChange={handleChange} className='mr-10 mb-2 select w-36'>
-              <option disabled>Sort by</option>
-              <option value='asc'>Asc: Name</option>
-              <option value='dsc'>Dsc: Name</option>
-            </select>
-          </div> */}
 
           <div className='overflow-x-auto w-full px-10 '>
             <table className='table w-full'>
@@ -80,7 +67,6 @@ const Customers: React.FC = () => {
                 ) : (
                   customers &&
                   search(customers).map((singleCustomer: Customer, index: number) => {
-                    
                     return <CustomerList key={index} singleCustomer={singleCustomer} index={index} />
                   })
                 )}

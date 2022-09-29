@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from "next";
 import prisma from "../../lib/db"
 import UserProfile from '../../components/Ui/UserProfile';
-import WorkorderDetails from "../../components/Ui/WorkorderDetails"
+import WorkorderDetails from "../../components/Ui/SingleWorkOrder"
 
 export const getServerSideProps :GetServerSideProps = async (context) =>{
   const id = context.params?.id

@@ -35,7 +35,7 @@ export default function WorkDetailModal(props: Props) {
     setWorkOrders(singleCustomer.workOrders)
     dispatch(handleDetailsPopup(''))
   }
-  console.log('on modal:', detailWorkOrder)
+
   return (
     <>
       {handler === 'WORKORDERS' ? (
