@@ -33,7 +33,7 @@ function Navigation() {
               </div>
             </li>
           </Link>
-          <Link href='/customers'>
+          <Link href='/customers/'>
             <li className='flex h-16 w-60 items-center hover:border-solid hover:rounded-2xl hover:bg-primary cursor-pointer'>
               <div className='flex gap-4'>
                 <SettingsAccessibilityIcon className='ml-6' />

@@ -59,7 +59,7 @@ function Topbar() {
               className="dropdown-content menu shadow mt-5 p-1 bg-white "
             >
               <li>
-                <a>Profile</a>
+                <a href={`/users/${data.user.email}`}>Profile</a>
               </li>
               <li>
                 <a>Settings</a>

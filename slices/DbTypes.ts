@@ -29,6 +29,8 @@ export type WorkOrders = {
   title?: string
   discription?: string
   statusFlag?: string
-  customer?: Customer[]
-  user?: User[]
+  customer?: Customer
+  user?: User
+  userId?: string
+  customerId?: string
 }
