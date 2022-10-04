@@ -57,7 +57,6 @@ const Users: React.FC = () => {
                     return <UsersList key={index} singleUser={singleUser} index={index} />
                   })
                 )}
-                {}
               </tbody>
             </table>
           </div>
