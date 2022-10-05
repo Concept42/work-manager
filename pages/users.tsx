@@ -16,11 +16,12 @@ const Users: React.FC = () => {
   const [handleOpen, setHandleOpen] = useState<string>('')
   const [isLoading, setIsLoading] = useState<string>('')
   const dispatch = useAppDispatch()
+
   const { data } = trpc.useQuery(['users.getUsersData'])
-  // console.log(data)
+  console.log(data)
 
   useEffect(() => {
-    dispatch(fetchUsersToState(data))
+    // dispatch(fetchUsersToState(data))
   })
 
   useEffect(() => {

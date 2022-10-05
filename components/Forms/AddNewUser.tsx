@@ -57,9 +57,9 @@ const AddNewUser: React.FC = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     if (Object.keys(errors).length === 0) {
-      dispatch(addNewUser(data))
-      console.log(contextUser)
-      // mutateAsync(data)
+      // dispatch(addNewUser(data))
+      // console.log(contextUser)
+      mutateAsync(data)
       cancel()
     }
   })

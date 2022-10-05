@@ -2,6 +2,8 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { userSchema, userYup } from '../../components/Forms/FormValidate'
 import { createRouter } from '../createRouter'
 import * as trpc from '@trpc/server'
+import Users from '../../pages/users'
+import { User } from '@prisma/client'
 
 export const userRouter = createRouter()
   .query('getUsersData', {
@@ -15,7 +17,7 @@ export const userRouter = createRouter()
           workOrders: true,
         },
       })
-      return users
+      return users as User[]
     },
   })
   .mutation('addNewUser', {
